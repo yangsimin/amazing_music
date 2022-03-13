@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .amz-text {
+    /* color: #161e27; */
+    @apply text-red-600;
+  }
+  .amz-text-hl {
+    /* color: #161e27; */
+    @apply text-gray-900;
+  }
+}

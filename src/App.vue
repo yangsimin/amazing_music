@@ -1,16 +1,23 @@
+<!--
+ * @Author: simonyang
+ * @Date: 2022-03-11 17:31:33
+ * @LastEditTime: 2022-03-13 21:14:32
+ * @LastEditors: simonyang
+ * @Description: 
+-->
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <home-page />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HomePage from './views/home/HomePage.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    HomePage
   }
 }
 </script>
