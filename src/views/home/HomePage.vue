@@ -1,13 +1,14 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 21:13:40
- * @LastEditTime: 2022-03-13 23:11:55
+ * @LastEditTime: 2022-03-14 23:00:20
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
   <div>
-    <amz-header />
+    <amz-header class="bg-white" />
+    <router-view class="mt-2"></router-view>
   </div>
 </template>
 

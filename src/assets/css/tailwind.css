@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .amz-text-hl {
+    color: var(--color-text-hl);
+  }
+  .amz-text {
+    color: var(--color-text);
+  }
+  .amz-bg-hl {
+    background-color: var(--color-text-hl);
+  }
+  .amz-border-hl {
+    border-color: var(--color-text-hl);
+  }
+  .amz-container-px {
+    padding: 0 3%;
+  }
+}

@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-13 10:44:27
- * @LastEditTime: 2022-03-13 23:05:41
+ * @LastEditTime: 2022-03-14 12:28:24
  * @LastEditors: simonyang
  * @Description:
  */
@@ -21,8 +21,7 @@ module.exports = {
     SharedArrayBuffer: 'readonly'
   },
   parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module'
+    parse: 'babel-eslint'
   },
   plugins: ['vue'],
   rules: {
