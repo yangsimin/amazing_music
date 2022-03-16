@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 17:58:40
- * @LastEditTime: 2022-03-16 14:58:02
+ * @LastEditTime: 2022-03-16 22:00:50
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -13,51 +13,42 @@
   >
     <div
       ref="content"
-      class="content flex"
+      class="content flex items-center"
       @pointerdown.prevent="pointerdown"
       @pointerup.prevent="pointerup"
       @pointermove.prevent="pointermove"
       @dragstart.prevent
       @touchstart.prevent
     >
-      <div
-        v-for="img in images"
-        :key="img.slice(-10)"
-        class="w-full flex-shrink-0"
-      >
-        <img
-          :src="img"
-          alt=""
-          class="w-full max-w-screen-lg mx-auto object-cover"
-          @load.once="resize()"
-        />
-      </div>
+      <slot></slot>
     </div>
     <!-- btnControl -->
     <div v-if="btnControl">
       <div
-        @click="swipe(-1)"
+        @click="swipeItem(-1)"
         class="pre absolute top-1/2 left-0 w-10 h-full transform -translate-y-1/2 overflow-hidden cursor-pointer sm:w-20"
       ></div>
       <div
-        @click="swipe(1)"
+        @click="swipeItem(1)"
         class="next absolute top-1/2 right-0 w-10 h-full transform -translate-y-1/2 overflow-hidden cursor-pointer sm:w-20"
       ></div>
     </div>
 
     <!-- indicator -->
-    <ul
+    <div
       v-if="indicator"
       class="indicator flex absolute left-1/2 bottom-4 transform -translate-x-1/2 space-x-3 px-4 py-2 rounded-full bg-black bg-opacity-30 cursor-pointer"
     >
-      <li
-        v-for="index in imgsLength"
-        :key="index"
-        class="w-2 h-2 bg-[#d9d9db] rounded-full hover:amz-bg-hl sm:w-3 sm:h-3 lg:4 lg:4"
-        :class="{ 'amz-bg-hl': index - 1 === activeIndex }"
-        @click="activeIndex = index - 1"
-      ></li>
-    </ul>
+      <slot name="indicator">
+        <div
+          v-for="index in itemsLength"
+          :key="index"
+          class="w-2 h-2 bg-[#d9d9db] rounded-full hover:amz-bg-hl sm:w-3 sm:h-3 lg:4 lg:4"
+          :class="{ 'amz-bg-hl': index - 1 === activeIndex }"
+          @click="activeIndex = index - 1"
+        ></div>
+      </slot>
+    </div>
   </div>
 </template>
 
@@ -71,10 +62,6 @@ export default {
     event: 'change'
   },
   props: {
-    images: {
-      type: Array,
-      default: () => []
-    },
     // 滑动阈值
     swipeThreshold: {
       type: Number,
@@ -99,18 +86,14 @@ export default {
 
   mixins: [lifeCycleMixin(false)],
   data: () => ({
-    // 滑动容器宽度
-    swiperWidth: 0,
-    // 当前滑动距离
-    swipeDistance: 0,
-    // 手指是否按下屏幕
-    isPointerDown: false,
-    // 手指按下时的滑动距离
-    preSwipeDistance: 0,
-    // 滑动起点
-    pointerStartX: 0,
-    // 滑动终点
-    pointerEndX: 0
+    itemWidth: 0, // 滑动容器宽度
+    swipeDistance: 0, // 当前滑动距离
+    isPointerDown: false, // 手指是否按下屏幕
+    preSwipeDistance: 0, // 手指按下时的滑动距离
+    pointerStartX: 0, // 滑动起点
+    pointerEndX: 0, // 滑动终点
+    itemsLength: 0,
+    animDuration: 150
   }),
   computed: {
     // 当前显示图片的索引值
@@ -121,47 +104,53 @@ export default {
       set(newVal) {
         this.$emit('change', newVal)
       }
-    },
-    imgsLength() {
-      return this.images.length
-    },
-    contentWidth() {
-      return this.swiperWidth * this.imgsLength
     }
   },
   watch: {
     activeIndex() {
-      this.swipeDistance = -this.activeIndex * this.swiperWidth
-      this.scroll(this.swipeDistance)
+      this.$refs.content.style.transition = `transform ${this.animDuration}ms`
+      console.log(this.$refs.content.style.transition)
+      this.swipeDistance = -this.activeIndex * this.itemWidth
+      this.scrollContent(this.swipeDistance)
+      setTimeout(() => {
+        this.$refs.content.style.transition = ''
+      }, this.animDuration)
     }
   },
   methods: {
     // 以图片大小为单位滑动
-    swipe(step) {
+    swipeItem(step) {
       const nextIndex = this.activeIndex + step
-      if (nextIndex >= this.imgsLength || nextIndex < 0) {
+      if (nextIndex >= this.itemsLength || nextIndex < 0) {
         return
       }
       this.activeIndex = nextIndex
     },
     // 以像素大小为单位滑动
-    scroll(distance) {
-      // const transform = `translateX(${distance}px)`
+    scrollContent(distance) {
       const transform = `translate3d(${distance}px,0,0)`
       this.$refs.content.style.transform = transform
       this.$refs.content.style['-webkit-transform'] = transform
       this.$refs.content.style['-ms-transform'] = transform
     },
     // 响应屏幕尺寸变化
-    resize() {
-      this.swiperWidth = this.$refs.amzSwiper.offsetWidth
+    refreshLayout() {
+      // 重新获取宽度
+      console.log('refresh')
+      const items = this.$refs.content.querySelectorAll('.amz-swiper-item')
+
+      // 在 mounted 中无法获取到 items, 所以只能在这获取了
+      this.itemWidth = items[0].offsetWidth
+      this.itemsLength = items.length
     },
     // 手指按下
     pointerdown(event) {
       if (this.isPointerDown) {
         return
       }
+      // 该元素捕获后续所有该 pointId 触发的事件
       event.target.setPointerCapture(event.pointerId)
+
       this.isPointerDown = true
       // 记录下起点 X, 当前的滑动距离
       this.pointerStartX = event.clientX
@@ -177,16 +166,19 @@ export default {
 
       // 计算滑动距离, 如果大于滑动阈值(默认0.25), 则划到下一页
       const moveDistance = this.pointerStartX - this.pointerEndX
-      if (Math.abs(moveDistance) > this.swiperWidth * this.swipeThreshold) {
+      if (Math.abs(moveDistance) > this.itemWidth * this.swipeThreshold) {
         if (moveDistance < 0 && this.activeIndex > 0) {
           this.activeIndex -= 1
-        } else if (moveDistance > 0 && this.activeIndex < this.imgsLength - 1) {
+        } else if (
+          moveDistance > 0 &&
+          this.activeIndex < this.itemsLength - 1
+        ) {
           this.activeIndex += 1
         } else {
-          this.scroll(this.preSwipeDistance)
+          this.scrollContent(this.preSwipeDistance)
         }
       } else {
-        this.scroll(this.preSwipeDistance)
+        this.scrollContent(this.preSwipeDistance)
       }
       this.pointerStartX = 0
       this.pointerEndX = 0
@@ -200,22 +192,22 @@ export default {
         // 实现边界阻尼
         if (
           (this.activeIndex === 0 && pointerOffset > 0) ||
-          (this.activeIndex === this.imgsLength - 1 && pointerOffset < 0)
+          (this.activeIndex === this.itemsLength - 1 && pointerOffset < 0)
         ) {
           pointerOffset *= 1 / 10
         }
 
         const swipeDistance = this.preSwipeDistance + pointerOffset
 
-        this.scroll(swipeDistance)
+        this.scrollContent(swipeDistance)
       }
     }
   },
   mounted() {
-    window.addEventListener('resize', this.resize)
+    window.addEventListener('resize', this.refreshLayout)
   },
   destroyed() {
-    window.removeEventListener('resize', this.resize)
+    window.removeEventListener('resize', this.refreshLayout)
   }
 }
 </script>
