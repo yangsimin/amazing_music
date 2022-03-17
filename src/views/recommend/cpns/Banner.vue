@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-16 10:53:19
- * @LastEditTime: 2022-03-16 22:05:14
+ * @LastEditTime: 2022-03-17 11:02:05
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -75,8 +75,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.banner > ul {
-  -webkit-tap-highlight-color: transparent;
-}
-</style>
+<style scoped></style>
