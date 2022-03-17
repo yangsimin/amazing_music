@@ -1,13 +1,14 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-14 18:25:54
- * @LastEditTime: 2022-03-14 20:15:05
+ * @LastEditTime: 2022-03-17 17:54:12
  * @LastEditors: simonyang
  * @Description: 封装 axios
  */
 import axios from 'axios'
+import { BASE_URL, TIME_OUT } from '../config.js'
 
-export default class Request {
+class Request {
   constructor(config, requestInterceptor, responseInterceptor) {
     this.instance = axios.create(config)
 
@@ -42,3 +43,29 @@ export default class Request {
     })
   }
 }
+
+const request = new Request(
+  {
+    baseURL: BASE_URL,
+    response: 'json',
+    timeout: TIME_OUT,
+    withCredentials: true
+  },
+  null,
+  function (response) {
+    const status = response.status
+    const data = response.data
+    switch (status) {
+      case 301:
+        return Promise.reject('请登录')
+      default:
+        // 2xx 都是成功请求
+        if (status >= 200 && status < 299) {
+          return Promise.resolve(data)
+        }
+        return Promise.reject(response)
+    }
+  }
+)
+
+export default request

@@ -19,3 +19,16 @@
     padding: 0 3%;
   }
 }
+
+/* 480px 开始 font-size 自适应 */
+@screen xs {
+  :root {
+    font-size: calc(100vw / 40);
+  }
+}
+/* 640px 开始固定 font-size 为16px */
+@screen sm {
+  :root {
+    font-size: 16px;
+  }
+}

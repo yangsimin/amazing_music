@@ -1,26 +1,5 @@
 @import url('./base.css');
 /* tailwindcss 配置 */
 @import url('./tailwind.css');
-
 /* 引入字体文件 */
 @import url('./iconfont/iconfont.css');
-
-/* 全局的变量 */
-:root {
-  --color-text: #111827;
-  --color-text-hl: #dc2626;
-  font-size: 12px;
-}
-
-/* 480px 开始 font-size 自适应 */
-@screen xs {
-  :root {
-    font-size: calc(100vw / 40);
-  }
-}
-/* 640px 开始固定 font-size 为16px */
-@screen sm {
-  :root {
-    font-size: 16px;
-  }
-}

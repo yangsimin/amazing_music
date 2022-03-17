@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 17:58:40
- * @LastEditTime: 2022-03-16 22:00:50
+ * @LastEditTime: 2022-03-17 17:47:42
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -109,7 +109,6 @@ export default {
   watch: {
     activeIndex() {
       this.$refs.content.style.transition = `transform ${this.animDuration}ms`
-      console.log(this.$refs.content.style.transition)
       this.swipeDistance = -this.activeIndex * this.itemWidth
       this.scrollContent(this.swipeDistance)
       setTimeout(() => {
@@ -136,7 +135,6 @@ export default {
     // 响应屏幕尺寸变化
     refreshLayout() {
       // 重新获取宽度
-      console.log('refresh')
       const items = this.$refs.content.querySelectorAll('.amz-swiper-item')
 
       // 在 mounted 中无法获取到 items, 所以只能在这获取了
