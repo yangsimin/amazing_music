@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-14 19:32:25
- * @LastEditTime: 2022-03-16 14:44:17
+ * @LastEditTime: 2022-03-17 10:43:54
  * @LastEditors: simonyang
  * @Description:
  */
@@ -14,7 +14,8 @@ const PERSONALIZED_DJPROGRAM_URL = '/personalized/djprogram'
 
 const request = new Request(
   {
-    baseURL: 'http://139.159.153.45:3000',
+    // baseURL: 'http://139.159.153.45:3000',
+    baseURL: 'https://music-api.ysmyyds.com',
     response: 'json',
     timeout: 5000,
     withCredentials: true
