@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 17:58:40
- * @LastEditTime: 2022-03-17 17:47:42
+ * @LastEditTime: 2022-03-18 22:51:45
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -107,6 +107,7 @@ export default {
     }
   },
   watch: {
+    // 当展示子项的索引改变时, 需要调整 content 的位置, 并且添加过渡效果
     activeIndex() {
       this.$refs.content.style.transition = `transform ${this.animDuration}ms`
       this.swipeDistance = -this.activeIndex * this.itemWidth
@@ -114,6 +115,11 @@ export default {
       setTimeout(() => {
         this.$refs.content.style.transition = ''
       }, this.animDuration)
+    },
+    // 当子项宽度改变时, 需要调整 content 的位置
+    itemWidth() {
+      this.swipeDistance = -this.activeIndex * this.itemWidth
+      this.scrollContent(this.swipeDistance)
     }
   },
   methods: {
