@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:27
- * @LastEditTime: 2022-03-17 22:28:57
+ * @LastEditTime: 2022-03-18 21:58:57
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -9,7 +9,7 @@
   <div class="amz-recommend">
     <banner :images="images" />
     <recommend-new-songs :songs="newSongs"></recommend-new-songs>
-    <recommend-song-list></recommend-song-list>
+    <recommend-song-list :song-lists="songLists"></recommend-song-list>
   </div>
 </template>
 
@@ -23,7 +23,8 @@ import {
   getPersonalized,
   getPersonalizedNewSong,
   getPersonalizedDJProgram,
-  Song
+  Song,
+  SongList
 } from '@/api'
 
 export default {
@@ -35,7 +36,8 @@ export default {
   },
   data: () => ({
     images: [],
-    newSongs: []
+    newSongs: [],
+    songLists: []
   }),
   methods: {
     // 请求 Banner 数据
@@ -47,9 +49,8 @@ export default {
       this.images.push(...images)
     },
     // 请求推荐新音乐
-    async getPersonalizedNewSong() {
-      const data = await getPersonalizedNewSong(12)
-      console.log('新音乐', data)
+    async getPersonalizedNewSong(limit) {
+      const data = await getPersonalizedNewSong(limit)
       // 清空数组
       this.newSongs.splice(0)
 
@@ -58,15 +59,17 @@ export default {
       }
 
       // 提取歌曲信息
-      for (const originSong of data.result.splice(-6)) {
+      for (const originSong of data.result) {
         this.newSongs.push(new Song(originSong))
       }
-      console.log(this.newSongs)
     },
     // 请求推荐歌单数据
-    async getPersonalized() {
-      const data = await getPersonalized()
+    async getPersonalized(limit) {
+      const data = await getPersonalized(limit)
       console.log('歌单', data)
+      for (const originSongList of data.result) {
+        this.songLists.push(new SongList(originSongList))
+      }
     },
     // 请求推荐电台
     async getPersonalizedDJProgram() {
@@ -76,8 +79,8 @@ export default {
   },
   created() {
     this.getBanner()
-    this.getPersonalizedNewSong()
-    // this.getPersonalized()
+    this.getPersonalizedNewSong(6)
+    this.getPersonalized(12)
     // this.getPersonalizedDJProgram()
   }
 }

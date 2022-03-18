@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 11:44:00
- * @LastEditTime: 2022-03-17 22:33:12
+ * @LastEditTime: 2022-03-18 22:28:25
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -25,15 +25,14 @@
     </div>
     <!-- 歌曲时长 -->
     <p class="justify-self-end flex-shrink-0 px-4 text-base font-medium">
-      {{ getSongTime(song.duration) }}
+      {{ formatSongTime(song.duration) }}
     </p>
   </div>
 </template>
 
 <script>
-import { Song } from '@/api/recommend-songs'
-import { customImage } from '@/api/utils/url'
-import { getSongTime } from '@/utils/format'
+import { Song } from '@/api/recommend'
+import { formatSongTime, formatImageUrl } from '@/utils/format'
 
 import SongCover from '@/components/song-cover'
 
@@ -50,11 +49,11 @@ export default {
     SongCover
   },
   methods: {
-    getSongTime(duration) {
-      return getSongTime(duration)
+    formatSongTime(duration) {
+      return formatSongTime(duration)
     },
     getCustomImage(imageUrl, width, height) {
-      return customImage(imageUrl, width, height)
+      return formatImageUrl(imageUrl, width, height)
     },
     playMusic() {
       console.log('play')

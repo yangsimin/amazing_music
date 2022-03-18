@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 20:18:12
- * @LastEditTime: 2022-03-17 23:00:57
+ * @LastEditTime: 2022-03-18 00:02:26
  * @LastEditors: simonyang
  * @Description: 歌曲封面, 依赖 iconfront
 -->
@@ -32,9 +32,7 @@ export default {
 .song-cover {
   position: relative;
 }
-.song-cover:hover img {
-  transform: scale(1.1);
-}
+
 /* 播放图标 */
 .song-cover::before {
   content: '\e611';
@@ -57,8 +55,20 @@ export default {
   z-index: 9;
   transition: all 0.3s;
 }
-.song-cover:hover::before {
-  opacity: 1;
-  transform: scale(1.2);
+/* 当支持 hover 时才显示 hover 样式, 解决移动端 hover 样式无法取消问题 */
+@media screen and (any-hover: hover) {
+  .song-cover:hover img {
+    transform: scale(1.1);
+  }
+  .song-cover:hover::before {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@media screen and (any-hover: none) {
+  .song-cover:active img {
+    transform: scale(0.95);
+  }
 }
 </style>

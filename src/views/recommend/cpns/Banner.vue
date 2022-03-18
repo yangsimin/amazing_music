@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-16 10:53:19
- * @LastEditTime: 2022-03-17 11:02:05
+ * @LastEditTime: 2022-03-18 20:07:12
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -22,7 +22,7 @@
     </ul>
     <amz-swiper
       ref="amzSwiper"
-      class="w-full max-w-4xl max-h-[350px] cursor-[grab] lg:w-3/4"
+      class="w-full max-w-5xl max-h-[350px] cursor-[grab] lg:w-3/4"
       v-model="activeIndex"
       :indicator="indicator"
       :btnControl="btnControl"

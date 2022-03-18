@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 22:33:38
- * @LastEditTime: 2022-03-17 23:07:49
+ * @LastEditTime: 2022-03-18 22:40:57
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -9,20 +9,41 @@
   <div class="song-list-item w-full">
     <song-cover
       class="rounded-lg cursor-pointer"
-      img="https://qpic.y.qq.com/music_cover/oMphCibDIicibO3ibh8tztPnIp3nianPqnFE9GsAKLibNo1yhsfzAvQ9L4aw/300?n=1"
+      :img="getCustomImage(songList.picUrl, 392, 392)"
     ></song-cover>
-    <h3 class="mt-4 text-sm cursor-pointer">暴露年龄! 学生时代MP3里听的歌</h3>
-    <p class="mt-2 text-sm text-gray-500">播放量：2.4亿</p>
+    <h3 class="h-10 mt-4 text-sm leading-5 cursor-pointer">
+      {{ songList.name }}
+    </h3>
+    <p class="mt-2 text-sm text-gray-500">
+      播放量：{{ formatPlayCount(songList.playCount) }}
+    </p>
   </div>
 </template>
 
 <script>
 import SongCover from '@/components/song-cover'
+import { SongList } from '@/api/recommend'
+import { formatImageUrl, formatPlayCount } from '@/utils/format'
 
 export default {
   name: 'SongListItem',
   components: {
     SongCover
+  },
+  props: {
+    'song-list': {
+      type: SongList,
+      required: true
+    }
+  },
+  methods: {
+    getCustomImage(url, width, height) {
+      return formatImageUrl(url, width, height)
+    },
+    formatPlayCount(count) {
+      const newCount = formatPlayCount(count)
+      return newCount.count + newCount.unit
+    }
   }
 }
 </script>

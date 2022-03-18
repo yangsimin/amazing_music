@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-17 13:57:22
- * @LastEditTime: 2022-03-17 14:35:37
+ * @LastEditTime: 2022-03-18 21:56:48
  * @LastEditors: simonyang
  * @Description:
  */
@@ -52,5 +52,17 @@ export class Song {
     this.id = originSong.id
     this.artists = originSong.song.artists.map(artists => artists.name)
     this.duration = originSong.song.duration
+  }
+}
+/**
+ * @method 歌单的数据结构
+ * @param {*}
+ */
+export class SongList {
+  constructor(originSongList) {
+    this.id = originSongList.id
+    this.name = originSongList.name
+    this.picUrl = originSongList.picUrl
+    this.playCount = originSongList.playCount
   }
 }
