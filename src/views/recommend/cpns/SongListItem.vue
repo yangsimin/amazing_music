@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 22:33:38
- * @LastEditTime: 2022-03-18 22:40:57
+ * @LastEditTime: 2022-03-20 18:41:27
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -11,10 +11,12 @@
       class="rounded-lg cursor-pointer"
       :img="getCustomImage(songList.picUrl, 392, 392)"
     ></song-cover>
-    <h3 class="h-10 mt-4 text-sm leading-5 cursor-pointer">
+    <h3
+      class="song-list-name h-10 mt-4 text-lg leading-5 cursor-pointer media:hover:amz-text-hl lg:text-sm"
+    >
       {{ songList.name }}
     </h3>
-    <p class="mt-2 text-sm text-gray-500">
+    <p class="mt-2 text-lg text-gray-500 lg:text-sm">
       播放量：{{ formatPlayCount(songList.playCount) }}
     </p>
   </div>
@@ -22,7 +24,6 @@
 
 <script>
 import SongCover from '@/components/song-cover'
-import { SongList } from '@/api/recommend'
 import { formatImageUrl, formatPlayCount } from '@/utils/format'
 
 export default {
@@ -32,7 +33,7 @@ export default {
   },
   props: {
     'song-list': {
-      type: SongList,
+      type: Object, // SongList
       required: true
     }
   },
@@ -51,5 +52,15 @@ export default {
 <style scoped>
 .song-cover::before {
   font-size: 50px;
+}
+/* 处理多行文本溢出, 适用于 webkit 浏览器和移动端 */
+.song-list-name {
+  overflow: hidden;
+  /** 将元素作为弹性盒子显示 */
+  display: -webkit-box;
+  /** 显示的行数 */
+  -webkit-line-clamp: 2;
+  /** 设置弹性盒子子元素的排列方式 */
+  -webkit-box-orient: vertical;
 }
 </style>

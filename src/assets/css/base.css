@@ -8,3 +8,22 @@ body {
   --color-text-hl: #dc2626;
   font-size: 12px;
 }
+
+/* 在 hover 可用时, 才添加对应样式 */
+@media (hover: hover) {
+  .media\:hover\:amz-text-hl:hover {
+    color: var(--color-text-hl);
+  }
+  .media\:hover\:amz-bg-hl:hover {
+    background-color: var(--color-text-hl);
+  }
+}
+
+@media (hover: none) {
+  .media\:hover\:amz-text-hl:active {
+    color: var(--color-text-hl);
+  }
+  .media\:hover\:amz-bg-hl:active {
+    background-color: var(--color-text-hl);
+  }
+}

@@ -1,12 +1,12 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 23:03:30
- * @LastEditTime: 2022-03-14 17:53:35
+ * @LastEditTime: 2022-03-19 11:38:20
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
-  <div class="flex items-center shadow-md amz-container-px">
+  <header class="amz-header flex items-center amz-container-px">
     <!-- logo 部分 -->
     <h1>
       <a href="/" class="flex items-center h-20">
@@ -32,7 +32,7 @@
         class="iconfont icon-search align-middle text-2xl cursor-pointer mr-2"
       />
     </div>
-  </div>
+  </header>
 </template>
 
 <script>

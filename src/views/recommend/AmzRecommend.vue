@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:27
- * @LastEditTime: 2022-03-18 21:58:57
+ * @LastEditTime: 2022-03-20 14:16:52
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -19,12 +19,12 @@ import RecommendNewSongs from './cpns/RecommendNewSongs.vue'
 import RecommendSongList from './cpns/RecommendSongList.vue'
 
 import {
+  Song,
+  SongList,
   getBanner,
   getPersonalized,
   getPersonalizedNewSong,
-  getPersonalizedDJProgram,
-  Song,
-  SongList
+  getPersonalizedDJProgram
 } from '@/api'
 
 export default {
@@ -44,7 +44,7 @@ export default {
     async getBanner() {
       const data = await getBanner()
       const images = data.banners.map(banner => banner.imageUrl)
-      // 布局限制, 只去前三张图
+      // 布局限制, 只取前三张图
       images.splice(3)
       this.images.push(...images)
     },
@@ -66,7 +66,11 @@ export default {
     // 请求推荐歌单数据
     async getPersonalized(limit) {
       const data = await getPersonalized(limit)
-      console.log('歌单', data)
+
+      if (!data.result) {
+        throw Error('请求数据失败')
+      }
+
       for (const originSongList of data.result) {
         this.songLists.push(new SongList(originSongList))
       }
@@ -75,6 +79,10 @@ export default {
     async getPersonalizedDJProgram() {
       const data = await getPersonalizedDJProgram()
       console.log('电台', data)
+
+      if (!data.result) {
+        throw Error('请求数据失败')
+      }
     }
   },
   created() {

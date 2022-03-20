@@ -18,6 +18,9 @@
   .amz-container-px {
     padding: 0 3%;
   }
+  .amz-max-width {
+    @apply max-w-7xl;
+  }
 }
 
 /* 480px 开始 font-size 自适应 */

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 17:58:40
- * @LastEditTime: 2022-03-18 22:51:45
+ * @LastEditTime: 2022-03-20 20:45:59
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -43,7 +43,7 @@
         <div
           v-for="index in itemsLength"
           :key="index"
-          class="w-2 h-2 bg-[#d9d9db] rounded-full hover:amz-bg-hl sm:w-3 sm:h-3 lg:4 lg:4"
+          class="w-2 h-2 bg-[#d9d9db] rounded-full media:hover:amz-bg-hl sm:w-3 sm:h-3 lg:4 lg:4"
           :class="{ 'amz-bg-hl': index - 1 === activeIndex }"
           @click="activeIndex = index - 1"
         ></div>

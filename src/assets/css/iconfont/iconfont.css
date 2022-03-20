@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'iconfont'; /* Project id 3244652 */
-  src: url('iconfont.woff2?t=1647512152210') format('woff2'),
-    url('iconfont.woff?t=1647512152210') format('woff'),
-    url('iconfont.ttf?t=1647512152210') format('truetype');
+  src: url('iconfont.woff2?t=1647674503862') format('woff2'),
+    url('iconfont.woff?t=1647674503862') format('woff'),
+    url('iconfont.ttf?t=1647674503862') format('truetype');
 }
 
 .iconfont {
@@ -16,7 +16,48 @@
 .icon-play-music:before {
   content: '\e611';
 }
-
 .icon-search:before {
   content: '\e610';
+}
+.icon-player-play:before {
+  content: '\e66e';
+}
+.icon-player-prev:before {
+  content: '\e603';
+}
+.icon-player-next:before {
+  content: '\e602';
+}
+.icon-playlist:before {
+  content: '\e600';
+}
+.icon-mode-list:before {
+  content: '\e6a3';
+}
+.icon-mode-single:before {
+  content: '\e6a2';
+}
+.icon-mode-random:before {
+  content: '\e60e';
+}
+.icon-player-stop:before {
+  content: '\e693';
+}
+.icon-volume-cross:before {
+  content: '\ea0f';
+}
+.icon-volume-disable:before {
+  content: '\ea10';
+}
+.icon-volume-low:before {
+  content: '\ea11';
+}
+.icon-volume-high:before {
+  content: '\ea12';
+}
+.icon-volume-middle:before {
+  content: '\ea13';
+}
+.icon-lyric:before {
+  content: '\e727';
 }

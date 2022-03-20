@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 11:44:00
- * @LastEditTime: 2022-03-18 22:28:25
+ * @LastEditTime: 2022-03-20 18:37:10
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -15,11 +15,11 @@
     <!-- 歌曲名称 / 创作人 -->
     <div class="ml-5 flex-grow flex-shrink min-w-0">
       <p
-        class="song-name text-base font-bold text-gray-800 truncate lg:text-lg hover:amz-text-hl"
+        class="song-name text-xl font-bold text-gray-800 truncate lg:text-lg media:hover:amz-text-hl"
       >
         {{ song.songName }}
       </p>
-      <p class="mt-2 text-xs font-normal text-gray-500">
+      <p class="mt-2 text-lg font-normal text-gray-500 lg:text-sm">
         {{ song.artists.join(' / ') }}
       </p>
     </div>
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import { Song } from '@/api/recommend'
 import { formatSongTime, formatImageUrl } from '@/utils/format'
 
 import SongCover from '@/components/song-cover'
@@ -41,7 +40,7 @@ export default {
   props: {
     // 属性有 picUrl, songName, artists, duration, id
     song: {
-      type: Song,
+      type: Object,
       required: true
     }
   },
