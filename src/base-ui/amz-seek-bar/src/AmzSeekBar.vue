@@ -1,12 +1,12 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 18:08:25
- * @LastEditTime: 2022-03-20 23:25:32
+ * @LastEditTime: 2022-03-21 20:05:28
  * @LastEditors: simonyang
  * @Description:  
 -->
 <template>
-  <div class="AmzSeekBar relative w-11/12 mx-auto">
+  <div class="AmzSeekBar relative">
     <!-- background -->
     <div
       class="absolute top-1/2 -translate-y-1/2 w-full h-2 rounded-full bg-gray-300 z-0"
@@ -15,8 +15,8 @@
     ></div>
     <!-- front -->
     <div
-      class="absolute top-1/2 -translate-y-1/2 w-10 h-2 rounded-full bg-gray-600 z-10"
-      :style="{ width: `${cacheProgress}%` }"
+      class="absolute top-1/2 -translate-y-1/2 w-10 h-2 rounded-full bg-gray-400 z-10"
+      :style="{ width: `${loadProgress}%` }"
     ></div>
     <!-- dot -->
     <div
@@ -45,7 +45,7 @@ export default {
       default: 0
     },
     // 缓冲进度
-    cacheProgress: {
+    loadProgress: {
       type: Number,
       default: 0
     }
@@ -58,9 +58,14 @@ export default {
     minClientX: 0
   }),
   watch: {
-    dotLeftRatio(newVal) {
+    progress(newVal) {
       this.$refs.dot.style.left = newVal + '%'
-      this.$emit('updateProgress', newVal)
+    },
+    dotLeftRatio: {
+      handler(newVal) {
+        this.$refs.dot.style.left = newVal + '%'
+        this.$emit('updateProgress', newVal)
+      }
     }
   },
   methods: {
@@ -98,6 +103,10 @@ export default {
       const maxWidth = this.$refs.background.offsetWidth
       this.dotLeftRatio = ((event.clientX - minClientX) / maxWidth) * 100
     }
+  },
+  mounted() {
+    // 挂载后赋值,绘制初始状态
+    this.dotLeftRatio = this.progress
   }
 }
 </script>

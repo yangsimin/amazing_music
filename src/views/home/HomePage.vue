@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 21:13:40
- * @LastEditTime: 2022-03-20 23:48:55
+ * @LastEditTime: 2022-03-21 12:52:43
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -11,7 +11,7 @@
       <amz-header class="amz-max-width mx-auto" />
     </div>
 
-    <main class="mt-2 amz-max-width mx-auto">
+    <main class="mt-2 amz-max-width mx-auto pb-32 md:pb-24">
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
