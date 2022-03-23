@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 13:06:21
- * @LastEditTime: 2022-03-21 17:00:45
+ * @LastEditTime: 2022-03-23 15:43:45
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -28,20 +28,22 @@ export default {
   },
   methods: {},
   mounted() {
-    this.$store.commit('insertSongs', [
-      {
-        id: 64874,
-        duration: 226000,
-        songName: '歌·颂',
-        artists: ['陈奕迅']
-      }
-      // {
-      //   id: 111,
-      //   duration: 120000,
-      //   songName: '富士山下',
-      //   artists: ['陈奕迅']
-      // }
-    ])
+    // this.$store.dispatch('insertSongs', [
+    //   {
+    //     id: 64874,
+    //     // id: 33894312,
+    //     url: '',
+    //     duration: 226000,
+    //     songName: '歌·颂',
+    //     artists: ['陈奕迅']
+    //   },
+    //   {
+    //     id: 33894312,
+    //     duration: 120000,
+    //     songName: '富士山下',
+    //     artists: ['陈奕迅']
+    //   }
+    // ])
   }
 }
 </script>

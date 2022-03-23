@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 11:44:00
- * @LastEditTime: 2022-03-20 18:37:10
+ * @LastEditTime: 2022-03-23 16:42:58
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -11,6 +11,7 @@
     <song-cover
       class="justify-self-start flex-shrink-0 w-20 h-20 rounded-lg"
       :img="getCustomImage(song.picUrl, 160, 160)"
+      @click.native="addSong"
     />
     <!-- 歌曲名称 / 创作人 -->
     <div class="ml-5 flex-grow flex-shrink min-w-0">
@@ -31,9 +32,10 @@
 </template>
 
 <script>
-import { formatSongTime, formatImageUrl } from '@/utils/format'
-
 import SongCover from '@/components/song-cover'
+
+import { formatSongTime, formatImageUrl } from '@/utils/format'
+import { INSERT_SONGS } from '@/types/action-types'
 
 export default {
   name: 'SongItem',
@@ -56,6 +58,9 @@ export default {
     },
     playMusic() {
       console.log('play')
+    },
+    addSong() {
+      this.$store.dispatch(INSERT_SONGS, [this.song])
     }
   }
 }

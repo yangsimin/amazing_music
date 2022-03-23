@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 17:58:40
- * @LastEditTime: 2022-03-20 20:45:59
+ * @LastEditTime: 2022-03-22 14:07:48
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -53,8 +53,6 @@
 </template>
 
 <script>
-import lifeCycleMixin from '@/utils/life-cycle'
-
 export default {
   name: 'AmzSwiper',
   model: {
@@ -83,8 +81,6 @@ export default {
       default: 0
     }
   },
-
-  mixins: [lifeCycleMixin(false)],
   data: () => ({
     itemWidth: 0, // 滑动容器宽度
     swipeDistance: 0, // 当前滑动距离

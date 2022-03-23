@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-13 10:44:27
- * @LastEditTime: 2022-03-14 12:28:24
+ * @LastEditTime: 2022-03-23 09:15:15
  * @LastEditors: simonyang
  * @Description:
  */
@@ -25,6 +25,7 @@ module.exports = {
   },
   plugins: ['vue'],
   rules: {
-    'vue/multi-word-component-names': 'off'
+    'vue/multi-word-component-names': 'off',
+    'vue/no-unused-components': 'off'
   }
 }

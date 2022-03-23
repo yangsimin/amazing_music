@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:27
- * @LastEditTime: 2022-03-20 14:16:52
+ * @LastEditTime: 2022-03-23 23:17:43
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -19,13 +19,12 @@ import RecommendNewSongs from './cpns/RecommendNewSongs.vue'
 import RecommendSongList from './cpns/RecommendSongList.vue'
 
 import {
-  Song,
-  SongList,
   getBanner,
   getPersonalized,
   getPersonalizedNewSong,
   getPersonalizedDJProgram
 } from '@/api'
+import { Song, SongList } from '@/types/song/types'
 
 export default {
   name: 'AmzRecommend',
@@ -57,7 +56,7 @@ export default {
       if (!data.result) {
         throw Error('请求数据失败')
       }
-
+      console.log('newSong', data.result)
       // 提取歌曲信息
       for (const originSong of data.result) {
         this.newSongs.push(new Song(originSong))
@@ -74,6 +73,7 @@ export default {
       for (const originSongList of data.result) {
         this.songLists.push(new SongList(originSongList))
       }
+      console.log(data)
     },
     // 请求推荐电台
     async getPersonalizedDJProgram() {

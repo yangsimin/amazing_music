@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-17 13:57:22
- * @LastEditTime: 2022-03-19 10:14:51
+ * @LastEditTime: 2022-03-23 16:39:14
  * @LastEditors: simonyang
  * @Description:
  */
@@ -40,29 +40,3 @@ export const getPersonalizedNewSong = limit =>
  */
 export const getPersonalizedDJProgram = () =>
   request.get(PERSONALIZED_DJPROGRAM_URL)
-
-/**
- * @method 歌曲的数据结构
- * @param {*}
- */
-export class Song {
-  constructor(originSong) {
-    this.picUrl = originSong.picUrl
-    this.songName = originSong.name
-    this.id = originSong.id
-    this.artists = originSong.song.artists.map(artists => artists.name)
-    this.duration = originSong.song.duration
-  }
-}
-/**
- * @method 歌单的数据结构
- * @param {*}
- */
-export class SongList {
-  constructor(originSongList) {
-    this.id = originSongList.id
-    this.name = originSongList.name
-    this.picUrl = originSongList.picUrl
-    this.playCount = originSongList.playCount
-  }
-}

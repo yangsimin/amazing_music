@@ -1,26 +1,64 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 18:08:25
- * @LastEditTime: 2022-03-21 20:05:28
+ * @LastEditTime: 2022-03-23 14:34:19
  * @LastEditors: simonyang
- * @Description:  
+ * @Description:  emits: ['pointerMove', 'pointerUp']
 -->
 <template>
   <div class="AmzSeekBar relative">
-    <!-- background -->
+    <!-- background  进度底色-->
     <div
-      class="absolute top-1/2 -translate-y-1/2 w-full h-2 rounded-full bg-gray-300 z-0"
+      class="absolute rounded-full bg-gray-200 z-0 cursor-pointer shadow-inner"
+      :class="
+        horizontal
+          ? ['w-full', 'h-2', 'top-1/2', '-translate-y-1/2']
+          : ['w-2', 'h-full', 'left-1/2', '-translate-x-1/2']
+      "
+      :style="seekBarStyle.background"
       ref="background"
       @click="skip"
     ></div>
-    <!-- front -->
+    <!-- front 进度前景色, 用于显示缓冲条-->
     <div
-      class="absolute top-1/2 -translate-y-1/2 w-10 h-2 rounded-full bg-gray-400 z-10"
-      :style="{ width: `${loadProgress}%` }"
+      class="absolute rounded-full bg-red-200 z-10 pointer-events-none shadow-inner"
+      :class="
+        horizontal
+          ? ['h-2', 'top-1/2', '-translate-y-1/2']
+          : ['w-2', 'left-1/2', '-translate-x-1/2']
+      "
+      :style="[
+        seekBarStyle.front,
+        horizontal
+          ? { width: `${loadProgress * 100}%` }
+          : { height: `${loadProgress * 100}%` }
+      ]"
     ></div>
-    <!-- dot -->
+    <!-- track 播放进度条-->
     <div
-      class="relative -translate-x-1/2 w-5 h-5 rounded-full bg-red-400 z-20"
+      class="absolute rounded-full bg-red-500 z-10 pointer-events-none shadow-inner"
+      :class="
+        horizontal
+          ? ['h-2', 'top-1/2', '-translate-y-1/2']
+          : ['w-2', 'left-1/2', '-translate-x-1/2']
+      "
+      :style="[
+        seekBarStyle.track,
+        horizontal
+          ? { width: `${progress * 100}%` }
+          : { height: `${progress * 100}%` }
+      ]"
+    ></div>
+    <!-- dot 游标-->
+    <div
+      class="relative w-5 h-5 rounded-full shadow-inner bg-red-500 z-20 cursor-pointer"
+      :class="horizontal ? ['-translate-x-1/2'] : ['-translate-y-1/2']"
+      :style="[
+        seekBarStyle.dot,
+        horizontal
+          ? { left: `${progress * 100}%` }
+          : { top: `${progress * 100}%` }
+      ]"
       ref="dot"
       @pointerdown.prevent="pointerDown"
       @pointerup.prevent="pointerUp"
@@ -32,81 +70,127 @@
 </template>
 
 <script>
+// emit: pointerMove pointerUp
 export default {
   name: 'AmzSeekBar',
-  model: {
-    prop: 'progress',
-    event: 'updateProgress'
-  },
   props: {
-    // 0~100
+    // 0 ~ 1.0
     progress: {
       type: Number,
       default: 0
     },
-    // 缓冲进度
+    // 缓冲进度 0 ~ 1.0
     loadProgress: {
       type: Number,
       default: 0
+    },
+    horizontal: {
+      type: Boolean,
+      default: true
+    },
+    seekBarStyle: {
+      type: Object,
+      default: () => ({
+        background: { background: 'rgba(229, 231, 235)' },
+        front: { background: 'rgba(254, 202, 202)' },
+        track: { background: 'rgba(239, 68, 68)' },
+        dot: { background: 'rgba(239, 68, 68)' }
+      })
+    },
+    // 是否允许拖动进度
+    canSeek: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
-    dotLeftRatio: 0,
+    dotOffsetRatio: 0,
     isPointerDown: false,
-    shiftX: 0, // 指针按下位置到滑块左边沿的偏移量
-    maxWidth: 0, // 进度条的最大宽度
-    minClientX: 0
+    // 指针按下位置到滑块左/上边沿的偏移量
+    shiftBoundary: 0,
+    // 进度条的最大宽度
+    maxLength: 0,
+    originClientPoint: 0
   }),
   watch: {
-    progress(newVal) {
-      this.$refs.dot.style.left = newVal + '%'
-    },
-    dotLeftRatio: {
-      handler(newVal) {
-        this.$refs.dot.style.left = newVal + '%'
-        this.$emit('updateProgress', newVal)
+    dotOffsetRatio(newVal) {
+      if (this.horizontal) {
+        this.$refs.dot.style.left = newVal * 100 + '%'
+      } else {
+        this.$refs.dot.style.top = newVal * 100 + '%'
       }
     }
   },
   methods: {
     // 指针按下
     pointerDown(event) {
+      if (!this.canSeek) {
+        return
+      }
       const dot = this.$refs.dot
       const background = this.$refs.background
       // 在 pointerUp 事件之前, 把所有指针事件重定向到 dot
       dot.setPointerCapture(event.pointerId)
       this.isPointerDown = true
-      this.maxWidth = background.offsetWidth
-      this.shiftX = event.clientX - dot.getBoundingClientRect().left
-      this.minClientX =
-        background.getBoundingClientRect().left - dot.offsetWidth / 2
+      if (this.horizontal) {
+        this.maxLength = background.offsetWidth
+        this.shiftBoundary = event.clientX - dot.getBoundingClientRect().left
+        this.originClientPoint =
+          background.getBoundingClientRect().left - dot.offsetWidth / 2
+      } else {
+        this.maxLength = background.offsetHeight
+        this.shiftBoundary = event.clientY - dot.getBoundingClientRect().top
+        this.originClientPoint =
+          background.getBoundingClientRect().top - dot.offsetHeight / 2
+      }
     },
     // 指针移动
     pointerMove(event) {
       if (this.isPointerDown) {
-        let left = event.clientX - this.shiftX - this.minClientX
-        if (left < 0) {
-          left = 0
-        } else if (left > this.maxWidth) {
-          left = this.maxWidth
+        // 指针按下时, 滑块相对与边界的偏移量
+        let curOffset = 0
+        if (this.horizontal) {
+          curOffset =
+            event.clientX - this.shiftBoundary - this.originClientPoint
+        } else {
+          curOffset =
+            event.clientY - this.shiftBoundary - this.originClientPoint
         }
-        this.dotLeftRatio = (left / this.maxWidth) * 100
+        if (curOffset < 0) {
+          curOffset = 0
+        } else if (curOffset > this.maxLength) {
+          curOffset = this.maxLength
+        }
+        this.dotOffsetRatio = curOffset / this.maxLength
+        this.$emit('pointerMove', this.dotOffsetRatio)
       }
     },
     // 指针抬起
     pointerUp() {
       this.isPointerDown = false
+      this.$emit('pointerUp', this.dotOffsetRatio)
     },
     // 指针点击, 进度跳跃
     skip(event) {
-      const minClientX = this.$refs.background.getBoundingClientRect().left
-      const maxWidth = this.$refs.background.offsetWidth
-      this.dotLeftRatio = ((event.clientX - minClientX) / maxWidth) * 100
+      if (!this.canSeek) {
+        return
+      }
+      let originClientPoint = 0
+      let maxLength = 0
+      let downPoint = 0
+      if (this.horizontal) {
+        originClientPoint = this.$refs.background.getBoundingClientRect().left
+        maxLength = this.$refs.background.offsetWidth
+        downPoint = event.clientX
+      } else {
+        originClientPoint = this.$refs.background.getBoundingClientRect().top
+        maxLength = this.$refs.background.offsetHeight
+        downPoint = event.clientY
+      }
+      this.dotOffsetRatio = (downPoint - originClientPoint) / maxLength
+      this.$emit('pointerUp', this.dotOffsetRatio)
+      console.log('skip')
     }
-  },
-  mounted() {
-    // 挂载后赋值,绘制初始状态
-    this.dotLeftRatio = this.progress
   }
 }
 </script>
