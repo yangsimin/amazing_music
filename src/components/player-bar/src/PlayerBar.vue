@@ -1,14 +1,14 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:34:40
- * @LastEditTime: 2022-03-23 22:45:52
+ * @LastEditTime: 2022-03-25 16:54:35
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
   <div class="player-bar w-full">
     <div
-      class="flex flex-wrap items-center content-evenly h-28 md:h-20"
+      class="flex flex-wrap items-center content-evenly h-28 md:h-20 md:flex-nowrap"
       @click.prevent="takeAction"
     >
       <!-- 单曲循环/列表循环/随机播放 -->
@@ -20,30 +20,31 @@
 
       <!-- 上一首/播放/下一首 -->
       <div class="flex-1 md:flex-grow-0">
-        <player-bar-controller
+        <player-controller
           class="mx-auto !w-52 md:ml-10 md:!w-48"
           @prevClick="prevClick"
           @nextClick="nextClick"
           @playToggle="playToggle"
           :isPlaying="isPlaying"
-        ></player-bar-controller>
+        ></player-controller>
       </div>
-      <player-bar-progress
+      <player-progress
         ref="playerProgressBar"
         class="order-first w-full md:flex md:flex-1 md:px-10 md:order-0 md:order-none"
         v-model="isPlaying"
         @playEnd="playEnd"
         @error="error"
-      ></player-bar-progress>
+      ></player-progress>
 
       <div class="flex items-center">
         <!-- 音量 -->
-        <player-bar-volume
+        <player-volume
           class="hidden flex-1 cursor-pointer media:hover:amz-text-hl lg:block lg:mr-5"
           data-action="clickVolume"
           :volume="volume"
           @updateVolume="updateVolume"
-        ></player-bar-volume>
+          @muted="volumeMuted"
+        ></player-volume>
         <!-- 单曲循环/列表循环/随机播放 -->
         <i
           class="hidden flex-1 iconfont before:text-3xl cursor-pointer media:hover:amz-text-hl md:block md:mr-5"
@@ -60,16 +61,26 @@
       <!-- 播放列表 -->
       <i
         class="iconfont icon-playlist pr-10 cursor-pointer media:hover:amz-text-hl before:text-2xl"
+        :class="{ 'amz-text-hl': isPlaylistShow }"
         data-action="toggleList"
       ></i>
+
+      <!-- 播放列表 -->
+      <transition name="playlist">
+        <playlist
+          class="fixed right-0 bottom-20 h-[70%] w-[90%] bg-white shadow-inner z-20 md:h-[calc(100%-5rem)] md:w-[600px]"
+          v-show="isPlaylistShow"
+        ></playlist>
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
-import PlayerBarController from './PlayerBarController.vue'
-import PlayerBarProgress from './PlayerBarProgress.vue'
-import PlayerBarVolume from './PlayerBarVolume.vue'
+import PlayerController from './PlayerController.vue'
+import PlayerProgress from './PlayerProgress.vue'
+import PlayerVolume from './PlayerVolume.vue'
+import Playlist from '@/components/playlist'
 
 import {
   PLAY_MODES,
@@ -78,23 +89,30 @@ import {
   getNextSong
 } from '../PlayMode'
 
-import { CHANGE_PLAYING_INDEX } from '@/types/mutation-types'
+import { CHANGE_PLAYING_INDEX, CHANGE_PLAY_MODE } from '@/types/mutation-types'
 import { CHANGE_SONG, SET_VOLUME } from '@/types/action-types'
+import Logger from '@/utils/logger'
+const Log = Logger.create('PlayerBar')
 
 export default {
   name: 'PlayerBar',
   components: {
-    PlayerBarController,
-    PlayerBarProgress,
-    PlayerBarVolume
+    PlayerController,
+    PlayerProgress,
+    PlayerVolume,
+    Playlist
   },
   data: () => ({
     // 播放状态
     isPlaying: false,
     // 播放模式
-    playMode: PLAY_MODES.SINGLE_LOOP
+    lastVolume: 0,
+    isPlaylistShow: false
   }),
   computed: {
+    playMode() {
+      return this.$store.state.playMode
+    },
     modeIcon() {
       if (this.playMode < 0 || this.playMode >= PLAY_MODES.length) {
         throw TypeError('unknown playMode: ' + this.playMode)
@@ -111,7 +129,7 @@ export default {
   },
   methods: {
     prevClick() {
-      console.log('prev')
+      Log.d('prev')
       if (!this.playingSong) {
         if (this.$store.state.playlist.length === 0) {
           return
@@ -125,7 +143,7 @@ export default {
       this.$store.dispatch(CHANGE_SONG, getPrevSong(this.playMode))
     },
     nextClick() {
-      console.log('next')
+      Log.d('next')
       if (!this.playingSong) {
         if (this.$store.state.playlist.length === 0) {
           return
@@ -151,21 +169,22 @@ export default {
       this.isPlaying = !this.isPlaying
     },
     togglePlayMode() {
-      console.log('togglePlayMode', this.playMode)
+      Log.d('togglePlayMode', this.playMode)
       if (this.playMode === Object.keys(PLAY_MODES).length - 1) {
-        this.playMode = 0
+        this.$store.commit(CHANGE_PLAY_MODE, 0)
         return
       }
-      this.playMode += 1
+      this.$store.commit(CHANGE_PLAY_MODE, this.playMode + 1)
     },
     clickVolume() {
-      console.log('clickVolume')
+      Log.d('clickVolume')
     },
     toggleLyric() {
-      console.log('toggleLyric')
+      Log.d('toggleLyric')
     },
     toggleList() {
-      console.log('toggleList')
+      Log.d('toggleList')
+      this.isPlaylistShow = !this.isPlaylistShow
     },
     takeAction(event) {
       const action = event.target.dataset.action
@@ -181,7 +200,7 @@ export default {
       }
     },
     playEnd() {
-      console.log('end')
+      Log.d('end')
       switch (this.playMode) {
         case PLAY_MODES.LIST_LOOP:
         case PLAY_MODES.RANDOM:
@@ -194,15 +213,37 @@ export default {
       }
     },
     error(error) {
-      console.log('error', error)
+      Log.d('error', error)
       this.isPlaying = false
     },
     updateVolume(volume) {
       this.$store.dispatch(SET_VOLUME, volume)
+    },
+    volumeMuted(muted) {
+      Log.d('muted', muted)
+      if (muted) {
+        this.lastVolume = this.volume
+        // 静音操作
+        this.$store.dispatch(SET_VOLUME, 0)
+      } else {
+        // 恢复音量
+        this.$store.dispatch(SET_VOLUME, this.lastVolume)
+      }
     }
   },
   created() {}
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.playlist-enter-active,
+.playlist-leave-active {
+  transition: all 300ms ease-in-out;
+}
+
+.playlist-enter,
+.playlist-leave-to {
+  transform: translateX(100%);
+  opacity: 0.8;
+}
+</style>

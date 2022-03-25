@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:31:32
- * @LastEditTime: 2022-03-23 23:01:14
+ * @LastEditTime: 2022-03-25 21:17:34
  * @LastEditors: simonyang
  * @Description: 
       输入: 展示的信息, 播放控制; 
@@ -20,19 +20,19 @@
         4.2 playingSong.url 置空
 -->
 <template>
-  <div class="player-bar-progress flex items-center">
-    <div class="hidden h-20 w-20 p-2 mr-2 md:block">
+  <div class="player-progress flex items-center">
+    <div class="h-20 w-20 p-2 mr-2 md:block">
       <img class="h-full rounded-lg shadow-sm" :src="picUrl" alt="" />
     </div>
-    <div class="flex-1">
+    <div class="flex-1 mr-4 md:mr-0">
       <div class="flex justify-between pb-2">
-        <div class="">
+        <div class="flex-1 w-20 truncate">
           <span class="text-xl">{{ songName }}</span
           >&nbsp;&nbsp;-&nbsp;&nbsp;<span class="text-base text-gray-500">
             {{ artists }}
           </span>
         </div>
-        <div class="text-base text-gray-800">
+        <div class="flex-shrink-0 text-base text-gray-800">
           {{ formatCurrentTime }}&nbsp;/&nbsp;{{ formatDuration }}
         </div>
       </div>
@@ -41,7 +41,7 @@
         @pointerMove="pointerMove"
         @pointerUp="pointerUp"
         :loadProgress="loadProgress"
-        :canSeek="playingSong !== null"
+        :canSeek="playingIndex !== -1"
       ></amz-seek-bar>
     </div>
 
@@ -70,8 +70,11 @@ import { formatSongTime, formatImageUrl } from '@/utils/format'
 import { throttle } from '@/utils/throttle'
 import { SET_PLAYING_URL, REQUEST_PLAYING_SONG_URL } from '@/types/action-types'
 
+import Logger from '@/utils/logger'
+const Log = Logger.create('PlayerProgress')
+
 export default {
-  name: 'PlayerBarProgress',
+  name: 'PlayerProgress',
   components: {
     AmzSeekBar
   },
@@ -109,6 +112,9 @@ export default {
     playingSong() {
       return this.$store.getters.playingSong
     },
+    playingIndex() {
+      return this.$store.state.playingIndex
+    },
     volume() {
       return this.$store.state.volume
     },
@@ -116,7 +122,12 @@ export default {
       return this.playingSong && this.playingSong.songName
     },
     artists() {
-      return this.playingSong && this.playingSong.artists.join(' / ')
+      if (this.playingSong) {
+        let artists = this.playingSong.artists
+        artists = artists.map(artist => artist.name)
+        return artists.join('/')
+      }
+      return undefined
     },
     picUrl() {
       return (
@@ -139,7 +150,10 @@ export default {
       }
     },
     playingSong(song) {
-      console.log('watch song', song)
+      if (song === null) {
+        this.resetAll()
+        return
+      }
       this.playSong(song)
     },
     volume(newVal) {
@@ -149,12 +163,12 @@ export default {
   methods: {
     // 播放结束发射结束事件
     emitFinish() {
-      this.reset()
+      this.resetProgress()
       this.$emit('playEnd')
     },
     emitError(message) {
       this.$store.dispatch(SET_PLAYING_URL, '')
-      this.reset()
+      this.resetProgress()
       this.$emit('error', message)
     },
     emitStateChange(playing) {
@@ -171,15 +185,22 @@ export default {
 
       // 发送请求
       this.$store.dispatch(REQUEST_PLAYING_SONG_URL, song.id).then(() => {
-        console.log('request end', song.url)
         this.amzAudio.setSource(song.url)
         this.amzAudio.play()
       })
     },
     // 重置播放进度
-    reset() {
+    resetProgress() {
       this.progress = 0
-      this.amzAudio.reset()
+      this.amzAudio.resetProgress()
+    },
+    // 重置所有状态
+    resetAll() {
+      this.amzAudio.pause()
+      this.resetProgress()
+      this.loadProgress = 0
+      this.duration = 0
+      this.currentTime = 0
     },
     // 播放时触发, 用于获取当前播放时间点
     timeupdate: throttle(function () {
@@ -193,7 +214,7 @@ export default {
     }, 100),
     // 播放/暂停触发
     toggle(event) {
-      console.log(event.type)
+      Log.d(event.type)
       this.emitStateChange(event.type === 'play')
     },
     // 获取到音频总时长时触发
@@ -211,12 +232,11 @@ export default {
     waiting() {},
     // 播放结束时触发
     ended() {
-      // 清楚标记, 下次播放时重新加载
       this.emitFinish()
     },
     // 发生异常时触发
     error(event) {
-      console.log(event.type, event.target.error)
+      Log.d(event.type, event.target.error)
       let errorMsg = ''
       switch (event.target.error.code) {
         case MediaError.MEDIA_ERR_ABORTED: // 用户中止

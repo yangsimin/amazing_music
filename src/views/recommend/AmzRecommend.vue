@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:27
- * @LastEditTime: 2022-03-23 23:17:43
+ * @LastEditTime: 2022-03-24 13:29:50
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -56,10 +56,9 @@ export default {
       if (!data.result) {
         throw Error('请求数据失败')
       }
-      console.log('newSong', data.result)
       // 提取歌曲信息
       for (const originSong of data.result) {
-        this.newSongs.push(new Song(originSong))
+        this.newSongs.push(Song.createFromNewSong(originSong))
       }
     },
     // 请求推荐歌单数据
@@ -73,12 +72,10 @@ export default {
       for (const originSongList of data.result) {
         this.songLists.push(new SongList(originSongList))
       }
-      console.log(data)
     },
     // 请求推荐电台
     async getPersonalizedDJProgram() {
       const data = await getPersonalizedDJProgram()
-      console.log('电台', data)
 
       if (!data.result) {
         throw Error('请求数据失败')

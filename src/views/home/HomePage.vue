@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 21:13:40
- * @LastEditTime: 2022-03-21 12:52:43
+ * @LastEditTime: 2022-03-24 13:46:37
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -11,7 +11,7 @@
       <amz-header class="amz-max-width mx-auto" />
     </div>
 
-    <main class="mt-2 amz-max-width mx-auto pb-32 md:pb-24">
+    <main class="mt-2 amz-max-width mx-auto pb-32 px-2 md:pb-24">
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
@@ -22,7 +22,7 @@
 
 <script>
 import AmzHeader from './cpns/AmzHeader.vue'
-import AmzPlayer from '@/components/amz-player'
+import AmzPlayer from './cpns/AmzPlayer.vue'
 
 export default {
   name: 'HomePage',

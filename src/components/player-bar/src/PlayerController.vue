@@ -1,13 +1,13 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 13:43:07
- * @LastEditTime: 2022-03-22 21:45:39
+ * @LastEditTime: 2022-03-24 13:53:39
  * @LastEditors: simonyang
  * @Description: 音乐控制按钮(上一首, 播放/暂停, 下一首)
 -->
 <template>
   <div
-    class="player-bar-controller flex items-center justify-between w-36"
+    class="player-controller flex items-center justify-between w-36"
     @click.prevent="takeAction"
   >
     <i
@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: 'PlayerBarController',
+  name: 'PlayerController',
   props: {
     isPlaying: {
       type: Boolean,

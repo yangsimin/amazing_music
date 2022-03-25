@@ -1,14 +1,14 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-22 21:44:14
- * @LastEditTime: 2022-03-23 15:37:25
+ * @LastEditTime: 2022-03-25 12:46:15
  * @LastEditors: simonyang
- * @Description: 
+ * @Description: emits: muted
 -->
 <template>
-  <div class="group player-bar-volume relative">
+  <div class="player-bar-volume group relative">
     <div
-      class="hidden wrapper absolute left-0 bottom-full h-32 px-2 py-4 bg-white shadow-lg rounded group-hover:block"
+      class="hidden wrapper absolute left-0 bottom-full h-32 px-2 py-4 bg-white shadow-lg rounded z-50 group-hover:block"
     >
       <amz-seek-bar
         class="h-full"
@@ -21,7 +21,11 @@
       ></amz-seek-bar>
     </div>
 
-    <i class="iconfont before:text-2xl" :class="volumeIcon"></i>
+    <i
+      class="iconfont before:text-2xl"
+      :class="volumeIcon"
+      @click="toggleMuted"
+    ></i>
   </div>
 </template>
 
@@ -31,8 +35,9 @@ import AmzSeekBar from '@/base-ui/amz-seek-bar'
 const HIGH_LEVEL = 0.7
 const MIDDLE_LEVEL = 0.3
 
+// emits: ['muted']
 export default {
-  name: 'PlayerBarVolume',
+  name: 'PlayerVolume',
   components: {
     AmzSeekBar
   },
@@ -72,6 +77,9 @@ export default {
   methods: {
     updateVolume(val) {
       this.$emit('updateVolume', 1 - val)
+    },
+    toggleMuted() {
+      this.$emit('muted', this.volume !== 0)
     }
   }
 }
@@ -81,6 +89,7 @@ export default {
 .wrapper {
   transform: translateX(calc(-50% + 0.7rem)) translateY(-5px);
 }
+/* 倒三角 */
 .wrapper::after {
   content: '';
   position: absolute;

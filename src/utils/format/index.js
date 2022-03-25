@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-17 14:37:07
- * @LastEditTime: 2022-03-21 23:18:30
+ * @LastEditTime: 2022-03-24 17:33:35
  * @LastEditors: simonyang
  * @Description:
  */
@@ -54,4 +54,37 @@ export function formatPlayCount(count) {
   }
 
   return { count, unit: '' }
+}
+/**
+ * @method: 格式化时间戳(yyyy-MM-dd HH:mm:ss:SSS)
+ * @param {*} format 格式
+ * @param {*} timestamp 时间戳
+ */
+export function formatDate(format, timestamp) {
+  const date = new Date(timestamp)
+  const option = {
+    // Java SimpleDateFormat 规则
+    'y+': date.getFullYear().toString(), // 年
+    'M+': (date.getMonth() + 1).toString(), // 月
+    'd+': date.getDate().toString(), // 日
+    'H+': date.getHours().toString(), // 时 24时制
+    'm+': date.getMinutes().toString(), // 分
+    's+': date.getSeconds().toString(), // 秒
+    'S+': date.getMilliseconds().toString() // 毫秒
+  }
+
+  for (const rule in option) {
+    const regExp = new RegExp(rule, 'g')
+    if (regExp.test(format)) {
+      const time = option[rule]
+      format = format.replace(regExp, match => {
+        const offset = time.length - match.length
+        if (offset > 0) {
+          return time.slice(offset)
+        }
+        return time.padStart(match.length, 0)
+      })
+    }
+  }
+  return format
 }

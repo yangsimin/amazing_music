@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-16 10:53:19
- * @LastEditTime: 2022-03-18 20:07:12
+ * @LastEditTime: 2022-03-24 13:30:12
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -14,8 +14,9 @@
         v-for="(img, index) in images"
         :key="img.slice(-10)"
         @click="activeIndex = index"
-        class="border border-transparent overflow-hidden"
-        :class="{ 'amz-border-hl': index === activeIndex }"
+        class="border border-transparent overflow-hidden transition-transform duration-200"
+        :class="{ 'scale-[1.02]': index === activeIndex }"
+        @mouseenter="activeIndex = index"
       >
         <img :src="img" alt="" />
       </li>

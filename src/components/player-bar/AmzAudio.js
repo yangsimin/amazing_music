@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-22 08:48:45
- * @LastEditTime: 2022-03-23 13:58:38
+ * @LastEditTime: 2022-03-25 20:49:43
  * @LastEditors: simonyang
  * @Description:
  */
@@ -47,7 +47,7 @@ export default class AmzAudio {
   getProgress() {
     return this._audio.currentTime / this._audio.duration
   }
-  reset() {
+  resetProgress() {
     this._audio.currentTime = 0
   }
 }

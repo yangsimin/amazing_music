@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 13:06:21
- * @LastEditTime: 2022-03-23 15:43:45
+ * @LastEditTime: 2022-03-24 13:50:19
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import PlayerBar from './PlayerBar.vue'
-// import PlayerLyric from './PlayerLyric.vue'
+import PlayerBar from '@/components/player-bar'
+// import PlayerLyric from '@/components/player-lyric'
 
 export default {
   name: 'AmzPlayer',

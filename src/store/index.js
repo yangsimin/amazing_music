@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-19 16:43:27
- * @LastEditTime: 2022-03-23 22:25:38
+ * @LastEditTime: 2022-03-25 14:35:29
  * @LastEditors: simonyang
  * @Description:
  *    playingSong
@@ -21,7 +21,7 @@ import Vuex from 'vuex'
 import actions from './actions'
 import mutations from './mutations'
 
-import { LOAD_VOLUME, LOAD_SONG_LIST } from '../types/action-types'
+import { LOAD_PLAYER } from '../types/action-types'
 
 Vue.use(Vuex)
 
@@ -32,7 +32,8 @@ const store = new Vuex.Store({
     playingIndex: -1,
     // 播放列表
     playlist: [],
-    volume: 0.4
+    volume: 0.4,
+    playMode: 0
   }),
   getters: {
     // 当前正在播放的歌曲对象
@@ -48,8 +49,7 @@ const store = new Vuex.Store({
 })
 
 export function setupStore() {
-  store.dispatch(LOAD_VOLUME)
-  store.dispatch(LOAD_SONG_LIST)
+  store.dispatch(LOAD_PLAYER)
 }
 
 export default store

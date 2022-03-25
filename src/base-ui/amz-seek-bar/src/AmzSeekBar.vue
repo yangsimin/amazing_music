@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 18:08:25
- * @LastEditTime: 2022-03-23 14:34:19
+ * @LastEditTime: 2022-03-24 17:54:54
  * @LastEditors: simonyang
  * @Description:  emits: ['pointerMove', 'pointerUp']
 -->
@@ -51,7 +51,7 @@
     ></div>
     <!-- dot 游标-->
     <div
-      class="relative w-5 h-5 rounded-full shadow-inner bg-red-500 z-20 cursor-pointer"
+      class="relative w-5 h-5 rounded-full bg-red-500 z-20 cursor-pointer"
       :class="horizontal ? ['-translate-x-1/2'] : ['-translate-y-1/2']"
       :style="[
         seekBarStyle.dot,
@@ -70,6 +70,9 @@
 </template>
 
 <script>
+import Logger from '@/utils/logger'
+const Log = Logger.create('AmzSeekBar', true)
+
 // emit: pointerMove pointerUp
 export default {
   name: 'AmzSeekBar',
@@ -189,7 +192,7 @@ export default {
       }
       this.dotOffsetRatio = (downPoint - originClientPoint) / maxLength
       this.$emit('pointerUp', this.dotOffsetRatio)
-      console.log('skip')
+      Log.i('skip')
     }
   }
 }

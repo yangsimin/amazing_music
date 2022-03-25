@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 11:44:00
- * @LastEditTime: 2022-03-23 16:42:58
+ * @LastEditTime: 2022-03-24 17:51:00
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -21,7 +21,7 @@
         {{ song.songName }}
       </p>
       <p class="mt-2 text-lg font-normal text-gray-500 lg:text-sm">
-        {{ song.artists.join(' / ') }}
+        {{ artists }}
       </p>
     </div>
     <!-- 歌曲时长 -->
@@ -49,15 +49,18 @@ export default {
   components: {
     SongCover
   },
+  computed: {
+    artists() {
+      const names = this.song.artists.map(artist => artist.name)
+      return names.join(' / ')
+    }
+  },
   methods: {
     formatSongTime(duration) {
       return formatSongTime(duration)
     },
     getCustomImage(imageUrl, width, height) {
       return formatImageUrl(imageUrl, width, height)
-    },
-    playMusic() {
-      console.log('play')
     },
     addSong() {
       this.$store.dispatch(INSERT_SONGS, [this.song])

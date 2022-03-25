@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 16:38:48
- * @LastEditTime: 2022-03-23 23:43:21
+ * @LastEditTime: 2022-03-24 09:34:01
  * @LastEditors: simonyang
  * @Description:
  */
@@ -10,19 +10,42 @@
  * @param {*}
  */
 export class Song {
-  constructor(originSong) {
-    this.id = originSong.id
+  constructor() {
+    this.id = 0
     this.url = ''
-    this.picUrl = originSong.picUrl
-    this.songName = originSong.name
-    if (originSong.song) {
-      // 推荐新音乐返回的字段
-      this.artists = originSong.song.artists.map(artists => ({
-        id: artists.id,
-        name: artists.name
-      }))
-      this.duration = originSong.song.duration
-    }
+    this.picUrl = ''
+    this.songName = ''
+    this.artists = []
+    this.duration = 0
+  }
+  // <推荐新音乐>接口返回的数据转成 Song
+  static createFromNewSong(originSong) {
+    const song = new this()
+
+    song.id = originSong.id
+    song.picUrl = originSong.picUrl
+    song.songName = originSong.name
+    song.artists = originSong.song.artists.map(artists => ({
+      id: artists.id,
+      name: artists.name
+    }))
+    song.duration = originSong.song.duration
+
+    return song
+  }
+  // <歌单所有歌曲>接口返回的数据转成 Song
+  static createFromSongList(originSong) {
+    const song = new this()
+    song.id = originSong.id
+    song.picUrl = originSong.al.picUrl
+    song.songName = originSong.name
+    song.artists = originSong.ar.map(artists => ({
+      id: artists.id,
+      name: artists.name
+    }))
+    song.duration = originSong.dt
+
+    return song
   }
 }
 /**

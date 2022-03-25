@@ -12,7 +12,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.icon-cross-thin:before {
+  content: '\e657';
+}
+.icon-cross:before {
+  content: '\e66d';
+}
+.icon-del:before {
+  content: '\e601';
+}
 .icon-play-music:before {
   content: '\e611';
 }

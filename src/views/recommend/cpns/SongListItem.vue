@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 22:33:38
- * @LastEditTime: 2022-03-23 23:47:07
+ * @LastEditTime: 2022-03-24 17:51:40
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -56,16 +56,9 @@ export default {
         throw Error('请求数据失败 code:', data.code)
       }
       const songs = data.songs.map(song => {
-        const s = new Song(song.al)
-        s.artists = song.ar.map(artist => ({
-          name: artist.name,
-          id: artist.id
-        }))
-        return s
+        return Song.createFromSongList(song)
       })
 
-      console.log(data)
-      console.log(songs)
       this.$store.dispatch(INSERT_SONGS, songs)
     }
   }
