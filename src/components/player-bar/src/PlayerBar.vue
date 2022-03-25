@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:34:40
- * @LastEditTime: 2022-03-25 16:54:35
+ * @LastEditTime: 2022-03-25 22:28:37
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -70,6 +70,8 @@
         <playlist
           class="fixed right-0 bottom-20 h-[70%] w-[90%] bg-white shadow-inner z-20 md:h-[calc(100%-5rem)] md:w-[600px]"
           v-show="isPlaylistShow"
+          @blur="blur"
+          @focus="focus"
         ></playlist>
       </transition>
     </div>
@@ -229,6 +231,12 @@ export default {
         // 恢复音量
         this.$store.dispatch(SET_VOLUME, this.lastVolume)
       }
+    },
+    blur() {
+      console.log('blur')
+    },
+    focus() {
+      console.log('focus')
     }
   },
   created() {}
