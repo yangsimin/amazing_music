@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 15:27:25
- * @LastEditTime: 2022-03-28 22:57:53
+ * @LastEditTime: 2022-03-29 00:00:03
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import { formatImageUrl, formatSongTime } from '@/utils/format'
 export default {
   name: 'DetailList',
@@ -50,6 +50,9 @@ export default {
       type: Array,
       required: true
     }
+  },
+  computed: {
+    ...mapGetters(['playingSong'])
   },
   methods: {
     ...mapActions(['insertSongs']),
