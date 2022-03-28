@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-24 19:38:41
- * @LastEditTime: 2022-03-28 23:13:26
+ * @LastEditTime: 2022-03-28 23:39:16
  * @LastEditors: simonyang
  * @Description: 
   当前播放   歌曲总数      清空列表
@@ -73,11 +73,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 import PlayingIcon from '@/components/playing-icon'
 
 import { formatSongTime } from '@/utils/format'
-import { CHANGE_PLAYING_INDEX } from '@/types/mutation-types'
 import Velocity from 'velocity-animate'
 import mixinLifeCycle from '@/utils/logger/life-cycle'
 
@@ -95,6 +94,7 @@ export default {
   }),
   methods: {
     ...mapActions(['deleteSong', 'clearSongList']),
+    ...mapMutations(['changePlayingIndex']),
     formatArtists(artists) {
       return artists.map(artist => artist.name).join(' / ')
     },
@@ -108,7 +108,7 @@ export default {
       return formatSongTime(duration, true)
     },
     playSong(index) {
-      this.$store.commit(CHANGE_PLAYING_INDEX, index)
+      this.changePlayingIndex(index)
     },
     delSong(index) {
       this.deleteSong(index)

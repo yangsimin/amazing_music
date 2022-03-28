@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:31:32
- * @LastEditTime: 2022-03-28 23:12:40
+ * @LastEditTime: 2022-03-28 23:46:25
  * @LastEditors: simonyang
  * @Description: 
       输入: 展示的信息, 播放控制; 
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 
 import AmzSeekBar from '@/base-ui/amz-seek-bar'
 import AmzAudio from '../AmzAudio'
@@ -77,16 +77,6 @@ export default {
   name: 'PlayerProgress',
   components: {
     AmzSeekBar
-  },
-  model: {
-    prop: 'isPlaying',
-    event: 'stateChange'
-  },
-  props: {
-    isPlaying: {
-      type: Boolean,
-      default: false
-    }
   },
   data: () => ({
     // 缓冲进度 0 ~ 1.0
@@ -103,7 +93,7 @@ export default {
     isSeeking: false
   }),
   computed: {
-    ...mapGetters(['playingSong', 'playingIndex', 'volume']),
+    ...mapGetters(['playingSong', 'playingIndex', 'volume', 'isPlaying']),
     formatCurrentTime() {
       return formatSongTime(this.currentTime, false)
     },
@@ -154,6 +144,7 @@ export default {
   },
   methods: {
     ...mapActions(['setPlayingUrl', 'requestPlayingSongUrl']),
+    ...mapMutations(['changePlayingState']),
     // 播放结束发射结束事件
     emitFinish() {
       this.resetProgress()
@@ -163,9 +154,6 @@ export default {
       this.setPlayingUrl('')
       this.resetProgress()
       this.$emit('error', message)
-    },
-    emitStateChange(playing) {
-      this.$emit('stateChange', playing)
     },
     playSong(song) {
       if (song.url) {
@@ -208,7 +196,7 @@ export default {
     // 播放/暂停触发
     toggle(event) {
       Log.d(event.type)
-      this.emitStateChange(event.type === 'play')
+      this.changePlayingState(event.type === 'play')
     },
     // 获取到音频总时长时触发
     durationchange() {

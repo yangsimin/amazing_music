@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:34:40
- * @LastEditTime: 2022-03-28 23:29:23
+ * @LastEditTime: 2022-03-28 23:41:52
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -25,13 +25,11 @@
           @prevClick="prevClick"
           @nextClick="nextClick"
           @playToggle="playToggle"
-          :isPlaying="isPlaying"
         ></player-controller>
       </div>
       <player-progress
         ref="playerProgressBar"
         class="order-first w-full md:flex md:flex-1 md:px-10 md:order-0 md:order-none"
-        v-model="isPlaying"
         @playEnd="playEnd"
         @error="error"
       ></player-progress>
@@ -78,7 +76,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 import PlayerController from './PlayerController.vue'
 import PlayerProgress from './PlayerProgress.vue'
 import PlayerVolume from './PlayerVolume.vue'
@@ -86,7 +84,6 @@ import Playlist from '@/components/playlist'
 
 import { getPrevSong, getNextSong } from '../get-song'
 import { playModes, playModesIcon } from '@/common/play-mode'
-import { CHANGE_PLAYING_INDEX, CHANGE_PLAY_MODE } from '@/types/mutation-types'
 import clickoutside from '../directives'
 
 import Logger from '@/utils/logger'
@@ -104,14 +101,18 @@ export default {
     clickoutside
   },
   data: () => ({
-    // 播放状态
-    isPlaying: false,
     // 播放模式
     lastVolume: 0,
     isPlaylistShow: false
   }),
   computed: {
-    ...mapGetters(['playMode', 'playingSong', 'volume', 'playlist']),
+    ...mapGetters([
+      'playMode',
+      'playingSong',
+      'volume',
+      'playlist',
+      'isPlaying'
+    ]),
     modeIcon() {
       if (this.playMode < 0 || this.playMode >= playModes.length) {
         throw TypeError('unknown playMode: ' + this.playMode)
@@ -121,10 +122,15 @@ export default {
   },
   methods: {
     ...mapActions(['changeSong', 'setVolume']),
+    ...mapMutations([
+      'changePlayingIndex',
+      'changePlayingState',
+      'changePlayMode'
+    ]),
     keydown(event) {
       if (event.code === 'Space') {
         event.preventDefault()
-        this.isPlaying = !this.isPlaying
+        this.changePlayingState(!this.isPlaying)
       }
     },
     prevClick() {
@@ -135,7 +141,7 @@ export default {
         }
         // 场景: 刷新了页面, 歌单有歌曲, 但是 index 为 -1
         // 操作: 将index 设为0, 开始播放
-        this.$store.commit(CHANGE_PLAYING_INDEX, 0)
+        this.changePlayingIndex(0)
         return
       }
       // 1. 切换上一首歌
@@ -149,7 +155,7 @@ export default {
         }
         // 场景: 刷新了页面, 歌单有歌曲, 但是 index 为 -1
         // 操作: 将index 设为0, 开始播放
-        this.$store.commit(CHANGE_PLAYING_INDEX, 0)
+        this.changePlayingIndex(0)
         return
       }
       // 2. 切换下一首
@@ -162,18 +168,18 @@ export default {
         }
         // 场景: 刷新了页面, 歌单有歌曲, 但是 index 为 -1
         // 操作: 将index 设为0, 开始播放
-        this.$store.commit(CHANGE_PLAYING_INDEX, 0)
+        this.changePlayingIndex(0)
         return
       }
-      this.isPlaying = !this.isPlaying
+      this.changePlayingState(!this.isPlaying)
     },
     togglePlayMode() {
       Log.d('togglePlayMode', this.playMode)
       if (this.playMode === Object.keys(playModes).length - 1) {
-        this.$store.commit(CHANGE_PLAY_MODE, 0)
+        this.changePlayMode(0)
         return
       }
-      this.$store.commit(CHANGE_PLAY_MODE, this.playMode + 1)
+      this.changePlayMode(this.playMode + 1)
     },
     clickVolume() {
       Log.d('clickVolume')
@@ -207,13 +213,13 @@ export default {
           break
         case playModes.SINGLE_LOOP:
           // 重置
-          this.isPlaying = true
+          this.changePlayingState(true)
           break
       }
     },
     error(error) {
       Log.d('error', error)
-      this.isPlaying = false
+      this.changePlayingState(false)
     },
     updateVolume(volume) {
       this.setVolume(volume)

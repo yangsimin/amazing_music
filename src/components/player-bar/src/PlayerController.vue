@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 13:43:07
- * @LastEditTime: 2022-03-24 13:53:39
+ * @LastEditTime: 2022-03-28 23:42:39
  * @LastEditors: simonyang
  * @Description: 音乐控制按钮(上一首, 播放/暂停, 下一首)
 -->
@@ -27,15 +27,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'PlayerController',
-  props: {
-    isPlaying: {
-      type: Boolean,
-      required: true
-    }
-  },
   computed: {
+    ...mapGetters(['isPlaying']),
     iconClass() {
       return this.isPlaying ? 'icon-player-stop' : 'icon-player-play'
     }

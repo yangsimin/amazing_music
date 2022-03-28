@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 16:24:22
- * @LastEditTime: 2022-03-28 23:17:10
+ * @LastEditTime: 2022-03-28 23:35:51
  * @LastEditors: simonyang
  * @Description:
  */
@@ -18,6 +18,9 @@ export default {
   [types.CHANGE_PLAY_MODE](state, mode) {
     state.playMode = mode
     localCache.setCache(keys.KEY_PLAY_MODE, mode)
+  },
+  [types.CHANGE_PLAYING_STATE](state, isPlaying) {
+    state.isPlaying = isPlaying
   },
   // 插入歌曲时, 记得将 playingIndex 置0
   [types._INSERT_SONGS](state, { songs, index }) {
