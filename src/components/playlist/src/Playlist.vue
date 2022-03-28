@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-24 19:38:41
- * @LastEditTime: 2022-03-28 09:31:58
+ * @LastEditTime: 2022-03-28 11:30:11
  * @LastEditors: simonyang
  * @Description: 
   当前播放   歌曲总数      清空列表
@@ -46,7 +46,11 @@
         @touchstart.prevent="playSong(index)"
       >
         <div class="absolute left-0 top-1/2 -translate-y-1/2 w-7 text-right">
-          {{ index + 1 }}
+          <playing-icon
+            v-if="index === playingIndex"
+            class="!h-11 scale-[0.35] -translate-x-4"
+          ></playing-icon>
+          <p v-else>{{ index + 1 }}</p>
         </div>
         <div class="flex-1 w-28 truncate">
           <span class="cursor-pointer" @click="playSong(index)">{{
@@ -69,6 +73,8 @@
 </template>
 
 <script>
+import PlayingIcon from '@/components/playing-icon'
+
 import { formatSongTime } from '@/utils/format'
 import { CHANGE_PLAYING_INDEX } from '@/types/mutation-types'
 import { DELETE_SONG, CLEAR_SONG_LIST } from '@/types/action-types'
@@ -78,6 +84,9 @@ import mixinLifeCycle from '@/utils/logger/life-cycle'
 export default {
   name: 'Playlist',
   mixins: [mixinLifeCycle('Playlist', true)],
+  components: {
+    PlayingIcon
+  },
   computed: {
     playlist() {
       return this.$store.state.playlist

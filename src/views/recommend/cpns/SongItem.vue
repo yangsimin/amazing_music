@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 11:44:00
- * @LastEditTime: 2022-03-24 17:51:00
+ * @LastEditTime: 2022-03-28 11:34:31
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -20,7 +20,7 @@
       >
         {{ song.songName }}
       </p>
-      <p class="mt-2 text-lg font-normal text-gray-500 lg:text-sm">
+      <p class="mt-2 text-lg font-normal text-gray-500 truncate lg:text-sm">
         {{ artists }}
       </p>
     </div>
