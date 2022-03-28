@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:34:40
- * @LastEditTime: 2022-03-28 16:56:43
+ * @LastEditTime: 2022-03-28 17:38:29
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -135,7 +135,6 @@ export default {
   },
   methods: {
     keydown(event) {
-      console.log(event)
       if (event.code === 'Space') {
         event.preventDefault()
         this.isPlaying = !this.isPlaying

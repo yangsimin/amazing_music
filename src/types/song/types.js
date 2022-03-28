@@ -1,10 +1,11 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 16:38:48
- * @LastEditTime: 2022-03-28 15:05:55
+ * @LastEditTime: 2022-03-28 18:10:57
  * @LastEditors: simonyang
  * @Description:
  */
+
 /**
  * @method 歌曲的数据结构
  * @param {*}
@@ -44,6 +45,10 @@ export class Song {
       name: artists.name
     }))
     song.duration = originSong.dt
+    song.album = {
+      id: originSong.al.id,
+      name: originSong.al.name
+    }
 
     return song
   }
@@ -58,5 +63,26 @@ export class SongList {
     this.name = originSongList.name
     this.picUrl = originSongList.picUrl
     this.playCount = originSongList.playCount
+  }
+}
+
+export class SongListDetail {
+  constructor(data) {
+    const songListInfo = {
+      name: data.playlist.name,
+      coverImgUrl: data.playlist.coverImgUrl,
+      createTime: data.playlist.createTime,
+      description: data.playlist.description,
+      tags: data.playlist.tags,
+      trackCount: data.playlist.trackCount,
+      playCount: data.playlist.playCount,
+      trackUpdateTime: data.playlist.trackUpdateTime,
+      creator: {
+        nickname: data.playlist.creator.nickname,
+        avatarUrl: data.playlist.creator.avatarUrl,
+        userId: data.playlist.creator.userId
+      }
+    }
+    Object.assign(this, songListInfo)
   }
 }

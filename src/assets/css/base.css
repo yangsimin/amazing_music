@@ -23,6 +23,9 @@ body {
   .media\:hover\:amz-bg-hl:hover {
     background-color: var(--color-text-hl);
   }
+  .media\:hover\:bg-gray-hl:hover {
+    background-color: #e8e9ed !important;
+  }
 }
 
 @media (hover: none) {

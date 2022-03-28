@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-19 16:43:27
- * @LastEditTime: 2022-03-28 10:15:18
+ * @LastEditTime: 2022-03-28 22:03:49
  * @LastEditors: simonyang
  * @Description:
  *    playingSong
@@ -17,7 +17,7 @@
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import createLogger from 'vuex/dist/logger'
+import createLogger from 'vuex/dist/logger'
 import actions from './actions'
 import mutations from './mutations'
 
@@ -26,7 +26,7 @@ import { LOAD_PLAYER } from '../types/action-types'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  // plugins: [createLogger()],
+  plugins: [createLogger()],
   state: () => ({
     // 当前正在播放的歌曲索引
     playingIndex: -1,
