@@ -1,14 +1,14 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:34:40
- * @LastEditTime: 2022-03-25 22:28:37
+ * @LastEditTime: 2022-03-26 15:25:38
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
-  <div class="player-bar w-full">
+  <div class="player-bar">
     <div
-      class="flex flex-wrap items-center content-evenly h-28 md:h-20 md:flex-nowrap"
+      class="flex flex-wrap items-center content-evenly h-28 mb-7 md:h-20 md:mb-0 md:flex-nowrap"
       @click.prevent="takeAction"
     >
       <!-- 单曲循环/列表循环/随机播放 -->
@@ -57,23 +57,22 @@
           data-action="toggleLyric"
         ></i>
       </div>
-
       <!-- 播放列表 -->
-      <i
-        class="iconfont icon-playlist pr-10 cursor-pointer media:hover:amz-text-hl before:text-2xl"
-        :class="{ 'amz-text-hl': isPlaylistShow }"
-        data-action="toggleList"
-      ></i>
+      <div v-clickoutside="closePlaylist" :data-show="isPlaylistShow">
+        <i
+          class="iconfont icon-playlist pr-10 cursor-pointer media:hover:amz-text-hl before:text-2xl"
+          :class="{ 'amz-text-hl': isPlaylistShow }"
+          data-action="toggleList"
+        ></i>
 
-      <!-- 播放列表 -->
-      <transition name="playlist">
-        <playlist
-          class="fixed right-0 bottom-20 h-[70%] w-[90%] bg-white shadow-inner z-20 md:h-[calc(100%-5rem)] md:w-[600px]"
-          v-show="isPlaylistShow"
-          @blur="blur"
-          @focus="focus"
-        ></playlist>
-      </transition>
+        <!-- 播放列表 -->
+        <transition name="playlist">
+          <playlist
+            class="fixed right-0 bottom-20 h-[70%] w-[90%] bg-white shadow-inner z-20 md:h-[calc(100%-5rem)] md:w-[600px]"
+            v-show="isPlaylistShow"
+          ></playlist>
+        </transition>
+      </div>
     </div>
   </div>
 </template>
@@ -93,6 +92,8 @@ import {
 
 import { CHANGE_PLAYING_INDEX, CHANGE_PLAY_MODE } from '@/types/mutation-types'
 import { CHANGE_SONG, SET_VOLUME } from '@/types/action-types'
+import clickoutside from '../directives'
+
 import Logger from '@/utils/logger'
 const Log = Logger.create('PlayerBar')
 
@@ -103,6 +104,9 @@ export default {
     PlayerProgress,
     PlayerVolume,
     Playlist
+  },
+  directives: {
+    clickoutside
   },
   data: () => ({
     // 播放状态
@@ -232,11 +236,11 @@ export default {
         this.$store.dispatch(SET_VOLUME, this.lastVolume)
       }
     },
-    blur() {
-      console.log('blur')
-    },
-    focus() {
-      console.log('focus')
+    closePlaylist(el, event) {
+      if (event.target.closest('.player-bar')) {
+        return
+      }
+      this.isPlaylistShow = false
     }
   },
   created() {}
@@ -246,12 +250,11 @@ export default {
 <style scoped>
 .playlist-enter-active,
 .playlist-leave-active {
-  transition: all 300ms ease-in-out;
+  @apply transition-all duration-300;
 }
 
 .playlist-enter,
 .playlist-leave-to {
-  transform: translateX(100%);
-  opacity: 0.8;
+  @apply translate-x-full opacity-80;
 }
 </style>

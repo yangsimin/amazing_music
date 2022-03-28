@@ -1,41 +1,44 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-15 10:51:36
- * @LastEditTime: 2022-03-17 17:47:48
+ * @LastEditTime: 2022-03-26 12:13:06
  * @LastEditors: simonyang
  * @Description:
  */
-export default function (showLog) {
+import Logger from '../index'
+export default function (module, debug, options) {
+  const Log = Logger.create(module, debug, options)
+
   return {
     beforeCreate() {
-      showLog && console.log(`[${this.$options.name}] beforeCreate`)
+      Log.d('beforeCreate')
     },
     created() {
-      showLog && console.log(`[${this.$options.name}] created`)
+      Log.d('created')
     },
     beforeMount() {
-      showLog && console.log(`[${this.$options.name}] beforeMount`)
+      Log.d('beforeMount')
     },
     mounted() {
-      showLog && console.log(`[${this.$options.name}] mounted`)
+      Log.d('mounted')
     },
     beforeUpdate() {
-      showLog && console.log(`[${this.$options.name}] beforeUpdate`)
+      Log.d('beforeUpdate')
     },
     updated() {
-      showLog && console.log(`[${this.$options.name}] updated`)
+      Log.d('updated')
     },
     activated() {
-      showLog && console.log(`[${this.$options.name}] activated`)
+      Log.d('activated')
     },
     deactivated() {
-      showLog && console.log(`[${this.$options.name}] deactivated`)
+      Log.d('deactivated')
     },
     beforeDestroy() {
-      showLog && console.log(`[${this.$options.name}] beforeDestroy`)
+      Log.d('beforeDestroy')
     },
     destroyed() {
-      showLog && console.log(`[${this.$options.name}] destroyed`)
+      Log.d('destroyed')
     }
   }
 }

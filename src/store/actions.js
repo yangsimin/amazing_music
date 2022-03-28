@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 14:54:07
- * @LastEditTime: 2022-03-25 22:08:08
+ * @LastEditTime: 2022-03-28 10:13:31
  * @LastEditors: simonyang
  * @Description:
  */
@@ -124,14 +124,18 @@ export default {
   },
   // 删除歌曲
   [DELETE_SONG]({ commit, state }, index) {
-    if (index <= state.playingIndex) {
+    if (index < state.playingIndex) {
       // 当删除的是当前播放之前的, 需要将播放索引往前移动
-      commit(_DELETE_SONG, index)
       commit(CHANGE_PLAYING_INDEX, state.playingIndex - 1)
-    } else {
-      commit(_DELETE_SONG, index)
+    } else if (index === state.playingIndex) {
+      // 删除的是当前播放的歌曲, 有两种特殊情况
+      if (state.playingIndex.length === 1) {
+        commit(CHANGE_PLAYING_INDEX, -1)
+      } else if (index === state.playlist.length - 1) {
+        commit(CHANGE_PLAYING_INDEX, index - 1)
+      }
     }
-
+    commit(_DELETE_SONG, index)
     localCache.setCache(KEY_SONG_LIST, state.playlist)
   }
 }

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-24 19:38:41
- * @LastEditTime: 2022-03-25 22:16:24
+ * @LastEditTime: 2022-03-28 09:31:58
  * @LastEditors: simonyang
  * @Description: 
   当前播放   歌曲总数      清空列表
@@ -59,8 +59,9 @@
         <div class="w-2/12">{{ getSongTime(song.duration) }}</div>
         <i
           class="iconfont icon-cross-thin absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer before:text-lg media:hover:amz-text-hl"
-          @click.stop="delSong(index)"
-          @touchstart.stop="delSong(index)"
+          @click.prevent.stop="delSong(index)"
+          @dblclick.prevent.stop
+          @touchstart.prevent.stop="delSong(index)"
         ></i>
       </li>
     </transition-group>
@@ -72,9 +73,11 @@ import { formatSongTime } from '@/utils/format'
 import { CHANGE_PLAYING_INDEX } from '@/types/mutation-types'
 import { DELETE_SONG, CLEAR_SONG_LIST } from '@/types/action-types'
 import Velocity from 'velocity-animate'
+import mixinLifeCycle from '@/utils/logger/life-cycle'
 
 export default {
   name: 'Playlist',
+  mixins: [mixinLifeCycle('Playlist', true)],
   computed: {
     playlist() {
       return this.$store.state.playlist

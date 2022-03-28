@@ -1,12 +1,12 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-11 17:31:33
- * @LastEditTime: 2022-03-24 19:41:47
+ * @LastEditTime: 2022-03-26 13:39:05
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
-  <div id="app" class="">
+  <div id="app">
     <home-page />
     <!-- <test /> -->
   </div>
