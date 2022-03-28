@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:31:32
- * @LastEditTime: 2022-03-25 21:17:34
+ * @LastEditTime: 2022-03-28 16:49:22
  * @LastEditors: simonyang
  * @Description: 
       输入: 展示的信息, 播放控制; 
@@ -262,6 +262,7 @@ export default {
       // 设置 isSeeking 标志, 避免 audio 回调刷新 dot 的位置
       this.isSeeking = true
       this.currentTime = this.amzAudio.getDuration() * progress
+      this.progress = progress
     },
     pointerUp(progress) {
       // 修改 audio.currentTime 和 formatCurrentTime

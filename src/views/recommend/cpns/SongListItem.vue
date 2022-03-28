@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 22:33:38
- * @LastEditTime: 2022-03-24 17:51:40
+ * @LastEditTime: 2022-03-28 16:32:07
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -13,7 +13,8 @@
       @click.native="addSongs"
     ></song-cover>
     <h3
-      class="song-list-name h-10 mt-4 text-lg leading-5 cursor-pointer media:hover:amz-text-hl lg:text-sm"
+      class="song-list-name h-10 mt-4 text-lg leading-5 cursor-pointer amz-truncate-2 media:hover:amz-text-hl lg:text-sm"
+      @click="jumpDetail"
     >
       {{ songList.name }}
     </h3>
@@ -60,6 +61,14 @@ export default {
       })
 
       this.$store.dispatch(INSERT_SONGS, songs)
+    },
+    jumpDetail() {
+      this.$router.push({
+        name: 'song-list-detail',
+        params: {
+          songListId: this.songList.id
+        }
+      })
     }
   }
 }
@@ -68,15 +77,5 @@ export default {
 <style scoped>
 .song-cover::before {
   font-size: 50px;
-}
-/* 处理多行文本溢出, 适用于 webkit 浏览器和移动端 */
-.song-list-name {
-  overflow: hidden;
-  /** 将元素作为弹性盒子显示 */
-  display: -webkit-box;
-  /** 显示的行数 */
-  -webkit-line-clamp: 2;
-  /** 设置弹性盒子子元素的排列方式 */
-  -webkit-box-orient: vertical;
 }
 </style>

@@ -21,6 +21,16 @@
   .amz-max-width {
     @apply max-w-7xl;
   }
+  /* 处理多行文本溢出, 适用于 webkit 浏览器和移动端 */
+  .amz-truncate-2 {
+    overflow: hidden;
+    /** 将元素作为弹性盒子显示 */
+    display: -webkit-box;
+    /** 显示的行数 */
+    -webkit-line-clamp: 2;
+    /** 设置弹性盒子子元素的排列方式 */
+    -webkit-box-orient: vertical;
+  }
 }
 
 /* 480px 开始 font-size 自适应 */

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-24 19:38:41
- * @LastEditTime: 2022-03-28 11:30:11
+ * @LastEditTime: 2022-03-28 14:34:22
  * @LastEditors: simonyang
  * @Description: 
   当前播放   歌曲总数      清空列表
@@ -101,6 +101,12 @@ export default {
   methods: {
     formatArtists(artists) {
       return artists.map(artist => artist.name).join(' / ')
+    },
+    formatNum(index) {
+      if (index < 10) {
+        return '0' + index
+      }
+      return index
     },
     getSongTime(duration) {
       return formatSongTime(duration, true)

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:34:40
- * @LastEditTime: 2022-03-26 15:25:38
+ * @LastEditTime: 2022-03-28 16:56:43
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -134,6 +134,13 @@ export default {
     }
   },
   methods: {
+    keydown(event) {
+      console.log(event)
+      if (event.code === 'Space') {
+        event.preventDefault()
+        this.isPlaying = !this.isPlaying
+      }
+    },
     prevClick() {
       Log.d('prev')
       if (!this.playingSong) {
@@ -243,7 +250,12 @@ export default {
       this.isPlaylistShow = false
     }
   },
-  created() {}
+  mounted() {
+    document.addEventListener('keydown', this.keydown)
+  },
+  destroyed() {
+    document.removeEventListener('keydown', this.keydown)
+  }
 }
 </script>
 
