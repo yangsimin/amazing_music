@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-24 19:38:41
- * @LastEditTime: 2022-03-28 14:34:22
+ * @LastEditTime: 2022-03-28 23:13:26
  * @LastEditors: simonyang
  * @Description: 
   当前播放   歌曲总数      清空列表
@@ -73,11 +73,11 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import PlayingIcon from '@/components/playing-icon'
 
 import { formatSongTime } from '@/utils/format'
 import { CHANGE_PLAYING_INDEX } from '@/types/mutation-types'
-import { DELETE_SONG, CLEAR_SONG_LIST } from '@/types/action-types'
 import Velocity from 'velocity-animate'
 import mixinLifeCycle from '@/utils/logger/life-cycle'
 
@@ -88,17 +88,13 @@ export default {
     PlayingIcon
   },
   computed: {
-    playlist() {
-      return this.$store.state.playlist
-    },
-    playingIndex() {
-      return this.$store.state.playingIndex
-    }
+    ...mapGetters(['playlist', 'playingIndex'])
   },
   data: () => ({
     activeClass: ['bg-red-100', 'bg-opacity-50', 'text-red-700']
   }),
   methods: {
+    ...mapActions(['deleteSong', 'clearSongList']),
     formatArtists(artists) {
       return artists.map(artist => artist.name).join(' / ')
     },
@@ -115,10 +111,10 @@ export default {
       this.$store.commit(CHANGE_PLAYING_INDEX, index)
     },
     delSong(index) {
-      this.$store.dispatch(DELETE_SONG, index)
+      this.deleteSong(index)
     },
     clearAll() {
-      this.$store.dispatch(CLEAR_SONG_LIST)
+      this.clearSongList()
     },
     beforeEnter(el) {
       el.style.opacity = 0

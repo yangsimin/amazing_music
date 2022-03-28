@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:31:32
- * @LastEditTime: 2022-03-28 16:49:22
+ * @LastEditTime: 2022-03-28 23:12:40
  * @LastEditors: simonyang
  * @Description: 
       输入: 展示的信息, 播放控制; 
@@ -63,13 +63,13 @@
 </template>
 
 <script>
-import AmzSeekBar from '@/base-ui/amz-seek-bar'
+import { mapGetters, mapActions } from 'vuex'
 
+import AmzSeekBar from '@/base-ui/amz-seek-bar'
 import AmzAudio from '../AmzAudio'
+
 import { formatSongTime, formatImageUrl } from '@/utils/format'
 import { throttle } from '@/utils/throttle'
-import { SET_PLAYING_URL, REQUEST_PLAYING_SONG_URL } from '@/types/action-types'
-
 import Logger from '@/utils/logger'
 const Log = Logger.create('PlayerProgress')
 
@@ -103,20 +103,12 @@ export default {
     isSeeking: false
   }),
   computed: {
+    ...mapGetters(['playingSong', 'playingIndex', 'volume']),
     formatCurrentTime() {
       return formatSongTime(this.currentTime, false)
     },
     formatDuration() {
       return formatSongTime(this.duration, false)
-    },
-    playingSong() {
-      return this.$store.getters.playingSong
-    },
-    playingIndex() {
-      return this.$store.state.playingIndex
-    },
-    volume() {
-      return this.$store.state.volume
     },
     songName() {
       return this.playingSong && this.playingSong.songName
@@ -161,13 +153,14 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['setPlayingUrl', 'requestPlayingSongUrl']),
     // 播放结束发射结束事件
     emitFinish() {
       this.resetProgress()
       this.$emit('playEnd')
     },
     emitError(message) {
-      this.$store.dispatch(SET_PLAYING_URL, '')
+      this.setPlayingUrl('')
       this.resetProgress()
       this.$emit('error', message)
     },
@@ -184,7 +177,7 @@ export default {
       }
 
       // 发送请求
-      this.$store.dispatch(REQUEST_PLAYING_SONG_URL, song.id).then(() => {
+      this.requestPlayingSongUrl(song.id).then(() => {
         this.amzAudio.setSource(song.url)
         this.amzAudio.play()
       })

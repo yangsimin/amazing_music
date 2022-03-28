@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 22:33:38
- * @LastEditTime: 2022-03-28 16:32:07
+ * @LastEditTime: 2022-03-28 22:54:16
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -25,12 +25,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import SongCover from '@/components/song-cover'
 import { formatImageUrl, formatPlayCount } from '@/utils/format'
 import { getSongListTrack } from '@/api/common'
 
 import { Song } from '@/types/song/types.js'
-import { INSERT_SONGS } from '@/types/action-types.js'
 
 export default {
   name: 'SongListItem',
@@ -44,6 +44,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['insertSongs']),
     getCustomImage(url, width, height) {
       return formatImageUrl(url, width, height)
     },
@@ -60,7 +61,7 @@ export default {
         return Song.createFromSongList(song)
       })
 
-      this.$store.dispatch(INSERT_SONGS, songs)
+      this.insertSongs(songs)
     },
     jumpDetail() {
       this.$router.push({

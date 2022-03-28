@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:34:40
- * @LastEditTime: 2022-03-28 17:38:29
+ * @LastEditTime: 2022-03-28 23:29:23
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -78,20 +78,15 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import PlayerController from './PlayerController.vue'
 import PlayerProgress from './PlayerProgress.vue'
 import PlayerVolume from './PlayerVolume.vue'
 import Playlist from '@/components/playlist'
 
-import {
-  PLAY_MODES,
-  PLAY_MODES_ICON,
-  getPrevSong,
-  getNextSong
-} from '../PlayMode'
-
+import { getPrevSong, getNextSong } from '../get-song'
+import { playModes, playModesIcon } from '@/common/play-mode'
 import { CHANGE_PLAYING_INDEX, CHANGE_PLAY_MODE } from '@/types/mutation-types'
-import { CHANGE_SONG, SET_VOLUME } from '@/types/action-types'
 import clickoutside from '../directives'
 
 import Logger from '@/utils/logger'
@@ -116,24 +111,16 @@ export default {
     isPlaylistShow: false
   }),
   computed: {
-    playMode() {
-      return this.$store.state.playMode
-    },
+    ...mapGetters(['playMode', 'playingSong', 'volume', 'playlist']),
     modeIcon() {
-      if (this.playMode < 0 || this.playMode >= PLAY_MODES.length) {
+      if (this.playMode < 0 || this.playMode >= playModes.length) {
         throw TypeError('unknown playMode: ' + this.playMode)
       }
-      return PLAY_MODES_ICON[this.playMode]
-    },
-    // 正在模仿的歌曲
-    playingSong() {
-      return this.$store.getters.playingSong
-    },
-    volume() {
-      return this.$store.state.volume
+      return playModesIcon[this.playMode]
     }
   },
   methods: {
+    ...mapActions(['changeSong', 'setVolume']),
     keydown(event) {
       if (event.code === 'Space') {
         event.preventDefault()
@@ -143,7 +130,7 @@ export default {
     prevClick() {
       Log.d('prev')
       if (!this.playingSong) {
-        if (this.$store.state.playlist.length === 0) {
+        if (this.playlist.length === 0) {
           return
         }
         // 场景: 刷新了页面, 歌单有歌曲, 但是 index 为 -1
@@ -152,12 +139,12 @@ export default {
         return
       }
       // 1. 切换上一首歌
-      this.$store.dispatch(CHANGE_SONG, getPrevSong(this.playMode))
+      this.changeSong(getPrevSong(this.playMode))
     },
     nextClick() {
       Log.d('next')
       if (!this.playingSong) {
-        if (this.$store.state.playlist.length === 0) {
+        if (this.playlist.length === 0) {
           return
         }
         // 场景: 刷新了页面, 歌单有歌曲, 但是 index 为 -1
@@ -166,11 +153,11 @@ export default {
         return
       }
       // 2. 切换下一首
-      this.$store.dispatch(CHANGE_SONG, getNextSong(this.playMode))
+      this.changeSong(getNextSong(this.playMode))
     },
     playToggle() {
       if (!this.playingSong) {
-        if (this.$store.state.playlist.length === 0) {
+        if (this.playlist.length === 0) {
           return
         }
         // 场景: 刷新了页面, 歌单有歌曲, 但是 index 为 -1
@@ -182,7 +169,7 @@ export default {
     },
     togglePlayMode() {
       Log.d('togglePlayMode', this.playMode)
-      if (this.playMode === Object.keys(PLAY_MODES).length - 1) {
+      if (this.playMode === Object.keys(playModes).length - 1) {
         this.$store.commit(CHANGE_PLAY_MODE, 0)
         return
       }
@@ -214,11 +201,11 @@ export default {
     playEnd() {
       Log.d('end')
       switch (this.playMode) {
-        case PLAY_MODES.LIST_LOOP:
-        case PLAY_MODES.RANDOM:
+        case playModes.LIST_LOOP:
+        case playModes.RANDOM:
           this.nextClick()
           break
-        case PLAY_MODES.SINGLE_LOOP:
+        case playModes.SINGLE_LOOP:
           // 重置
           this.isPlaying = true
           break
@@ -229,17 +216,17 @@ export default {
       this.isPlaying = false
     },
     updateVolume(volume) {
-      this.$store.dispatch(SET_VOLUME, volume)
+      this.setVolume(volume)
     },
     volumeMuted(muted) {
       Log.d('muted', muted)
       if (muted) {
         this.lastVolume = this.volume
         // 静音操作
-        this.$store.dispatch(SET_VOLUME, 0)
+        this.setVolume(0)
       } else {
         // 恢复音量
-        this.$store.dispatch(SET_VOLUME, this.lastVolume)
+        this.setVolume(this.lastVolume)
       }
     },
     closePlaylist(el, event) {

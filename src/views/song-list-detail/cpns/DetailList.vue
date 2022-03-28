@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 15:27:25
- * @LastEditTime: 2022-03-28 22:04:42
+ * @LastEditTime: 2022-03-28 22:57:53
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -41,8 +41,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { formatImageUrl, formatSongTime } from '@/utils/format'
-import { INSERT_SONGS } from '@/types/action-types'
 export default {
   name: 'DetailList',
   props: {
@@ -52,6 +52,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['insertSongs']),
     getImageUrl(url, width, height) {
       return formatImageUrl(url, width, height)
     },
@@ -62,7 +63,7 @@ export default {
       return formatSongTime(duration)
     },
     playMusic(index) {
-      this.$store.dispatch(INSERT_SONGS, [this.songs[index]])
+      this.insertSongs([this.songs[index]])
     }
   }
 }

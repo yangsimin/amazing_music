@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 11:44:00
- * @LastEditTime: 2022-03-28 11:34:31
+ * @LastEditTime: 2022-03-28 22:55:53
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -32,10 +32,10 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import SongCover from '@/components/song-cover'
 
 import { formatSongTime, formatImageUrl } from '@/utils/format'
-import { INSERT_SONGS } from '@/types/action-types'
 
 export default {
   name: 'SongItem',
@@ -56,6 +56,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['insertSongs']),
     formatSongTime(duration) {
       return formatSongTime(duration)
     },
@@ -63,7 +64,7 @@ export default {
       return formatImageUrl(imageUrl, width, height)
     },
     addSong() {
-      this.$store.dispatch(INSERT_SONGS, [this.song])
+      this.insertSongs([this.song])
     }
   }
 }
