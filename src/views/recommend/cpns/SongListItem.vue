@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 22:33:38
- * @LastEditTime: 2022-03-28 22:54:16
+ * @LastEditTime: 2022-03-29 12:04:49
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -13,7 +13,7 @@
       @click.native="addSongs"
     ></song-cover>
     <h3
-      class="song-list-name h-10 mt-4 text-lg leading-5 cursor-pointer amz-truncate-2 media:hover:amz-text-hl lg:text-sm"
+      class="song-list-name h-10 mt-4 text-lg font-bold leading-5 cursor-pointer amz-truncate-2 media:hover:amz-text-hl lg:text-base lg:h-12"
       @click="jumpDetail"
     >
       {{ songList.name }}

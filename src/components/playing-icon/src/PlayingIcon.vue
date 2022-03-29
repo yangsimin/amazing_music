@@ -1,13 +1,13 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 10:53:34
- * @LastEditTime: 2022-03-28 11:37:27
+ * @LastEditTime: 2022-03-29 00:32:17
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
-  <ul class="playing-icon flex w-20 h-14 gap-x-1 overflow-hidden">
-    <li v-for="index in 5" :key="index" class="w-1/12 bg-red-600"></li>
+  <ul class="playing-icon flex w-16 h-14 justify-evenly overflow-hidden">
+    <li v-for="index in 5" :key="index" class="w-[10%] bg-red-600"></li>
   </ul>
 </template>
 

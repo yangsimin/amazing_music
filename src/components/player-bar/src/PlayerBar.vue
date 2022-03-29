@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:34:40
- * @LastEditTime: 2022-03-28 23:41:52
+ * @LastEditTime: 2022-03-29 20:56:44
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -56,7 +56,7 @@
         ></i>
       </div>
       <!-- 播放列表 -->
-      <div v-clickoutside="closePlaylist" :data-show="isPlaylistShow">
+      <div v-clickOutside="closePlaylist" :data-show="isPlaylistShow">
         <i
           class="iconfont icon-playlist pr-10 cursor-pointer media:hover:amz-text-hl before:text-2xl"
           :class="{ 'amz-text-hl': isPlaylistShow }"
@@ -84,7 +84,7 @@ import Playlist from '@/components/playlist'
 
 import { getPrevSong, getNextSong } from '../get-song'
 import { playModes, playModesIcon } from '@/common/play-mode'
-import clickoutside from '../directives'
+import clickOutside from '@/directives/click-outside/directives'
 
 import Logger from '@/utils/logger'
 const Log = Logger.create('PlayerBar')
@@ -98,7 +98,7 @@ export default {
     Playlist
   },
   directives: {
-    clickoutside
+    clickOutside
   },
   data: () => ({
     // 播放模式
@@ -108,7 +108,7 @@ export default {
   computed: {
     ...mapGetters([
       'playMode',
-      'playingSong',
+      'playingIndex',
       'volume',
       'playlist',
       'isPlaying'
@@ -135,7 +135,7 @@ export default {
     },
     prevClick() {
       Log.d('prev')
-      if (!this.playingSong) {
+      if (this.playingIndex < 0) {
         if (this.playlist.length === 0) {
           return
         }
@@ -149,7 +149,7 @@ export default {
     },
     nextClick() {
       Log.d('next')
-      if (!this.playingSong) {
+      if (this.playingIndex < 0) {
         if (this.playlist.length === 0) {
           return
         }
@@ -162,7 +162,7 @@ export default {
       this.changeSong(getNextSong(this.playMode))
     },
     playToggle() {
-      if (!this.playingSong) {
+      if (this.playingIndex < 0) {
         if (this.playlist.length === 0) {
           return
         }

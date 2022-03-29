@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:31:32
- * @LastEditTime: 2022-03-28 23:46:25
+ * @LastEditTime: 2022-03-29 00:17:39
  * @LastEditors: simonyang
  * @Description: 
       输入: 展示的信息, 播放控制; 
@@ -101,10 +101,10 @@ export default {
       return formatSongTime(this.duration, false)
     },
     songName() {
-      return this.playingSong && this.playingSong.songName
+      return this.playingSong.songName
     },
     artists() {
-      if (this.playingSong) {
+      if ('artists' in this.playingSong) {
         let artists = this.playingSong.artists
         artists = artists.map(artist => artist.name)
         return artists.join('/')
@@ -112,16 +112,14 @@ export default {
       return undefined
     },
     picUrl() {
-      return (
-        this.playingSong && formatImageUrl(this.playingSong.picUrl, 160, 160)
-      )
+      return formatImageUrl(this.playingSong.picUrl, 160, 160)
     }
   },
   watch: {
     // 监听外部修改 isPlaying 标志位
     isPlaying(playing) {
       if (playing) {
-        if (!this.playingSong) {
+        if (this.playingIndex < 0) {
           this.emitFinish()
           return
         }
@@ -131,19 +129,19 @@ export default {
         this.amzAudio.pause()
       }
     },
-    playingSong(song) {
-      if (song === null) {
+    playingIndex(index) {
+      if (index < 0) {
         this.resetAll()
         return
       }
-      this.playSong(song)
+      this.playSong(this.playingSong)
     },
     volume(newVal) {
       this.amzAudio.setVolume(newVal)
     }
   },
   methods: {
-    ...mapActions(['setPlayingUrl', 'requestPlayingSongUrl']),
+    ...mapActions(['setPlayingUrl']),
     ...mapMutations(['changePlayingState']),
     // 播放结束发射结束事件
     emitFinish() {
@@ -156,19 +154,12 @@ export default {
       this.$emit('error', message)
     },
     playSong(song) {
-      if (song.url) {
-        if (this.amzAudio.getSource() !== song.url) {
-          this.amzAudio.setSource(song.url)
-        }
-        this.amzAudio.play()
-        return
-      }
+      Log.d('song', song)
 
-      // 发送请求
-      this.requestPlayingSongUrl(song.id).then(() => {
+      if (this.amzAudio.getSource() !== song.url) {
         this.amzAudio.setSource(song.url)
-        this.amzAudio.play()
-      })
+      }
+      this.amzAudio.play()
     },
     // 重置播放进度
     resetProgress() {

@@ -1,11 +1,10 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 14:54:07
- * @LastEditTime: 2022-03-28 22:40:55
+ * @LastEditTime: 2022-03-29 10:14:14
  * @LastEditors: simonyang
  * @Description:
  */
-import { getSongUrl } from '@/api'
 import localCache from '@/utils/cache'
 
 import * as types from '../types/mutation-types'
@@ -88,12 +87,6 @@ export const changeSong = function ({ commit, state }, getSong) {
   // next: true下一首, false上一首
   const playingIndex = getSong(state.playingIndex, state.playlist)
   commit(types.CHANGE_PLAYING_INDEX, playingIndex)
-}
-// 获取歌曲的 url
-export const requestPlayingSongUrl = async function ({ commit }, id) {
-  const data = await getSongUrl(id)
-  const url = data.data[0].url
-  commit(types._SET_PLAYING_URL, url)
 }
 // 设置音量
 export const setVolume = function ({ commit }, volume) {

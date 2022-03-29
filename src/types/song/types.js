@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 16:38:48
- * @LastEditTime: 2022-03-28 18:10:57
+ * @LastEditTime: 2022-03-29 10:13:13
  * @LastEditors: simonyang
  * @Description:
  */
@@ -24,6 +24,7 @@ export class Song {
     const song = new this()
 
     song.id = originSong.id
+    song.url = `https://music.163.com/song/media/outer/url?id=${originSong.id}.mp3`
     song.picUrl = originSong.picUrl
     song.songName = originSong.name
     song.artists = originSong.song.artists.map(artists => ({
@@ -38,6 +39,7 @@ export class Song {
   static createFromSongList(originSong) {
     const song = new this()
     song.id = originSong.id
+    song.url = `https://music.163.com/song/media/outer/url?id=${originSong.id}.mp3`
     song.picUrl = originSong.al.picUrl
     song.songName = originSong.name
     song.artists = originSong.ar.map(artists => ({
@@ -69,6 +71,7 @@ export class SongList {
 export class SongListDetail {
   constructor(data) {
     const songListInfo = {
+      id: data.playlist.id,
       name: data.playlist.name,
       coverImgUrl: data.playlist.coverImgUrl,
       createTime: data.playlist.createTime,

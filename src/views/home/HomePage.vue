@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 21:13:40
- * @LastEditTime: 2022-03-28 12:20:01
+ * @LastEditTime: 2022-03-29 13:33:01
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -23,9 +23,11 @@
 <script>
 import AmzHeader from './cpns/AmzHeader.vue'
 import AmzPlayer from './cpns/AmzPlayer.vue'
+import mixinLifeCycle from '@/utils/logger/life-cycle'
 
 export default {
   name: 'HomePage',
+  mixins: [mixinLifeCycle(false)],
   components: {
     AmzHeader,
     AmzPlayer

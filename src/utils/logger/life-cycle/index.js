@@ -1,16 +1,17 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-15 10:51:36
- * @LastEditTime: 2022-03-28 15:15:41
+ * @LastEditTime: 2022-03-29 11:44:46
  * @LastEditors: simonyang
  * @Description:
  */
 import Logger from '../index'
-export default function (module, debug, options) {
-  const Log = Logger.create(module, debug, options)
+export default function (debug, options) {
+  let Log = null
 
   return {
     beforeCreate() {
+      Log = Logger.create(this.$options.name, debug, options)
       Log.d('beforeCreate')
     },
     created() {

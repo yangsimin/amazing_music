@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:27
- * @LastEditTime: 2022-03-24 13:29:50
+ * @LastEditTime: 2022-03-29 15:26:52
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -17,6 +17,8 @@
 import Banner from './cpns/Banner.vue'
 import RecommendNewSongs from './cpns/RecommendNewSongs.vue'
 import RecommendSongList from './cpns/RecommendSongList.vue'
+import mixinLifeCycle from '@/utils/logger/life-cycle'
+import Logger from '@/utils/logger'
 
 import {
   getBanner,
@@ -26,8 +28,11 @@ import {
 } from '@/api'
 import { Song, SongList } from '@/types/song/types'
 
+const Log = Logger.create('AmzRecommend', false)
+
 export default {
   name: 'AmzRecommend',
+  mixins: [mixinLifeCycle()],
   components: {
     Banner,
     RecommendNewSongs,
@@ -37,6 +42,7 @@ export default {
     images: [],
     newSongs: [],
     songLists: []
+    // scrollY: 0
   }),
   methods: {
     // 请求 Banner 数据
@@ -87,6 +93,16 @@ export default {
     this.getPersonalizedNewSong(6)
     this.getPersonalized(12)
     // this.getPersonalizedDJProgram()
+  },
+  beforeRouteLeave(to, from, next) {
+    this.scrollY = document.body.scrollTop
+    next()
+  },
+  activated() {
+    Log.d(this.scrollY)
+    if (this.scrollY) {
+      document.body.scrollTo(0, this.scrollY)
+    }
   }
 }
 </script>

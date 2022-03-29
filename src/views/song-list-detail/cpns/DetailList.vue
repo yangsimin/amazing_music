@@ -1,13 +1,13 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 15:27:25
- * @LastEditTime: 2022-03-29 00:00:03
+ * @LastEditTime: 2022-03-29 12:12:35
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
   <div class="detail-list">
-    <div class="flex items-center h-14 text-gray-400 even:bg-gray-100">
+    <div class="flex items-center h-14 text-gray-400 bg-gray-100">
       <span class="w-16 text-center">序号</span>
       <span class="flex items-center w-[35%] flex-1">歌曲</span>
       <span class="w-[25%] flex-shrink">歌手</span>
@@ -15,11 +15,16 @@
       <span class="w-20">时长</span>
     </div>
     <div
-      class="group flex items-center h-14 text-left media:hover:bg-gray-hl even:bg-gray-100"
+      class="group flex items-center h-14 text-left media:hover:bg-gray-hl odd:bg-gray-100"
+      :class="{ 'amz-text-hl': song.id === playingSong.id }"
       v-for="(song, index) in songs"
       :key="song.id"
     >
-      <div class="relative w-16 text-center cursor-pointer">
+      <playing-icon
+        class="scale-[0.4]"
+        v-if="song.id === playingSong.id"
+      ></playing-icon>
+      <div class="relative w-16 text-center cursor-pointer" v-else>
         <span class="group-hover:hidden">{{ index + 1 }}</span>
         <i
           class="hidden iconfont icon-play-music text-red-500 before:text-3xl group-hover:block"
@@ -28,7 +33,7 @@
       </div>
 
       <div class="flex items-center w-[35%] flex-1 cursor-pointer">
-        <img class="w-10 rounded-md" :src="song.picUrl" />
+        <img class="w-10 rounded-md" :src="getImageUrl(song.picUrl, 40, 40)" />
         <span class="ml-2 truncate">{{ song.songName }}</span>
       </div>
       <span class="w-[25%] flex-shrink truncate">{{
@@ -42,9 +47,14 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import PlayingIcon from '@/components/playing-icon'
 import { formatImageUrl, formatSongTime } from '@/utils/format'
+
 export default {
   name: 'DetailList',
+  components: {
+    PlayingIcon
+  },
   props: {
     songs: {
       type: Array,

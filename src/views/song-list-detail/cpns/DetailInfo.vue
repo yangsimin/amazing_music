@@ -1,12 +1,12 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 15:26:59
- * @LastEditTime: 2022-03-28 21:08:11
+ * @LastEditTime: 2022-03-29 19:48:05
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
-  <div class="detail-info flex">
+  <div class="detail-info relative flex">
     <img
       class="w-52 h-52 rounded-xl shadow-md flex-shrink-0"
       :src="getImageUrl(info.coverImgUrl, 416, 416)"
@@ -41,11 +41,19 @@
         {{ info.description }}
       </p>
     </div>
+    <div
+      class="absolute right-0 bottom-16 bg-red-600 px-5 py-2 rounded-full text-white cursor-pointer"
+      @click="$emit('playAll')"
+    >
+      播放全部
+    </div>
   </div>
 </template>
 
 <script>
 import { formatImageUrl, formatDate, formatPlayCount } from '@/utils/format'
+import Logger from '@/utils/logger'
+const Log = Logger.create('DetailInfo', false)
 
 export default {
   name: 'DetailInfo',
@@ -57,13 +65,13 @@ export default {
   },
   computed: {
     createTime() {
-      console.log('createTime', this.info.createTime)
+      Log.d('createTime', this.info.createTime)
       return formatDate('yyyy-MM-dd', this.info.createTime)
     },
     playCount() {
-      console.log('playCount', this.info.playCount)
+      Log.d('playCount', this.info.playCount)
       const result = formatPlayCount(this.info.playCount)
-      console.log(result)
+      Log.d(result)
       return result.count + result.unit
     }
   },
