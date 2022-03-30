@@ -1,12 +1,12 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-29 16:09:33
- * @LastEditTime: 2022-03-29 18:19:25
+ * @LastEditTime: 2022-03-30 14:34:43
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
-  <div class="amz-loading text-center font-bold" ref="amzLoading">
+  <div class="amz-loading w-full text-center font-bold" ref="amzLoading">
     Loading...
   </div>
 </template>

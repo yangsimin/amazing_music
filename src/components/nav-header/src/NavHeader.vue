@@ -1,13 +1,13 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 10:26:00
- * @LastEditTime: 2022-03-20 18:41:02
+ * @LastEditTime: 2022-03-30 23:33:53
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
   <nav class="nav-header relative">
-    <ul class="flex items-center text-xl">
+    <ul class="flex items-center text-xl" ref="tabWrapper">
       <li
         v-for="(title, index) in titles"
         :key="title"
@@ -33,21 +33,31 @@ export default {
     titles: {
       type: Array,
       default: () => []
+    },
+    activeIndex: {
+      type: Number,
+      required: true
     }
   },
   data: () => ({
-    activeIndex: 0,
     activeClass: ['amz-text-hl']
   }),
   methods: {
-    titleClick(index, event) {
-      this.activeIndex = index
+    titleClick(index) {
       // 发出点击事件
       this.$emit('titleClick', index)
-
-      // 修改 indicator 位置
-      const target = event.target
-      this.$refs.indicator.style.transform = `translateX(${target.offsetLeft}px)`
+      console.log()
+    }
+  },
+  watch: {
+    activeIndex(index) {
+      if (index < 0 || index >= this.titles.length) {
+        this.$refs.indicator.hidden = true
+      } else {
+        const offsetLeft = this.$refs.tabWrapper.children[index].offsetLeft
+        this.$refs.indicator.style.transform = `translateX(${offsetLeft}px)`
+        this.$refs.indicator.hidden = false
+      }
     }
   }
 }

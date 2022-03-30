@@ -23,6 +23,3 @@ test('formatImageUrl', () => {
   )
 })
 
-test('71272736 转成 7127万', () => {
-  expect(formatPlayCount(71272736)).toBe('7127万')
-})

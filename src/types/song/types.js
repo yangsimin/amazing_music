@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 16:38:48
- * @LastEditTime: 2022-03-29 10:13:13
+ * @LastEditTime: 2022-03-30 13:40:15
  * @LastEditors: simonyang
  * @Description:
  */
@@ -63,7 +63,7 @@ export class SongList {
   constructor(originSongList) {
     this.id = originSongList.id
     this.name = originSongList.name
-    this.picUrl = originSongList.picUrl
+    this.picUrl = originSongList.picUrl || originSongList.coverImgUrl
     this.playCount = originSongList.playCount
   }
 }

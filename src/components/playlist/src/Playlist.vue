@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-24 19:38:41
- * @LastEditTime: 2022-03-29 11:40:06
+ * @LastEditTime: 2022-03-30 10:49:16
  * @LastEditors: simonyang
  * @Description: 
   当前播放   歌曲总数      清空列表
@@ -152,15 +152,6 @@ export default {
 </script>
 
 <style scoped>
-/* Chrome Safari */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-/* Firefox */
-.no-scrollbar {
-  scrollbar-width: 0;
-}
-
 .song-move {
   transition: transform 500ms;
 }

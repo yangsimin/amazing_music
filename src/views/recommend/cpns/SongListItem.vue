@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 22:33:38
- * @LastEditTime: 2022-03-29 12:04:49
+ * @LastEditTime: 2022-03-30 14:31:34
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -77,6 +77,6 @@ export default {
 
 <style scoped>
 .song-cover::before {
-  font-size: 50px;
+  font-size: 3.125rem;
 }
 </style>

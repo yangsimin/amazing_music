@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:31:32
- * @LastEditTime: 2022-03-29 00:17:39
+ * @LastEditTime: 2022-03-30 15:04:28
  * @LastEditors: simonyang
  * @Description: 
       输入: 展示的信息, 播放控制; 
@@ -191,13 +191,17 @@ export default {
     },
     // 获取到音频总时长时触发
     durationchange() {
-      this.duration = this.amzAudio.getDuration()
+      if (this.isPlaying) {
+        this.duration = this.amzAudio.getDuration()
+      }
     },
     // 开始获取音频数据时触发
     loadeddata() {},
     // 缓冲时触发, 获取缓冲进度
     onProgress() {
-      this.loadProgress = this.amzAudio.getLoadProgress()
+      if (this.isPlaying) {
+        this.loadProgress = this.amzAudio.getLoadProgress()
+      }
     },
     // 等待缓冲时触发
     // TODO 可以修改 loading 的 ui

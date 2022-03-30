@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 15:26:59
- * @LastEditTime: 2022-03-29 19:48:05
+ * @LastEditTime: 2022-03-30 15:07:43
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -11,8 +11,12 @@
       class="w-52 h-52 rounded-xl shadow-md flex-shrink-0"
       :src="getImageUrl(info.coverImgUrl, 416, 416)"
     />
-    <div class="flex flex-col justify-around ml-7 text-gray-600">
-      <h3 class="text-2xl font-bold text-gray-800">{{ info.name }}</h3>
+    <div
+      class="min-w-[18.75rem] flex-1 flex flex-col justify-around ml-7 text-gray-600"
+    >
+      <h3 class="truncate text-2xl font-bold text-gray-800">
+        {{ info.name }}
+      </h3>
       <div class="flex items-center">
         <img
           class="w-10 rounded-full"
@@ -36,16 +40,18 @@
         <span class="ml-5 text-black font-bold">播放数:&nbsp;</span>
         {{ playCount }}
       </div>
-      <p class="amz-truncate-2" :title="info.description">
-        <span class="text-black font-bold">简介:&nbsp;</span>
-        {{ info.description }}
-      </p>
-    </div>
-    <div
-      class="absolute right-0 bottom-16 bg-red-600 px-5 py-2 rounded-full text-white cursor-pointer"
-      @click="$emit('playAll')"
-    >
-      播放全部
+      <div class="flex">
+        <p class="flex-1 amz-truncate-2" :title="info.description">
+          <span class="text-black font-bold">简介:&nbsp;</span>
+          {{ info.description }}
+        </p>
+        <div
+          class="self-end flex-shrink-0 w-28 bg-red-600 px-5 py-2 rounded-full text-white cursor-pointer"
+          @click="$emit('playAll')"
+        >
+          播放全部
+        </div>
+      </div>
     </div>
   </div>
 </template>

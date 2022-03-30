@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 23:03:30
- * @LastEditTime: 2022-03-19 11:38:20
+ * @LastEditTime: 2022-03-30 23:32:24
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -24,7 +24,12 @@
     </h1>
 
     <!-- 导航部分 -->
-    <nav-header class="flex-1" :titles="titles" @titleClick="titleClick" />
+    <nav-header
+      class="flex-1"
+      :titles="titles"
+      @titleClick="titleClick"
+      :activeIndex="activeIndex"
+    />
 
     <!-- 搜索框部分 -->
     <div>
@@ -53,6 +58,9 @@ export default {
   computed: {
     titles() {
       return this.tabs.map(tab => tab.title)
+    },
+    activeIndex() {
+      return this.tabs.findIndex(tab => tab.path === this.$route.path)
     }
   },
   methods: {

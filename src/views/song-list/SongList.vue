@@ -1,55 +1,112 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:34
- * @LastEditTime: 2022-03-29 22:58:15
+ * @LastEditTime: 2022-03-30 23:07:04
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
-  <div class="song-list">
-    <div class="flex items-center">
-      <h3 class="font-bold text-lg">所有</h3>
-      <span>全部歌单</span>
+  <div class="song-list min-w-[1024px]">
+    <div
+      class="flex justify-between space-x-3 mt-2 overflow-scroll no-scrollbar"
+    >
+      <!-- 所有标签 -->
+      <cate-card
+        v-for="(category, index) in categories"
+        :key="category"
+        :category="category"
+        :tags="filterTags(index)"
+        :activeTag="activeTag"
+        @changeTag="changeTag"
+      ></cate-card>
     </div>
-    <div class="flex" v-for="(category, index) in categories" :key="category">
-      <h3 class="w-12 font-bold text-lg">{{ category }}</h3>
-      <div class="flex flex-wrap">
-        <span
-          class="mr-2 px-2 py-1 text-gray-600 border-2 rounded-full cursor-pointer"
-          v-for="tag in filterSongList(index)"
-          :key="tag.name"
+    <!-- 歌单列表 -->
+    <div
+      class="flex flex-wrap w-full mt-5 min-h-[1024px]"
+      v-amzLoading="isLoading"
+    >
+      <div
+        class="w-[12.5%] p-2"
+        v-for="songList in songLists"
+        :key="songList.id"
+      >
+        <div class="relative">
+          <song-cover
+            class="w-full rounded-xl cursor-pointer"
+            :img="songList.picUrl"
+            alt=""
+            @click.native="addSongs(songList.id)"
+          />
+          <div class="play-count absolute right-0 top-1 text-white">
+            <i class="iconfont icon-player-play"></i>
+            <span class="ml-1">{{ getPlayCount(songList.playCount) }}</span>
+          </div>
+        </div>
+        <h3
+          class="mt-2 amz-truncate-2 font-bold text-base cursor-pointer hover:amz-text-hl"
+          @click="jumpDetail(songList.id)"
         >
-          {{ tag.name }}
-        </span>
+          {{ songList.name }}
+        </h3>
       </div>
     </div>
+    <!-- 分页 -->
+    <amz-pagination
+      class="flex justify-center my-5"
+      :total="pageInfo.total"
+      :page-size="limit"
+      :current-page="currentPage"
+      @current-change="currentChange"
+      @prev-click="prevClick"
+      @next-click="nextClick"
+    ></amz-pagination>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import CateCard from './cpns/CateCard.vue'
+import SongCover from '@/components/song-cover'
+import AmzPagination from '@/base-ui/amz-pagination'
+
 import { getCateList, getTopList } from '@/api/song-list'
+import { getSongListTrack } from '@/api/common'
+import { Song, SongList } from '@/types/song/types'
+import { formatPlayCount } from '@/utils/format'
 import Logger from '@/utils/logger'
+import savePosition from '@/mixin/save-position'
 
 const Log = Logger.create('SongList')
 
 export default {
   name: 'SongList',
+  mixins: [savePosition],
+  components: {
+    CateCard,
+    SongCover,
+    AmzPagination
+  },
   data: () => ({
-    curCate: '',
+    activeTag: '全部歌单',
     // 类型大类
     categories: [],
     // 所有小类, {name, category, hot}
-    allCateList: [],
+    allTags: [],
     // 小类对应的当前页歌单
     songLists: [],
     pageInfo: {
-      offset: 0,
-      limit: 0,
-      total: 0,
-      sumPage: 0
-    }
+      tag: '',
+      total: 0
+    },
+    // 每页显示的数量
+    limit: 40,
+    // 当前页数, 起始页为1
+    currentPage: 1,
+    isLoading: false
   }),
   methods: {
+    ...mapActions(['insertSongs']),
+    // 请求所有标签
     async requestCateList() {
       let data = await getCateList()
       Log.i('requestCateList', data)
@@ -57,25 +114,115 @@ export default {
       for (const key in data.categories) {
         this.categories[key] = data.categories[key]
       }
-      this.allCateList = data.sub.map(each => ({
+      this.allTags = data.sub.map(each => ({
         name: each.name,
         category: each.category,
         hot: each.hot
       }))
+      // 添加 "全部歌单" 标签
+      this.allTags.push({
+        name: data.all.name,
+        category: data.all.category,
+        hot: data.all.hot
+      })
     },
-    async requestSongLists(cate) {
-      let data = await getTopList(cate, 40, 0)
+    // 请求歌单列表
+    async requestSongLists() {
+      this.isLoading = true
+      this.songLists.splice(0)
+      let data
+      if (this.pageInfo.tag !== this.activeTag) {
+        this.pageInfo.tag = this.activeTag
+        this.currentPage = 1
+      }
+      data = await getTopList(
+        this.pageInfo.tag,
+        this.limit,
+        (this.currentPage - 1) * this.limit
+      )
+      this.pageInfo.total = data.total
+      this.songLists = data.playlists.map(playlist => new SongList(playlist))
+      this.isLoading = false
       Log.i(data)
     },
-    filterSongList(category) {
-      return this.allCateList.filter(cate => cate.category === category)
+    // 根据类型过滤 tag
+    filterTags(category) {
+      return this.allTags.filter(cate => cate.category === category)
+    },
+    // 切换 tag
+    changeTag(tag) {
+      this.activeTag = tag
+    },
+    // 将歌单添加进播放列表
+    async addSongs(id) {
+      Log.d('addSongs')
+      const data = await getSongListTrack(id, 20, 0)
+      if (data.code !== 200) {
+        throw Error('请求数据失败 code:', data.code)
+      }
+      const songs = data.songs.map(song => {
+        return Song.createFromSongList(song)
+      })
+
+      this.insertSongs(songs)
+    },
+    // 跳到歌单详情页面
+    jumpDetail(id) {
+      Log.d('jumpDetail')
+      this.$router.push({
+        name: 'song-list-detail',
+        params: {
+          songListId: id
+        }
+      })
+    },
+    // 格式化播放次数
+    getPlayCount(count) {
+      const ret = formatPlayCount(count)
+      return ret.count + ret.unit
+    },
+    currentChange(page) {
+      Log.d('currentchange', page)
+      this.currentPage = page
+    },
+    prevClick() {
+      Log.d('prev')
+      this.currentPage -= 1
+    },
+    nextClick() {
+      Log.d('next')
+      this.currentPage += 1
+    }
+  },
+  watch: {
+    activeTag(tag) {
+      Log.d('watch', tag)
+      this.requestSongLists()
+    },
+    currentPage() {
+      document.body.scrollTo(0, 0)
+      this.requestSongLists()
     }
   },
   created() {
     this.requestCateList()
-    // this.requestSongLists('安静')
+    this.requestSongLists()
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.song-cover::before {
+  font-size: 3.125rem;
+}
+.icon-player-play::before {
+  font-size: 0.8rem;
+}
+.play-count {
+  @apply text-sm py-1 pl-1 pr-3;
+  background: url('https://img.alicdn.com/tfs/TB1xEGRub9YBuNjy0FgXXcxcXXa-268-48.png')
+    no-repeat;
+  background-size: cover;
+  background-position-x: 100%;
+}
+</style>

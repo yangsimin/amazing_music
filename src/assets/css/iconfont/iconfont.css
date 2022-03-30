@@ -12,6 +12,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-next-page:before {
+  content: '\eb11';
+}
+.icon-prev-page:before {
+  content: '\e77d';
+}
+.icon-ellipsis:before {
+  content: '\eb10';
+}
 .icon-cross-thin:before {
   content: '\e657';
 }

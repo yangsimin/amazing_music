@@ -1,18 +1,29 @@
+/* 全局的变量 */
+:root {
+  --color-text: #111827;
+  --color-text-hl: #dc2626;
+  font-size: 12px;
+}
+
 html,
 body {
   max-width: 100%;
   height: 100%;
   overflow-x: hidden;
 }
+
 body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* 全局的变量 */
-:root {
-  --color-text: #111827;
-  --color-text-hl: #dc2626;
-  font-size: 12px;
+
+/* Chrome Safari */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Firefox */
+.no-scrollbar {
+  scrollbar-width: 0;
 }
 
 /* 在 hover 可用时, 才添加对应样式 */
