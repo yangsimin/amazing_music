@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 14:54:07
- * @LastEditTime: 2022-03-29 10:14:14
+ * @LastEditTime: 2022-03-31 10:23:00
  * @LastEditors: simonyang
  * @Description:
  */
@@ -63,10 +63,13 @@ export const insertSongs = function ({ commit, state, dispatch }, songs) {
   }
   // 2. 添加多首, 粗暴的方法, 将原有歌曲清空, 再添加
   dispatch('clearSongList')
-  commit(types._INSERT_SONGS, { songs, index: 0 })
-  commit(types.CHANGE_PLAYING_INDEX, 0)
+  // 在下一个宏事件执行, 因为清空歌曲后立即添加新歌曲可能会导致播放器未能识别歌单切换而播放错误
+  setTimeout(() => {
+    commit(types._INSERT_SONGS, { songs, index: 0 })
+    commit(types.CHANGE_PLAYING_INDEX, 0)
 
-  localCache.setCache(KEY_SONG_LIST, state.playlist)
+    localCache.setCache(KEY_SONG_LIST, state.playlist)
+  }, 0)
 }
 // 清空歌单
 export const clearSongList = function ({ commit }) {
