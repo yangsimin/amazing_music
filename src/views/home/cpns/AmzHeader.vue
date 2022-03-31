@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 23:03:30
- * @LastEditTime: 2022-03-30 23:32:24
+ * @LastEditTime: 2022-03-31 08:43:03
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -51,8 +51,8 @@ export default {
   data: () => ({
     tabs: [
       { title: '推荐', path: '/recommend' },
-      { title: '排行榜', path: '/top-list' },
-      { title: '歌单', path: '/song-list' }
+      { title: '歌单', path: '/song-list' },
+      { title: '排行榜', path: '/top-list' }
     ]
   }),
   computed: {

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 10:26:00
- * @LastEditTime: 2022-03-30 23:33:53
+ * @LastEditTime: 2022-03-31 08:43:44
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -11,7 +11,7 @@
       <li
         v-for="(title, index) in titles"
         :key="title"
-        class="block w-20 py-2 rounded-sm text-center cursor-pointer media:hover:amz-text-hl"
+        class="block w-20 py-2 mx-5 rounded-sm text-center cursor-pointer media:hover:amz-text-hl"
         :class="index === activeIndex ? activeClass : ''"
         @click="titleClick(index, $event)"
       >
