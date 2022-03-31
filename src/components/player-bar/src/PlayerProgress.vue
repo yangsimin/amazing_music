@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:31:32
- * @LastEditTime: 2022-03-30 15:04:28
+ * @LastEditTime: 2022-03-31 13:19:05
  * @LastEditors: simonyang
  * @Description: 
       输入: 展示的信息, 播放控制; 
@@ -129,12 +129,12 @@ export default {
         this.amzAudio.pause()
       }
     },
-    playingIndex(index) {
-      if (index < 0) {
+    playingSong(song) {
+      if (Object.keys(song).length === 0) {
         this.resetAll()
         return
       }
-      this.playSong(this.playingSong)
+      this.playSong(song)
     },
     volume(newVal) {
       this.amzAudio.setVolume(newVal)
