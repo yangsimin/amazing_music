@@ -16,7 +16,6 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-
 /* Chrome Safari */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

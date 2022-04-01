@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 15:27:25
- * @LastEditTime: 2022-03-29 12:12:35
+ * @LastEditTime: 2022-04-01 10:36:51
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -9,9 +9,9 @@
   <div class="detail-list">
     <div class="flex items-center h-14 text-gray-400 bg-gray-100">
       <span class="w-16 text-center">序号</span>
-      <span class="flex items-center w-[35%] flex-1">歌曲</span>
-      <span class="w-[25%] flex-shrink">歌手</span>
-      <span class="w-[20%] flex-shrink">专辑</span>
+      <span class="flex items-center w-[30%] flex-auto">歌曲</span>
+      <span class="w-[30%] flex-shrink flex-auto">歌手</span>
+      <span class="w-[22%] flex-shrink">专辑</span>
       <span class="w-20">时长</span>
     </div>
     <div
@@ -24,6 +24,7 @@
         class="scale-[0.4]"
         v-if="song.id === playingSong.id"
       ></playing-icon>
+      <!-- 序号 -->
       <div class="relative w-16 text-center cursor-pointer" v-else>
         <span class="group-hover:hidden">{{ index + 1 }}</span>
         <i
@@ -31,15 +32,21 @@
           @click="playMusic(index)"
         ></i>
       </div>
-
-      <div class="flex items-center w-[35%] flex-1 cursor-pointer">
-        <img class="w-10 rounded-md" :src="getImageUrl(song.picUrl, 40, 40)" />
+      <!-- 歌曲 -->
+      <div class="flex items-center w-[30%] flex-auto cursor-pointer">
+        <amz-image
+          class="w-10 rounded-md overflow-hidden"
+          :src="getImageUrl(song.picUrl, 80, 80)"
+        />
         <span class="ml-2 truncate">{{ song.songName }}</span>
       </div>
-      <span class="w-[25%] flex-shrink truncate">{{
+      <!-- 歌手 -->
+      <span class="w-[30%] flex-shrink truncate flex-auto">{{
         getArtists(song.artists)
       }}</span>
-      <span class="w-[20%] flex-shrink truncate">{{ song.album.name }}</span>
+      <!-- 专辑 -->
+      <span class="w-[22%] flex-shrink truncate">{{ song.album.name }}</span>
+      <!-- 时长 -->
       <span class="w-20">{{ getSongTime(song.duration) }}</span>
     </div>
   </div>

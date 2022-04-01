@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:31:32
- * @LastEditTime: 2022-03-31 13:19:05
+ * @LastEditTime: 2022-04-01 10:38:47
  * @LastEditors: simonyang
  * @Description: 
       输入: 展示的信息, 播放控制; 
@@ -22,7 +22,11 @@
 <template>
   <div class="player-progress flex items-center">
     <div class="h-20 w-20 p-2 mr-2 md:block">
-      <img class="h-full rounded-lg shadow-sm" :src="picUrl" alt="" />
+      <amz-image
+        class="h-full rounded-lg shadow-sm overflow-hidden"
+        :src="picUrl"
+        alt=""
+      />
     </div>
     <div class="flex-1 mr-4 md:mr-0">
       <div class="flex justify-between pb-2">

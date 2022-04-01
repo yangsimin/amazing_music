@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:34
- * @LastEditTime: 2022-03-30 23:07:04
+ * @LastEditTime: 2022-03-31 21:00:23
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -33,7 +33,7 @@
         <div class="relative">
           <song-cover
             class="w-full rounded-xl cursor-pointer"
-            :img="songList.picUrl"
+            :img="getImageUrl(songList.picUrl, 320, 320)"
             alt=""
             @click.native="addSongs(songList.id)"
           />
@@ -72,11 +72,11 @@ import AmzPagination from '@/base-ui/amz-pagination'
 import { getCateList, getTopList } from '@/api/song-list'
 import { getSongListTrack } from '@/api/common'
 import { Song, SongList } from '@/types/song/types'
-import { formatPlayCount } from '@/utils/format'
+import { formatPlayCount, formatImageUrl } from '@/utils/format'
 import Logger from '@/utils/logger'
 import savePosition from '@/mixin/save-position'
 
-const Log = Logger.create('SongList')
+const Log = Logger.create('SongList', true)
 
 export default {
   name: 'SongList',
@@ -181,6 +181,9 @@ export default {
       const ret = formatPlayCount(count)
       return ret.count + ret.unit
     },
+    getImageUrl(url, width, height) {
+      return formatImageUrl(url, width, height)
+    },
     currentChange(page) {
       Log.d('currentchange', page)
       this.currentPage = page
@@ -202,7 +205,23 @@ export default {
     currentPage() {
       document.body.scrollTo(0, 0)
       this.requestSongLists()
+    },
+    $route(route) {
+      Log.d('route change', route)
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    Log.d('beforeRouteEnter', to, from)
+    next(vm => {
+      if (to.query.tag) {
+        Log.d('vm', vm)
+        vm.activeTag = to.query.tag
+      }
+    })
+  },
+  beforeRouteUpdate(to, from, next) {
+    Log.d('beforeRouteUpdate', to, from)
+    next()
   },
   created() {
     this.requestCateList()
@@ -216,13 +235,15 @@ export default {
   font-size: 3.125rem;
 }
 .icon-player-play::before {
-  font-size: 0.8rem;
+  font-size: 0.5rem;
 }
 .play-count {
-  @apply text-sm py-1 pl-1 pr-3;
+  @apply text-sm py-1.5 pl-2 pr-4;
+  /* @apply text-sm pl-2; */
   background: url('https://img.alicdn.com/tfs/TB1xEGRub9YBuNjy0FgXXcxcXXa-268-48.png')
     no-repeat;
   background-size: cover;
   background-position-x: 100%;
+  border-bottom-left-radius: 30%;
 }
 </style>

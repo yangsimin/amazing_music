@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-24 14:32:14
- * @LastEditTime: 2022-03-29 10:02:28
+ * @LastEditTime: 2022-03-31 16:01:25
  * @LastEditors: simonyang
  * @Description:
  * 用法:
@@ -12,9 +12,9 @@ import { formatDate } from '../format/index.js'
 
 // 全局 DEBUG 开关
 const GLOBAL_DEBUG = process.env.NODE_ENV !== 'production'
-const DEFAULT_OPTIONS = { time: false, date: false }
+const DEFAULT_OPTIONS = { time: true, date: false }
 const DATE_FORMAT = 'yyyy-MM-dd'
-const TIME_FORMAT = 'HH:mm:ss'
+const TIME_FORMAT = 'HH:mm:ss.SSS'
 
 // 定义公共函数
 const baseLogger = {
@@ -49,19 +49,17 @@ const baseLogger = {
   _getHeader(level) {
     let headerInfo = ''
     const timestamp = Date.now()
-
     if (this.options) {
       if (this.options.date) {
         const date = formatDate(DATE_FORMAT, timestamp)
-        headerInfo = headerInfo + ' ' + date
+        headerInfo = headerInfo + date
       }
       if (this.options.time) {
         const time = formatDate(TIME_FORMAT, timestamp)
         headerInfo = headerInfo + ' ' + time
       }
     }
-
-    headerInfo += `${level} [${this.module}]`
+    headerInfo += ` ${level} [${this.module}]`
 
     return headerInfo
   }

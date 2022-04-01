@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-19 16:43:27
- * @LastEditTime: 2022-03-28 23:04:12
+ * @LastEditTime: 2022-03-31 14:20:02
  * @LastEditors: simonyang
  * @Description:
  */
@@ -13,6 +13,7 @@ import state from './state'
 import mutations from './mutations'
 import * as getters from './getters'
 import * as actions from './actions'
+import moduleTopList from './top-list'
 
 Vue.use(Vuex)
 
@@ -23,6 +24,9 @@ const store = new Vuex.Store({
   getters,
   mutations,
   actions,
+  modules: {
+    topList: moduleTopList
+  },
   strict: debug,
   plugins: debug ? [createLogger()] : []
 })

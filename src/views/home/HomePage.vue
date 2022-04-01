@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 21:13:40
- * @LastEditTime: 2022-03-29 13:33:01
+ * @LastEditTime: 2022-04-01 10:52:06
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -12,7 +12,7 @@
     </div>
 
     <main class="w-full h-full mt-2 amz-max-width mx-auto pb-32 px-2 md:pb-24">
-      <keep-alive>
+      <keep-alive exclude="SongListDetail">
         <router-view></router-view>
       </keep-alive>
     </main>

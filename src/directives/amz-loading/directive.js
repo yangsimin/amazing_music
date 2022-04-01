@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-29 16:12:41
- * @LastEditTime: 2022-03-30 14:16:02
+ * @LastEditTime: 2022-03-31 14:40:49
  * @LastEditors: simonyang
  * @Description:
  */
@@ -41,7 +41,6 @@ const toggleLoading = (el, binding) => {
     Vue.nextTick(() => {
       // 控制loading组件显示
       el.style.position = 'relative'
-      console.log(el.children)
       // 插入到目标元素
       el.append(el.__loading.$el)
     })

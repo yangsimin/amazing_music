@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 11:41:37
- * @LastEditTime: 2022-03-30 13:29:41
+ * @LastEditTime: 2022-03-31 14:55:12
  * @LastEditors: simonyang
  * @Description: 
  
@@ -25,7 +25,7 @@
 <script>
 import { mapActions } from 'vuex'
 import DetailInfo from './cpns/DetailInfo.vue'
-import DetailList from './cpns/DetailList.vue'
+import DetailList from '@/components/detail-list'
 import RecommendCard from './cpns/RecommendCard.vue'
 
 import { getSongListDetail, getSongListTrack } from '@/api/common'
@@ -70,6 +70,7 @@ export default {
   methods: {
     ...mapActions(['insertSongs']),
     async requestDetailInfo() {
+      this.isLoading = true
       let data = await getSongListDetail(this.songListId)
       const songListInfo = new SongListDetail(data)
       Object.assign(this.info, songListInfo)
@@ -93,7 +94,7 @@ export default {
       params => {
         if (params.songListId) {
           Log.d('request', params)
-          this.isLoading = true
+
           this.songs.splice(0)
           this.requestDetailInfo()
           document.body.scrollTo(0, 0)

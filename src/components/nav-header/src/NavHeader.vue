@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 10:26:00
- * @LastEditTime: 2022-03-31 08:43:44
+ * @LastEditTime: 2022-04-01 11:17:26
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -22,6 +22,7 @@
     <div
       class="absolute left-0 -bottom-1 w-20 h-[2px] rounded-full amz-bg-hl transition-all"
       ref="indicator"
+      hidden
     ></div>
   </nav>
 </template>

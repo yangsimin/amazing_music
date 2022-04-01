@@ -1,13 +1,14 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 20:18:12
- * @LastEditTime: 2022-03-20 18:10:19
+ * @LastEditTime: 2022-04-01 10:29:49
  * @LastEditors: simonyang
  * @Description: 歌曲封面, 依赖 iconfront
 -->
 <template>
   <div class="song-cover overflow-hidden" @click="playMusic">
-    <img class="w-full transition duration-300" :src="img" alt="" />
+    <amz-image class="w-full transition duration-300" :src="img"></amz-image>
+    <!-- <img class="w-full transition duration-300" :src="img" alt="" /> -->
   </div>
 </template>
 

@@ -12,6 +12,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-default-head:before {
+  content: "\e604";
+}
 .icon-next-page:before {
   content: '\eb11';
 }

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-30 08:34:51
- * @LastEditTime: 2022-03-30 09:02:04
+ * @LastEditTime: 2022-03-31 11:18:27
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -18,9 +18,9 @@
       v-for="songList in relatedSongLists"
       :key="songList.id"
     >
-      <img
-        class="w-20 h-20 rounded-md"
-        :src="getImageUrl(songList.coverImgUrl, 80, 80)"
+      <amz-image
+        class="w-20 h-20 rounded-md overflow-hidden"
+        :src="getImageUrl(songList.coverImgUrl, 160, 160)"
       />
       <div class="flex flex-col justify-between ml-2">
         <h4 class="text-base font-bold amz-truncate-2">

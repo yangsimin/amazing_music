@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-24 19:38:41
- * @LastEditTime: 2022-03-30 10:49:16
+ * @LastEditTime: 2022-03-31 09:24:30
  * @LastEditors: simonyang
  * @Description: 
   当前播放   歌曲总数      清空列表
@@ -82,7 +82,7 @@ import mixinLifeCycle from '@/utils/logger/life-cycle'
 
 export default {
   name: 'Playlist',
-  mixins: [mixinLifeCycle()],
+  mixins: [mixinLifeCycle(false)],
   components: {
     PlayingIcon
   },

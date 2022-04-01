@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:27
- * @LastEditTime: 2022-03-29 15:26:52
+ * @LastEditTime: 2022-03-31 09:24:06
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -32,7 +32,7 @@ const Log = Logger.create('AmzRecommend', false)
 
 export default {
   name: 'AmzRecommend',
-  mixins: [mixinLifeCycle()],
+  mixins: [mixinLifeCycle(false)],
   components: {
     Banner,
     RecommendNewSongs,

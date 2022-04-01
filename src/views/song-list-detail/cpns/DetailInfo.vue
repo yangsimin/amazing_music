@@ -1,27 +1,53 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 15:26:59
- * @LastEditTime: 2022-03-30 15:07:43
+ * @LastEditTime: 2022-04-01 11:11:58
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
   <div class="detail-info relative flex">
-    <img
-      class="w-52 h-52 rounded-xl shadow-md flex-shrink-0"
+    <amz-image
+      class="w-52 h-52 rounded-xl shadow-md flex-shrink-0 overflow-hidden"
       :src="getImageUrl(info.coverImgUrl, 416, 416)"
     />
+
     <div
       class="min-w-[18.75rem] flex-1 flex flex-col justify-around ml-7 text-gray-600"
     >
       <h3 class="truncate text-2xl font-bold text-gray-800">
         {{ info.name }}
       </h3>
-      <div class="flex items-center">
-        <img
-          class="w-10 rounded-full"
+      <div class="flex items-center grayscale-0">
+        <amz-image
+          class="w-10 rounded-full overflow-hidden"
           :src="getImageUrl(info.creator.avatarUrl, 80, 80)"
-        />
+        >
+          <template v-slot:placeholder>
+            <img
+              class="grayscale"
+              :src="
+                getImageUrl(
+                  'https://p1.music.126.net/SUeqMM8HOIpHv9Nhl9qt9w==/109951165647004069.jpg',
+                  80,
+                  80
+                )
+              "
+            />
+          </template>
+          <template v-slot:error>
+            <img
+              class="grayscale"
+              :src="
+                getImageUrl(
+                  'https://p1.music.126.net/SUeqMM8HOIpHv9Nhl9qt9w==/109951165647004069.jpg',
+                  80,
+                  80
+                )
+              "
+            />
+          </template>
+        </amz-image>
         <span class="ml-4">{{ info.creator.nickname }}</span>
         <span class="ml-6 text-gray-500">创建: {{ createTime }}</span>
       </div>
@@ -31,6 +57,7 @@
           class="py-1 px-2 mr-3 bg-red-600 text-sm text-white rounded-full cursor-pointer"
           v-for="tag in info.tags"
           :key="tag"
+          @click="jumpSongList(tag)"
           >{{ tag }}
         </a>
       </div>
@@ -84,6 +111,14 @@ export default {
   methods: {
     getImageUrl(url, width, height) {
       return formatImageUrl(url, width, height)
+    },
+    jumpSongList(tag) {
+      this.$router.push({
+        name: 'song-list',
+        query: {
+          tag
+        }
+      })
     }
   }
 }

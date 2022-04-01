@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 16:38:48
- * @LastEditTime: 2022-03-30 13:40:15
+ * @LastEditTime: 2022-03-31 15:22:42
  * @LastEditors: simonyang
  * @Description:
  */
@@ -65,6 +65,7 @@ export class SongList {
     this.name = originSongList.name
     this.picUrl = originSongList.picUrl || originSongList.coverImgUrl
     this.playCount = originSongList.playCount
+    this.topListType = originSongList.ToplistType || ''
   }
 }
 
@@ -87,5 +88,23 @@ export class SongListDetail {
       }
     }
     Object.assign(this, songListInfo)
+  }
+}
+/**
+ * @method: 榜单信息
+ * @param {*}
+ */
+export class ListInfo {
+  constructor(data) {
+    const listInfo = {
+      id: data.id,
+      name: data.name,
+      description: data.description,
+      playCount: data.playCount,
+      coverImgUrl: data.coverImgUrl,
+      updateFrequency: data.updateFrequency,
+      updateTime: data.updateTime
+    }
+    Object.assign(this, listInfo)
   }
 }
