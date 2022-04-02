@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:27
- * @LastEditTime: 2022-03-31 09:24:06
+ * @LastEditTime: 2022-04-02 18:09:03
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -17,7 +17,8 @@
 import Banner from './cpns/Banner.vue'
 import RecommendNewSongs from './cpns/RecommendNewSongs.vue'
 import RecommendSongList from './cpns/RecommendSongList.vue'
-import mixinLifeCycle from '@/utils/logger/life-cycle'
+import mixinLifeCycle from '@/mixins/life-cycle'
+import restoreScroll from '@/mixins/restore-scroll'
 import Logger from '@/utils/logger'
 
 import {
@@ -28,11 +29,12 @@ import {
 } from '@/api'
 import { Song, SongList } from '@/types/song/types'
 
+// eslint-disable-next-line no-unused-vars
 const Log = Logger.create('AmzRecommend', false)
 
 export default {
   name: 'AmzRecommend',
-  mixins: [mixinLifeCycle(false)],
+  mixins: [mixinLifeCycle(false), restoreScroll],
   components: {
     Banner,
     RecommendNewSongs,
@@ -42,7 +44,6 @@ export default {
     images: [],
     newSongs: [],
     songLists: []
-    // scrollY: 0
   }),
   methods: {
     // 请求 Banner 数据
@@ -93,16 +94,6 @@ export default {
     this.getPersonalizedNewSong(6)
     this.getPersonalized(12)
     // this.getPersonalizedDJProgram()
-  },
-  beforeRouteLeave(to, from, next) {
-    this.scrollY = document.body.scrollTop
-    next()
-  },
-  activated() {
-    Log.d(this.scrollY)
-    if (this.scrollY) {
-      document.body.scrollTo(0, this.scrollY)
-    }
   }
 }
 </script>

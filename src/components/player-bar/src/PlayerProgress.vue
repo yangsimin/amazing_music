@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:31:32
- * @LastEditTime: 2022-04-01 10:38:47
+ * @LastEditTime: 2022-04-02 09:58:02
  * @LastEditors: simonyang
  * @Description: 
       输入: 展示的信息, 播放控制; 
@@ -73,7 +73,7 @@ import AmzSeekBar from '@/base-ui/amz-seek-bar'
 import AmzAudio from '../AmzAudio'
 
 import { formatSongTime, formatImageUrl } from '@/utils/format'
-import { throttle } from '@/utils/throttle'
+import { throttle } from '@/utils/performance'
 import Logger from '@/utils/logger'
 const Log = Logger.create('PlayerProgress')
 

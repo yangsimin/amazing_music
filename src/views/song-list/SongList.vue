@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:34
- * @LastEditTime: 2022-03-31 21:00:23
+ * @LastEditTime: 2022-04-02 18:23:03
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -69,18 +69,17 @@ import CateCard from './cpns/CateCard.vue'
 import SongCover from '@/components/song-cover'
 import AmzPagination from '@/base-ui/amz-pagination'
 
-import { getCateList, getTopList } from '@/api/song-list'
-import { getSongListTrack } from '@/api/common'
+import { getCateList, getTopPlayList, getSongListTrack } from '@/api'
 import { Song, SongList } from '@/types/song/types'
 import { formatPlayCount, formatImageUrl } from '@/utils/format'
 import Logger from '@/utils/logger'
-import savePosition from '@/mixin/save-position'
+import restoreScroll from '@/mixins/restore-scroll'
 
-const Log = Logger.create('SongList', true)
+const Log = Logger.create('SongList', false)
 
 export default {
   name: 'SongList',
-  mixins: [savePosition],
+  mixins: [restoreScroll],
   components: {
     CateCard,
     SongCover,
@@ -135,7 +134,7 @@ export default {
         this.pageInfo.tag = this.activeTag
         this.currentPage = 1
       }
-      data = await getTopList(
+      data = await getTopPlayList(
         this.pageInfo.tag,
         this.limit,
         (this.currentPage - 1) * this.limit

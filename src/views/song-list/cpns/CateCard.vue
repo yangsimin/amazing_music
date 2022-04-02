@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-30 09:22:05
- * @LastEditTime: 2022-03-30 13:23:51
+ * @LastEditTime: 2022-04-01 16:35:15
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -17,7 +17,7 @@
         :style="{ height: (1.25 + 0.25 + 0.5 + 0.125) * row + 'rem' }"
       >
         <span
-          class="w-24 mr-1 mt-1 py-1 text-center text-sm text-black bg-gray-100 bg-opacity-40 border rounded-full cursor-pointer"
+          class="w-24 mr-1 mt-1 py-1 text-center text-sm text-black bg-gray-100 bg-opacity-40 border rounded-full cursor-pointer media:hover:amz-text-hl"
           :class="[
             tag.name === activeTag ? activeClass : '',
             { hotTag: tag.hot }
@@ -52,7 +52,7 @@ export default {
   },
   data: () => ({
     row: 7,
-    activeClass: '!bg-red-600 !text-white'
+    activeClass: '!bg-red-600 !text-white border-red-600'
   })
 }
 </script>

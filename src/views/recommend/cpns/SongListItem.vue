@@ -28,7 +28,7 @@
 import { mapActions } from 'vuex'
 import SongCover from '@/components/song-cover'
 import { formatImageUrl, formatPlayCount } from '@/utils/format'
-import { getSongListTrack } from '@/api/common'
+import { getSongListTrack } from '@/api'
 
 import { Song } from '@/types/song/types.js'
 

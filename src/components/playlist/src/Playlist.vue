@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-24 19:38:41
- * @LastEditTime: 2022-03-31 09:24:30
+ * @LastEditTime: 2022-04-02 18:11:34
  * @LastEditors: simonyang
  * @Description: 
   当前播放   歌曲总数      清空列表
@@ -78,7 +78,7 @@ import PlayingIcon from '@/components/playing-icon'
 
 import { formatSongTime } from '@/utils/format'
 import Velocity from 'velocity-animate'
-import mixinLifeCycle from '@/utils/logger/life-cycle'
+import mixinLifeCycle from '@/mixins/life-cycle'
 
 export default {
   name: 'Playlist',

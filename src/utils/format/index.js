@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-17 14:37:07
- * @LastEditTime: 2022-03-24 17:33:35
+ * @LastEditTime: 2022-04-02 09:15:13
  * @LastEditors: simonyang
  * @Description:
  */
@@ -26,6 +26,9 @@ export function formatSongTime(duration, ms = true) {
  * @return 带有宽高参数的 url
  */
 export function formatImageUrl(imageUrl, width, height) {
+  if (!imageUrl) {
+    return
+  }
   return `${imageUrl}?param=${width}y${height}`
 }
 

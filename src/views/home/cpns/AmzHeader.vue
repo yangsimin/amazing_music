@@ -1,12 +1,12 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 23:03:30
- * @LastEditTime: 2022-03-31 08:43:03
+ * @LastEditTime: 2022-04-01 16:52:41
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
-  <header class="amz-header flex items-center amz-container-px">
+  <header class="amz-header flex items-center">
     <!-- logo 部分 -->
     <h1>
       <a href="/" class="flex items-center h-20">
@@ -52,7 +52,8 @@ export default {
     tabs: [
       { title: '推荐', path: '/recommend' },
       { title: '歌单', path: '/song-list' },
-      { title: '排行榜', path: '/top-list' }
+      { title: '排行榜', path: '/top-list' },
+      { title: '歌手', path: '/singer' }
     ]
   }),
   computed: {

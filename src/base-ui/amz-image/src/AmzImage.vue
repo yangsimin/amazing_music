@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-31 18:06:43
- * @LastEditTime: 2022-04-01 10:34:04
+ * @LastEditTime: 2022-04-02 12:42:09
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -9,13 +9,13 @@
   <div class="amz-image" ref="image">
     <div class="w-full h-full" v-if="state === 1">
       <slot name="placeholder">
-        <img src="~@/assets/imgs/amz-image/album_300.png" />
+        <img :src="placeholderSrc" />
         <!-- PlaceHolder... -->
       </slot>
     </div>
     <div class="w-full h-full" v-if="state === -1">
       <slot name="error"
-        ><img src="~@/assets/imgs/amz-image/album_300.png" />
+        ><img :src="errorSrc" />
         <!-- Failed! -->
       </slot>
     </div>
@@ -24,12 +24,14 @@
       v-if="state === 0"
       v-bind="$attrs"
       :src="realSrc"
+      :style="{ 'object-fit': fit }"
     />
   </div>
 </template>
 
 <script>
 import Logger from '@/utils/logger'
+import { throttle } from '@/utils/performance'
 
 // 加载失败
 const ERROR = -1
@@ -75,7 +77,7 @@ const isVisible = (el, container, offset = 0) => {
   return topVisible || bottomVisible
 }
 
-const Log = Logger.create('AmzImage', true)
+const Log = Logger.create('AmzImage', false)
 
 export default {
   name: 'AmzImage',
@@ -83,7 +85,6 @@ export default {
   props: {
     // 图片源
     src: {
-      type: String,
       required: true
     },
     // 是否使用懒加载
@@ -100,18 +101,21 @@ export default {
     offset: {
       type: Number,
       default: 0
-    }
+    },
+    placeholderSrc: {
+      type: String,
+      default: require('@/assets/imgs/amz-image/default_album.png')
+    },
+    errorSrc: {
+      type: String,
+      default: require('@/assets/imgs/amz-image/default_album.png')
+    },
+    fit: String
   },
   data: () => ({
     state: DEFAULT,
     realSrc: ''
   }),
-  mounted() {
-    this.addListener()
-  },
-  destroyed() {
-    this.scrollContainer.removeEventListener('scroll', this._scroll)
-  },
   methods: {
     addListener() {
       if (!this.lazy) {
@@ -121,21 +125,22 @@ export default {
         return
       }
       // 使用懒加载, 监听 scroll 事件
-      this.$nextTick(() => {
-        this._scroll = () => {
-          // Log.d('scroll')
-          if (
-            this.$refs.image &&
-            isVisible(this.$refs.image, this.scrollContainer, this.offset)
-          ) {
-            Log.d('do something')
-            this.loadImage()
-            this.scrollContainer.removeEventListener('scroll', this._scroll)
-          }
+      this._scroll = throttle(() => {
+        // Log.d('scroll')
+        if (
+          this.$refs.image &&
+          isVisible(this.$refs.image, this.scrollContainer, this.offset) &&
+          this.src
+        ) {
+          Log.d('do something')
+          this.loadImage()
+          this.scrollContainer.removeEventListener('scroll', this._scroll)
         }
-        this.scrollContainer.addEventListener('scroll', this._scroll)
-        this._scroll()
+      }, 50)
+      this.scrollContainer.addEventListener('scroll', this._scroll, {
+        passive: true
       })
+      this._scroll()
     },
     loadImage() {
       // 预加载图像
@@ -156,11 +161,20 @@ export default {
       this.$emit('error', event)
     }
   },
-  watch: {
-    src(url) {
-      Log.d('new Url', url)
-      this.addListener()
-    }
+  mounted() {
+    this.$watch(
+      'src',
+      url => {
+        Log.d('new Url', url)
+        this.addListener()
+      },
+      {
+        immediate: true
+      }
+    )
+  },
+  destroyed() {
+    this.scrollContainer.removeEventListener('scroll', this._scroll)
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 11:41:37
- * @LastEditTime: 2022-03-31 14:55:12
+ * @LastEditTime: 2022-04-02 18:12:29
  * @LastEditors: simonyang
  * @Description: 
  
@@ -28,10 +28,10 @@ import DetailInfo from './cpns/DetailInfo.vue'
 import DetailList from '@/components/detail-list'
 import RecommendCard from './cpns/RecommendCard.vue'
 
-import { getSongListDetail, getSongListTrack } from '@/api/common'
+import { getSongListDetail, getSongListTrack } from '@/api'
 import { Song, SongListDetail } from '@/types/song/types'
 import { formatImageUrl } from '@/utils/format'
-import mixinLifeCycle from '@/utils/logger/life-cycle'
+import mixinLifeCycle from '@/mixins/life-cycle'
 import Logger from '@/utils/logger'
 
 const Log = Logger.create('SongListDetail', false)

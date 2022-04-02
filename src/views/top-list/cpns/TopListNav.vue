@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-31 09:28:00
- * @LastEditTime: 2022-03-31 15:23:34
+ * @LastEditTime: 2022-04-02 18:14:37
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -28,7 +28,7 @@ import { mapMutations, mapState } from 'vuex'
 import NavCard from './NavCard.vue'
 
 import Logger from '@/utils/logger'
-import { getTopList } from '@/api/top-list'
+import { getTopList } from '@/api'
 import { SongList, ListInfo } from '@/types/song/types'
 
 const Log = Logger.create('TopListNav')

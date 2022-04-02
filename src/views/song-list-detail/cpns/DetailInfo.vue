@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 15:26:59
- * @LastEditTime: 2022-04-01 11:11:58
+ * @LastEditTime: 2022-04-02 09:33:59
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -25,26 +25,14 @@
         >
           <template v-slot:placeholder>
             <img
-              class="grayscale"
-              :src="
-                getImageUrl(
-                  'https://p1.music.126.net/SUeqMM8HOIpHv9Nhl9qt9w==/109951165647004069.jpg',
-                  80,
-                  80
-                )
-              "
+              class="grayscale opacity-20"
+              src="~@/assets/imgs/common/default_head.png"
             />
           </template>
           <template v-slot:error>
             <img
-              class="grayscale"
-              :src="
-                getImageUrl(
-                  'https://p1.music.126.net/SUeqMM8HOIpHv9Nhl9qt9w==/109951165647004069.jpg',
-                  80,
-                  80
-                )
-              "
+              class="grayscale opacity-20"
+              src="~@/assets/imgs/common/default_head.png"
             />
           </template>
         </amz-image>

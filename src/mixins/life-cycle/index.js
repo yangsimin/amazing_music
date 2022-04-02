@@ -5,7 +5,7 @@
  * @LastEditors: simonyang
  * @Description:
  */
-import Logger from '../index'
+import Logger from '../../utils/logger/index'
 export default function (debug, options) {
   let Log = null
 

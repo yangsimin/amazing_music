@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 16:38:48
- * @LastEditTime: 2022-03-31 15:22:42
+ * @LastEditTime: 2022-04-02 17:54:35
  * @LastEditors: simonyang
  * @Description:
  */
@@ -106,5 +106,22 @@ export class ListInfo {
       updateTime: data.updateTime
     }
     Object.assign(this, listInfo)
+  }
+}
+/**
+ * @method: 歌手信息
+ * @param {*}
+ */
+export class Singer {
+  constructor(data) {
+    const singer = {
+      id: data.id,
+      name: data.name,
+      picUrl: data.img1v1Url,
+      musicSize: data.musicSize,
+      albumSize: data.albumSize,
+      alias: data.alias
+    }
+    Object.assign(this, singer)
   }
 }

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-30 08:34:51
- * @LastEditTime: 2022-03-31 11:18:27
+ * @LastEditTime: 2022-04-02 18:14:25
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -36,7 +36,7 @@
 
 <script>
 import CardView from '@/components/card-view'
-import { getRelatedSongList } from '@/api/common'
+import { getRelatedSongList } from '@/api'
 import Logger from '@/utils/logger'
 import { formatImageUrl } from '@/utils/format'
 

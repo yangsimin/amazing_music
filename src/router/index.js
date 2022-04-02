@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-14 12:12:41
- * @LastEditTime: 2022-03-31 16:39:51
+ * @LastEditTime: 2022-04-02 16:30:07
  * @LastEditors: simonyang
  * @Description:
  */
@@ -34,9 +34,19 @@ const routes = [
     component: () => import('@/views/top-list/TopList.vue')
   },
   {
+    path: '/singer',
+    name: 'singer',
+    component: () => import('@/views/singer/Singer.vue')
+  },
+  {
     path: '/song-list-detail/:songListId',
     name: 'song-list-detail',
     component: () => import('@/views/song-list-detail/SongListDetail.vue')
+  },
+  {
+    path: '/singer-detail/:singerId',
+    name: 'singer-detail',
+    component: () => import('@/views/singer-detail/SingerDetail.vue')
   },
   {
     path: '/:pathMatch(.*)*',

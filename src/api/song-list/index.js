@@ -33,6 +33,6 @@ export function getHotCate() {
  * @param {*} limit 可选, 数量限制, 默认为50
  * @param {*} offset  可选, 偏移量, 用于分页, (页数 - 1) * 50
  */
-export function getTopList(cat, limit, offset, order) {
+export function getTopPlayList(cat, limit, offset, order) {
   return request.get(TOP_LIST, { order, cat, limit, offset })
 }

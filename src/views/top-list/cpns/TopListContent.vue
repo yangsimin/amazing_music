@@ -22,7 +22,7 @@ import DetailList from '@/components/detail-list'
 import ContentInfo from './ContentInfo.vue'
 
 import Logger from '@/utils/logger'
-import { getSongListTrack } from '@/api/common'
+import { getSongListTrack } from '@/api'
 import { Song } from '@/types/song/types'
 import { formatImageUrl } from '@/utils/format'
 
