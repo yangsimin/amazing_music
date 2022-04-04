@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-01 16:13:16
- * @LastEditTime: 2022-04-02 18:13:51
+ * @LastEditTime: 2022-04-04 14:41:44
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -44,11 +44,10 @@
 // TODO 请求添加防抖
 import { getArtistList } from '@/api'
 import Logger from '@/utils/logger'
-import { Singer } from '@/types/song/types'
 import { formatImageUrl } from '@/utils/format'
 import { debounce } from '@/utils/performance'
 
-const Log = Logger.create('SingerContent')
+const Log = Logger.create('SingerContent', false)
 
 export default {
   name: 'SingerContent',
@@ -79,7 +78,14 @@ export default {
       Log.d('request', initial, type, area, page, limit)
       const data = await getArtistList(initial, type, area, page * limit, limit)
       Log.d(data)
-      this.singers.push(...data.artists.map(artist => new Singer(artist)))
+      this.singers.push(
+        ...data.artists.map(artist => ({
+          id: artist.id,
+          name: artist.name,
+          picUrl: artist.img1v1Url,
+          alias: artist.alias
+        }))
+      )
       this.more = data.more
       this.isLoading = false
     }, 500),

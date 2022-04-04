@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 11:41:37
- * @LastEditTime: 2022-04-02 18:12:29
+ * @LastEditTime: 2022-04-04 15:55:37
  * @LastEditors: simonyang
  * @Description: 
  
@@ -9,7 +9,7 @@
 <template>
   <div class="song-list-detail flex">
     <div class="flex-1 min-w-[40rem] shadow-lg p-5 rounded-lg">
-      <detail-info :info="info" @playAll="playAll"></detail-info>
+      <list-detail-header :info="info" @playAll="playAll"></list-detail-header>
       <detail-list
         class="mt-7"
         :songs="songs"
@@ -24,7 +24,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import DetailInfo from './cpns/DetailInfo.vue'
+import ListDetailHeader from './cpns/ListDetailHeader.vue'
 import DetailList from '@/components/detail-list'
 import RecommendCard from './cpns/RecommendCard.vue'
 
@@ -40,7 +40,7 @@ export default {
   name: 'SongListDetail',
   mixins: [mixinLifeCycle()],
   components: {
-    DetailInfo,
+    ListDetailHeader,
     DetailList,
     RecommendCard
   },

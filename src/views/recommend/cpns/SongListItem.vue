@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 22:33:38
- * @LastEditTime: 2022-03-30 14:31:34
+ * @LastEditTime: 2022-04-04 11:08:09
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -53,7 +53,7 @@ export default {
       return newCount.count + newCount.unit
     },
     async addSongs() {
-      const data = await getSongListTrack(this.songList.id, 20, 0)
+      const data = await getSongListTrack(this.songList.id)
       if (data.code !== 200) {
         throw Error('请求数据失败 code:', data.code)
       }

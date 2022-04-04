@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:34
- * @LastEditTime: 2022-04-02 18:23:03
+ * @LastEditTime: 2022-04-04 11:08:27
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -155,7 +155,7 @@ export default {
     // 将歌单添加进播放列表
     async addSongs(id) {
       Log.d('addSongs')
-      const data = await getSongListTrack(id, 20, 0)
+      const data = await getSongListTrack(id)
       if (data.code !== 200) {
         throw Error('请求数据失败 code:', data.code)
       }

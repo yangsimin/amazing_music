@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-31 10:59:07
- * @LastEditTime: 2022-04-01 10:40:07
+ * @LastEditTime: 2022-04-04 15:59:11
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -46,7 +46,7 @@ export default {
     topList: Array
   },
   data: () => ({
-    activeClass: 'bg-red-100 bg-opacity-50 !text-red-600'
+    activeClass: '!bg-red-100 !bg-opacity-50 !text-red-600'
   }),
   methods: {
     getImageUrl(url, width, height) {

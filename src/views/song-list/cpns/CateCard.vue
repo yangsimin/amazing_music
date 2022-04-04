@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-30 09:22:05
- * @LastEditTime: 2022-04-01 16:35:15
+ * @LastEditTime: 2022-04-04 15:59:04
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -52,7 +52,7 @@ export default {
   },
   data: () => ({
     row: 7,
-    activeClass: '!bg-red-600 !text-white border-red-600'
+    activeClass: '!bg-red-600 !text-white !border-red-600'
   })
 }
 </script>

@@ -1,26 +1,28 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 10:26:00
- * @LastEditTime: 2022-04-01 11:17:26
+ * @LastEditTime: 2022-04-04 16:29:04
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
   <nav class="nav-header relative">
-    <ul class="flex items-center text-xl" ref="tabWrapper">
-      <li
+    <div class="flex items-center text-xl" ref="tabWrapper">
+      <a
         v-for="(title, index) in titles"
         :key="title"
-        class="block w-20 py-2 mx-5 rounded-sm text-center cursor-pointer media:hover:amz-text-hl"
+        class="block cursor-pointer media:hover:amz-text-hl"
         :class="index === activeIndex ? activeClass : ''"
         @click="titleClick(index, $event)"
       >
-        {{ title }}
-      </li>
-    </ul>
+        <slot :title="title">
+          <span class="block w-20 mx-5 py-2 text-center">{{ title }}</span>
+        </slot>
+      </a>
+    </div>
     <!-- indicator -->
     <div
-      class="absolute left-0 -bottom-1 w-20 h-[2px] rounded-full amz-bg-hl transition-all"
+      class="absolute left-0 -bottom-1 h-[2px] rounded-full amz-bg-hl transition-transform"
       ref="indicator"
       hidden
     ></div>
@@ -47,16 +49,20 @@ export default {
     titleClick(index) {
       // 发出点击事件
       this.$emit('titleClick', index)
-      console.log()
     }
   },
   watch: {
     activeIndex(index) {
+      console.log('Nav', index)
       if (index < 0 || index >= this.titles.length) {
         this.$refs.indicator.hidden = true
       } else {
-        const offsetLeft = this.$refs.tabWrapper.children[index].offsetLeft
-        this.$refs.indicator.style.transform = `translateX(${offsetLeft}px)`
+        const width =
+          this.$refs.tabWrapper.children[index].children[0].offsetWidth
+        const offsetLeft =
+          this.$refs.tabWrapper.children[index].children[0].offsetLeft
+        this.$refs.indicator.style.width = width + 'px'
+        this.$refs.indicator.style.transform = `translate3d(${offsetLeft}px, 0, 0)`
         this.$refs.indicator.hidden = false
       }
     }

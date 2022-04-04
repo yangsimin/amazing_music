@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-31 09:30:12
- * @LastEditTime: 2022-03-31 16:02:58
+ * @LastEditTime: 2022-04-04 12:48:03
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -25,11 +25,12 @@ import Logger from '@/utils/logger'
 import { getSongListTrack } from '@/api'
 import { Song } from '@/types/song/types'
 import { formatImageUrl } from '@/utils/format'
-
+import lifeCycle from '@/mixins/life-cycle'
 const Log = Logger.create('TopListContent')
 
 export default {
   name: 'TopListContent',
+  mixins: [lifeCycle()],
   components: {
     DetailList,
     ContentInfo

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-24 19:38:41
- * @LastEditTime: 2022-04-02 18:11:34
+ * @LastEditTime: 2022-04-04 15:58:56
  * @LastEditors: simonyang
  * @Description: 
   当前播放   歌曲总数      清空列表
@@ -90,7 +90,7 @@ export default {
     ...mapGetters(['playlist', 'playingIndex'])
   },
   data: () => ({
-    activeClass: ['bg-red-100', 'bg-opacity-50', 'text-red-700']
+    activeClass: ['!bg-red-100', '!bg-opacity-50', '!text-red-700']
   }),
   methods: {
     ...mapActions(['deleteSong', 'clearSongList']),

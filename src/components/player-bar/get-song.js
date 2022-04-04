@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-22 17:14:31
- * @LastEditTime: 2022-03-28 23:25:52
+ * @LastEditTime: 2022-04-04 11:13:44
  * @LastEditors: simonyang
  * @Description:
  */
@@ -10,6 +10,8 @@ import { playModes } from '@/common/play-mode'
 // mode: 0列表循环, 1单曲循环, 2随机播放
 // next: true下一首, false上一首
 function getSong(mode, curIndex, playList, next) {
+  // eslint-disable-next-line no-debugger
+  debugger
   let index = -1
   const length = playList.length
   switch (mode) {
@@ -26,7 +28,7 @@ function getSong(mode, curIndex, playList, next) {
       break
     case playModes.RANDOM: // 随机播放
       // 随机选择, 无法追溯顺序, 待优化
-      index = Math.random() * (length - 1)
+      index = Math.floor(Math.random() * (length - 1))
       break
   }
   return index

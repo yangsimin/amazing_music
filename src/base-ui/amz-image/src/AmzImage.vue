@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-31 18:06:43
- * @LastEditTime: 2022-04-02 12:42:09
+ * @LastEditTime: 2022-04-04 12:56:30
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -31,7 +31,7 @@
 
 <script>
 import Logger from '@/utils/logger'
-import { throttle } from '@/utils/performance'
+// import { throttle } from '@/utils/performance'
 
 // 加载失败
 const ERROR = -1
@@ -54,26 +54,26 @@ const isVisible = (el, container, offset = 0) => {
     elRect.bottom - containerRect.top < container.offsetHeight + offset &&
     elRect.bottom - containerRect.top > -offset
 
-  // Log.d(
-  //   'topVisible',
-  //   topVisible,
-  //   `${elRect.top} - ${containerRect.top} < ${container.offsetHeight} + ${offset}`
-  // )
-  // Log.d(
-  //   'topVisible',
-  //   topVisible,
-  //   `${elRect.top} - ${containerRect.top} > ${offset}`
-  // )
-  // Log.d(
-  //   'bottomVisible',
-  //   bottomVisible,
-  //   `${elRect.bottom} - ${containerRect.top} < ${container.offsetHeight} + ${offset}`
-  // )
-  // Log.d(
-  //   'bottomVisible',
-  //   bottomVisible,
-  //   `${elRect.bottom} - ${containerRect.top} > ${offset}`
-  // )
+  Log.d(
+    'topVisible',
+    topVisible,
+    `${elRect.top} - ${containerRect.top} < ${container.offsetHeight} + ${offset}`
+  )
+  Log.d(
+    'topVisible',
+    topVisible,
+    `${elRect.top} - ${containerRect.top} > ${offset}`
+  )
+  Log.d(
+    'bottomVisible',
+    bottomVisible,
+    `${elRect.bottom} - ${containerRect.top} < ${container.offsetHeight} + ${offset}`
+  )
+  Log.d(
+    'bottomVisible',
+    bottomVisible,
+    `${elRect.bottom} - ${containerRect.top} > ${offset}`
+  )
   return topVisible || bottomVisible
 }
 
@@ -114,7 +114,8 @@ export default {
   },
   data: () => ({
     state: DEFAULT,
-    realSrc: ''
+    realSrc: '',
+    isVisible: false
   }),
   methods: {
     addListener() {
@@ -125,18 +126,25 @@ export default {
         return
       }
       // 使用懒加载, 监听 scroll 事件
-      this._scroll = throttle(() => {
+      // TODO 使用节流函数优化
+      this._scroll = () => {
+        if (this.state === LOAD) {
+          this.scrollContainer.removeEventListener('scroll', this._scroll)
+          return
+        }
         // Log.d('scroll')
-        if (
-          this.$refs.image &&
-          isVisible(this.$refs.image, this.scrollContainer, this.offset) &&
-          this.src
-        ) {
+        this.isVisible = isVisible(
+          this.$refs.image,
+          this.scrollContainer,
+          this.offset
+        )
+        Log.d(this.isVisible, 'url: ', this.src)
+        if (this.$refs.image && this.isVisible && this.src) {
           Log.d('do something')
           this.loadImage()
           this.scrollContainer.removeEventListener('scroll', this._scroll)
         }
-      }, 50)
+      }
       this.scrollContainer.addEventListener('scroll', this._scroll, {
         passive: true
       })
@@ -163,9 +171,12 @@ export default {
   },
   mounted() {
     this.$watch(
-      'src',
-      url => {
-        Log.d('new Url', url)
+      () => ({
+        src: this.src,
+        $image: this.$refs.image
+      }),
+      () => {
+        this.state = DEFAULT
         this.addListener()
       },
       {

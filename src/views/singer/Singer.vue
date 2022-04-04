@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-01 11:53:05
- * @LastEditTime: 2022-04-02 14:04:32
+ * @LastEditTime: 2022-04-04 11:04:40
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -27,8 +27,11 @@
 import SingerFilter from './cpns/SingerFilter.vue'
 import SingerContent from './cpns/SingerContent.vue'
 
+import restoreScroll from '@/mixins/restore-scroll'
+
 export default {
   name: 'Singer',
+  mixins: [restoreScroll],
   components: {
     SingerFilter,
     SingerContent

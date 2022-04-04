@@ -1,12 +1,12 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 15:26:59
- * @LastEditTime: 2022-04-02 09:33:59
+ * @LastEditTime: 2022-04-04 15:55:16
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
-  <div class="detail-info relative flex">
+  <div class="list-detail-header relative flex">
     <amz-image
       class="w-52 h-52 rounded-xl shadow-md flex-shrink-0 overflow-hidden"
       :src="getImageUrl(info.coverImgUrl, 416, 416)"
@@ -77,7 +77,7 @@ import Logger from '@/utils/logger'
 const Log = Logger.create('DetailInfo', false)
 
 export default {
-  name: 'DetailInfo',
+  name: 'ListDetailHeader',
   props: {
     info: {
       type: Object,

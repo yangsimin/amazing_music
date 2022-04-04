@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 16:38:48
- * @LastEditTime: 2022-04-02 17:54:35
+ * @LastEditTime: 2022-04-04 15:26:58
  * @LastEditors: simonyang
  * @Description:
  */
@@ -120,7 +120,9 @@ export class Singer {
       picUrl: data.img1v1Url,
       musicSize: data.musicSize,
       albumSize: data.albumSize,
-      alias: data.alias
+      mvSize: data.mvSize,
+      alias: data.alias,
+      briefDesc: data.briefDesc
     }
     Object.assign(this, singer)
   }

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-01 15:43:35
- * @LastEditTime: 2022-04-02 16:25:57
+ * @LastEditTime: 2022-04-04 15:58:34
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -88,7 +88,7 @@ export default {
       { name: '韩国', code: 16 },
       { name: '其他', code: 0 }
     ],
-    activeClass: 'bg-red-600 border-red-600 bg-opacity-100 !text-white '
+    activeClass: '!bg-red-600 !border-red-600 !bg-opacity-100 !text-white '
   }),
   methods: {
     tagChange(type, event) {
