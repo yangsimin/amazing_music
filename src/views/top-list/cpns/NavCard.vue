@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-31 10:59:07
- * @LastEditTime: 2022-04-04 15:59:11
+ * @LastEditTime: 2022-04-05 23:13:24
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -21,10 +21,10 @@
         :data-id="songList.id"
       >
         <amz-image
-          class="w-16 h-16 rounded-md overflow-hidden"
+          class="w-16 h-16 rounded-md overflow-hidden flex-shrink-0"
           :src="getImageUrl(songList.picUrl, 128, 128)"
         />
-        <h4 class="ml-3 text-base font-bold">
+        <h4 class="ml-3 text-base font-bold amz-truncate-2">
           {{ songList.name }}
         </h4>
       </li>

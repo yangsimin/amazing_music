@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 21:13:40
- * @LastEditTime: 2022-04-02 18:11:51
+ * @LastEditTime: 2022-04-05 23:42:08
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -17,6 +17,7 @@
       </keep-alive>
     </main>
     <amz-player></amz-player>
+    <amz-back-top></amz-back-top>
   </div>
 </template>
 
