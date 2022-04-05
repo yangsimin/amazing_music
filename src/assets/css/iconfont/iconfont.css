@@ -12,6 +12,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-signal-ok:before {
+  content: "\e63c";
+}
+.icon-signal-warning:before {
+  content: "\e627";
+}
+.icon-signal-info:before {
+  content: "\e637";
+}
 .icon-default-head:before {
   content: "\e604";
 }
