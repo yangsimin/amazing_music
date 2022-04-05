@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 11:41:37
- * @LastEditTime: 2022-04-04 15:55:37
+ * @LastEditTime: 2022-04-05 10:59:14
  * @LastEditors: simonyang
  * @Description: 
  
@@ -10,11 +10,11 @@
   <div class="song-list-detail flex">
     <div class="flex-1 min-w-[40rem] shadow-lg p-5 rounded-lg">
       <list-detail-header :info="info" @playAll="playAll"></list-detail-header>
-      <detail-list
+      <song-list-table
         class="mt-7"
         :songs="songs"
         v-amzLoading="isLoading"
-      ></detail-list>
+      ></song-list-table>
     </div>
     <div class="w-96 min-w-[20rem] ml-5">
       <recommend-card :songListId="songListId"></recommend-card>
@@ -25,7 +25,7 @@
 <script>
 import { mapActions } from 'vuex'
 import ListDetailHeader from './cpns/ListDetailHeader.vue'
-import DetailList from '@/components/detail-list'
+import SongListTable from '@/components/song-list-table'
 import RecommendCard from './cpns/RecommendCard.vue'
 
 import { getSongListDetail, getSongListTrack } from '@/api'
@@ -41,7 +41,7 @@ export default {
   mixins: [mixinLifeCycle()],
   components: {
     ListDetailHeader,
-    DetailList,
+    SongListTable,
     RecommendCard
   },
 

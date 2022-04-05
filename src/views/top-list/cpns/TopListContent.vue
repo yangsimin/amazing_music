@@ -1,24 +1,24 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-31 09:30:12
- * @LastEditTime: 2022-04-04 12:48:03
+ * @LastEditTime: 2022-04-05 11:00:54
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
   <section class="top-list-content">
     <content-info :list-info="listInfo" @play-all="playAll"></content-info>
-    <detail-list
+    <song-list-table
       class="mt-7"
       :songs="songs"
       v-amzLoading="isLoading"
-    ></detail-list>
+    ></song-list-table>
   </section>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import DetailList from '@/components/detail-list'
+import SongListTable from '@/components/song-list-table'
 import ContentInfo from './ContentInfo.vue'
 
 import Logger from '@/utils/logger'
@@ -32,7 +32,7 @@ export default {
   name: 'TopListContent',
   mixins: [lifeCycle()],
   components: {
-    DetailList,
+    SongListTable,
     ContentInfo
   },
   data: () => ({

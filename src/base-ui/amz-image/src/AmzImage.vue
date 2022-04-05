@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-31 18:06:43
- * @LastEditTime: 2022-04-04 12:56:30
+ * @LastEditTime: 2022-04-05 20:52:52
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -183,6 +183,9 @@ export default {
         immediate: true
       }
     )
+  },
+  updated() {
+    this._scroll()
   },
   destroyed() {
     this.scrollContainer.removeEventListener('scroll', this._scroll)

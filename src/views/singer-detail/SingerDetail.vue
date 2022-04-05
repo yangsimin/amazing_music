@@ -1,13 +1,17 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-02 16:27:41
- * @LastEditTime: 2022-04-04 18:06:40
+ * @LastEditTime: 2022-04-05 16:28:22
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
-  <div class="singer-detail">
-    <singer-detail-header class="mt-5" :singer="singer"></singer-detail-header>
+  <div class="singer-detail min-w-[1024px]">
+    <singer-detail-header
+      class="mt-5"
+      :singer="singer"
+      @playHotSongs="playHotSongs"
+    ></singer-detail-header>
     <nav-header
       class="mt-5"
       :titles="titles"
@@ -21,14 +25,16 @@
       </template>
     </nav-header>
     <component
+      class="mt-5"
       :is="currentComponent"
       :hotSongs="songs"
-      :id="$route.params.singerId"
+      :id="Number($route.params.singerId)"
     ></component>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import SingerDetailHeader from './cpns/SingerDetailHeader.vue'
 import NavHeader from '@/components/nav-header'
 import DetailHotSong from './cpns/DetailHotSong.vue'
@@ -77,6 +83,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['insertSongs']),
     async requestArtists() {
       const data = await getArtists(this.$route.params.singerId)
       Log.d(data)
@@ -84,14 +91,30 @@ export default {
       this.hotSongs.push(
         ...data.hotSongs.map(song => Song.createFromSongList(song))
       )
-      this.activeIndex = 0
     },
     titleClick(index) {
       this.activeIndex = index
+    },
+    playHotSongs() {
+      this.insertSongs(this.hotSongs)
     }
   },
   created() {
-    this.requestArtists()
+    this.$watch(
+      () => this.$route.params.singerId,
+      id => {
+        if (id) {
+          Log.d('watch', id)
+          this.requestArtists()
+          this.singer = {}
+          this.hotSongs.splice(0)
+          this.activeIndex = 0
+        }
+      },
+      {
+        immediate: true
+      }
+    )
   }
 }
 </script>

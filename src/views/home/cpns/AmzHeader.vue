@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 23:03:30
- * @LastEditTime: 2022-04-04 16:21:46
+ * @LastEditTime: 2022-04-05 20:50:16
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -35,6 +35,7 @@
     <div>
       <i
         class="iconfont icon-search align-middle text-2xl cursor-pointer mr-2"
+        @click="jumpSearch"
       />
     </div>
   </header>
@@ -70,6 +71,11 @@ export default {
       if (path !== this.$route.path) {
         this.$router.replace(this.tabs[index].path)
       }
+    },
+    jumpSearch() {
+      // this.$router.push({
+      //   name: 'search'
+      // })
     }
   }
 }

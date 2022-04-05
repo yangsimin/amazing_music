@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 16:38:48
- * @LastEditTime: 2022-04-04 15:26:58
+ * @LastEditTime: 2022-04-05 14:13:48
  * @LastEditors: simonyang
  * @Description:
  */
@@ -20,38 +20,40 @@ export class Song {
     this.duration = 0
   }
   // <推荐新音乐>接口返回的数据转成 Song
-  static createFromNewSong(originSong) {
+  static createFromNewSong(data) {
     const song = new this()
 
-    song.id = originSong.id
-    song.url = `https://music.163.com/song/media/outer/url?id=${originSong.id}.mp3`
-    song.picUrl = originSong.picUrl
-    song.songName = originSong.name
-    song.artists = originSong.song.artists.map(artists => ({
+    song.id = data.id
+    song.url = `https://music.163.com/song/media/outer/url?id=${data.id}.mp3`
+    song.picUrl = data.picUrl
+    song.songName = data.name
+    song.artists = data.song.artists.map(artists => ({
       id: artists.id,
       name: artists.name
     }))
-    song.duration = originSong.song.duration
+    song.duration = data.song.duration
 
     return song
   }
   // <歌单所有歌曲>接口返回的数据转成 Song
-  static createFromSongList(originSong) {
+  static createFromSongList(data) {
     const song = new this()
-    song.id = originSong.id
-    song.url = `https://music.163.com/song/media/outer/url?id=${originSong.id}.mp3`
-    song.picUrl = originSong.al.picUrl
-    song.songName = originSong.name
-    song.artists = originSong.ar.map(artists => ({
+    song.id = data.id
+    song.url = `https://music.163.com/song/media/outer/url?id=${data.id}.mp3`
+    song.picUrl = data.al.picUrl
+    song.songName = data.name
+    song.artists = data.ar.map(artists => ({
       id: artists.id,
       name: artists.name
     }))
-    song.duration = originSong.dt
+    song.duration = data.dt
     song.album = {
-      id: originSong.al.id,
-      name: originSong.al.name
+      id: data.al.id,
+      name: data.al.name
     }
-
+    song.alias = data.alia
+    // fee 0: 免费或无版权 1: VIP 歌曲 4: 购买专辑 8: 非会员可免费播放低音质，会员可播放高音质及下载
+    song.fee = data.fee
     return song
   }
 }
@@ -60,12 +62,12 @@ export class Song {
  * @param {*}
  */
 export class SongList {
-  constructor(originSongList) {
-    this.id = originSongList.id
-    this.name = originSongList.name
-    this.picUrl = originSongList.picUrl || originSongList.coverImgUrl
-    this.playCount = originSongList.playCount
-    this.topListType = originSongList.ToplistType || ''
+  constructor(data) {
+    this.id = data.id
+    this.name = data.name
+    this.picUrl = data.picUrl || data.coverImgUrl
+    this.playCount = data.playCount
+    this.topListType = data.ToplistType || ''
   }
 }
 
@@ -125,5 +127,19 @@ export class Singer {
       briefDesc: data.briefDesc
     }
     Object.assign(this, singer)
+  }
+}
+
+export class Album {
+  constructor(data) {
+    const album = {
+      id: data.id,
+      name: data.name,
+      publishTime: data.publishTime,
+      picUrl: data.picUrl,
+      size: data.size,
+      paid: data.paid
+    }
+    Object.assign(this, album)
   }
 }

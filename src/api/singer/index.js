@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-04-01 16:58:25
- * @LastEditTime: 2022-04-01 17:24:37
+ * @LastEditTime: 2022-04-05 13:35:12
  * @LastEditors: simonyang
  * @Description:
  */
@@ -54,7 +54,7 @@ export function getArtistDesc(id) {
  * @method: 获取歌手专辑
  * @param {*} id
  * @param {*} offset 页码偏移量, 默认0
- * @param {*} limit 每页数量限制, 默认50
+ * @param {*} limit 每页数量限制, 默认30
  */
 export function getArtistAlbum(id, offset, limit) {
   return request.get(ARTIST_ALBUM, { id, offset, limit })

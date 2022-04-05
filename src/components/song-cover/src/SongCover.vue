@@ -1,14 +1,13 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 20:18:12
- * @LastEditTime: 2022-04-01 10:29:49
+ * @LastEditTime: 2022-04-05 13:58:38
  * @LastEditors: simonyang
  * @Description: 歌曲封面, 依赖 iconfront
 -->
 <template>
   <div class="song-cover overflow-hidden" @click="playMusic">
     <amz-image class="w-full transition duration-300" :src="img"></amz-image>
-    <!-- <img class="w-full transition duration-300" :src="img" alt="" /> -->
   </div>
 </template>
 
@@ -58,7 +57,7 @@ export default {
 }
 /* 当支持 hover 时才显示 hover 样式, 解决移动端 hover 样式无法取消问题 */
 @media screen and (any-hover: hover) {
-  .song-cover:hover img {
+  .song-cover:hover .amz-image {
     transform: scale(1.1);
   }
   .song-cover:hover::before {
@@ -68,7 +67,7 @@ export default {
 }
 
 @media screen and (any-hover: none) {
-  .song-cover:active img {
+  .song-cover:active .amz-image {
     transform: scale(0.95);
   }
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-14 12:12:41
- * @LastEditTime: 2022-04-02 16:30:07
+ * @LastEditTime: 2022-04-05 17:39:16
  * @LastEditors: simonyang
  * @Description:
  */
@@ -47,6 +47,11 @@ const routes = [
     path: '/singer-detail/:singerId',
     name: 'singer-detail',
     component: () => import('@/views/singer-detail/SingerDetail.vue')
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: () => import('@/views/search/Search.vue')
   },
   {
     path: '/:pathMatch(.*)*',

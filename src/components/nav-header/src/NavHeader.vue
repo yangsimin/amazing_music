@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 10:26:00
- * @LastEditTime: 2022-04-04 16:29:04
+ * @LastEditTime: 2022-04-05 11:47:42
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -53,7 +53,6 @@ export default {
   },
   watch: {
     activeIndex(index) {
-      console.log('Nav', index)
       if (index < 0 || index >= this.titles.length) {
         this.$refs.indicator.hidden = true
       } else {

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-04 15:49:30
- * @LastEditTime: 2022-04-04 17:34:32
+ * @LastEditTime: 2022-04-05 11:04:44
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -38,7 +38,10 @@
         <span>
           MV<span class="ml-2 text-2xl text-black">{{ singer.mvSize }}</span>
         </span>
-        <button class="px-5 py-2 bg-red-600 text-white rounded-full">
+        <button
+          class="px-5 py-2 bg-red-600 text-white rounded-full"
+          @click="playHotSongs"
+        >
           播放热门歌曲
         </button>
       </p>
@@ -65,6 +68,9 @@ export default {
   methods: {
     getImageUrl(url, width, height) {
       return formatImageUrl(url, width, height)
+    },
+    playHotSongs() {
+      this.$emit('playHotSongs')
     }
   }
 }
