@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-22 08:48:45
- * @LastEditTime: 2022-03-25 20:49:43
+ * @LastEditTime: 2022-04-05 22:26:28
  * @LastEditors: simonyang
  * @Description:
  */
@@ -11,6 +11,7 @@ export default class AmzAudio {
   }
   setSource(url) {
     this._audio.src = url
+    console.log('setSource', url)
   }
   getSource() {
     return this._audio.currentSrc

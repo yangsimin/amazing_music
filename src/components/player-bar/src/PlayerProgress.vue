@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:31:32
- * @LastEditTime: 2022-04-04 14:29:28
+ * @LastEditTime: 2022-04-05 22:29:18
  * @LastEditors: simonyang
  * @Description: 
       输入: 展示的信息, 播放控制; 
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapActions } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 
 import AmzSeekBar from '@/base-ui/amz-seek-bar'
 import AmzAudio from '../AmzAudio'
@@ -145,7 +145,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setPlayingUrl']),
     ...mapMutations(['changePlayingState']),
     // 播放结束发射结束事件
     emitFinish() {
@@ -153,7 +152,6 @@ export default {
       this.$emit('playEnd')
     },
     emitError(message) {
-      this.setPlayingUrl('')
       this.resetProgress()
       this.$emit('error', message)
     },
@@ -232,6 +230,7 @@ export default {
           errorMsg = '资源不合适'
           break
       }
+      this.resetAll()
       this.emitError({
         code: event.target.error.code,
         message: errorMsg

@@ -74,13 +74,6 @@ export const clearSongList = function ({ commit }) {
   commit(types.CHANGE_PLAYING_INDEX, -1)
   localCache.clearCache(KEY_SONG_LIST)
 }
-// 设置歌曲对应的 url
-export const setPlayingUrl = function ({ commit, state }, payload) {
-  if (state.playingIndex < 0) {
-    return
-  }
-  commit(types._SET_PLAYING_URL, payload)
-}
 // 切换歌曲
 export const changeSong = function ({ commit, state }, getSong) {
   // mode: 0列表循环, 1单曲循环, 2随机播放

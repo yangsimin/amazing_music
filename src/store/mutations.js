@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 16:24:22
- * @LastEditTime: 2022-03-28 23:35:51
+ * @LastEditTime: 2022-04-05 22:34:13
  * @LastEditors: simonyang
  * @Description:
  */
@@ -29,9 +29,6 @@ export default {
   [types._CLEAR_SONG_LIST](state) {
     // TODO wait for testing
     state.playlist.splice(0)
-  },
-  [types._SET_PLAYING_URL](state, url) {
-    state.playlist[state.playingIndex].url = url
   },
   [types._SET_VOLUME](state, volume) {
     state.volume = volume

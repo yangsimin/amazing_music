@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:34:40
- * @LastEditTime: 2022-03-29 20:56:44
+ * @LastEditTime: 2022-04-05 22:33:15
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -111,7 +111,8 @@ export default {
       'playingIndex',
       'volume',
       'playlist',
-      'isPlaying'
+      'isPlaying',
+      'playingSong'
     ]),
     modeIcon() {
       if (this.playMode < 0 || this.playMode >= playModes.length) {
@@ -219,7 +220,18 @@ export default {
     },
     error(error) {
       Log.d('error', error)
+      switch (error.code) {
+        case MediaError.MEDIA_ERR_NETWORK:
+          this.$message.error('网络异常, 请重试')
+          break
+        case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+          if (this.playingSong.fee === 1) {
+            this.$message.error('无法获取歌曲资源, 需要开通 vip')
+          }
+          break
+      }
       this.changePlayingState(false)
+      this.nextClick()
     },
     updateVolume(volume) {
       this.setVolume(volume)
