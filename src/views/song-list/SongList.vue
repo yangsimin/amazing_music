@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:34
- * @LastEditTime: 2022-04-04 11:08:27
+ * @LastEditTime: 2022-04-06 13:50:55
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -33,7 +33,7 @@
         <div class="relative">
           <song-cover
             class="w-full rounded-xl cursor-pointer"
-            :img="getImageUrl(songList.picUrl, 320, 320)"
+            :img="$format.formatImageUrl(songList.picUrl, 320, 320)"
             alt=""
             @click.native="addSongs(songList.id)"
           />
@@ -71,7 +71,6 @@ import AmzPagination from '@/base-ui/amz-pagination'
 
 import { getCateList, getTopPlayList, getSongListTrack } from '@/api'
 import { Song, SongList } from '@/types/song/types'
-import { formatPlayCount, formatImageUrl } from '@/utils/format'
 import Logger from '@/utils/logger'
 import restoreScroll from '@/mixins/restore-scroll'
 
@@ -177,11 +176,8 @@ export default {
     },
     // 格式化播放次数
     getPlayCount(count) {
-      const ret = formatPlayCount(count)
+      const ret = this.$format.formatPlayCount(count)
       return ret.count + ret.unit
-    },
-    getImageUrl(url, width, height) {
-      return formatImageUrl(url, width, height)
     },
     currentChange(page) {
       Log.d('currentchange', page)

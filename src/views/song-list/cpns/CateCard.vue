@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-30 09:22:05
- * @LastEditTime: 2022-04-04 15:59:04
+ * @LastEditTime: 2022-04-06 09:10:51
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -16,8 +16,8 @@
         class="flex flex-col flex-wrap items-start content-start justify-start mt-2"
         :style="{ height: (1.25 + 0.25 + 0.5 + 0.125) * row + 'rem' }"
       >
-        <span
-          class="w-24 mr-1 mt-1 py-1 text-center text-sm text-black bg-gray-100 bg-opacity-40 border rounded-full cursor-pointer media:hover:amz-text-hl"
+        <a
+          class="w-24 mr-1 mt-1 py-1 text-center text-sm text-black bg-gray-100 bg-opacity-40 border rounded-full cursor-pointer transition-colors media:hover:amz-text-hl"
           :class="[
             tag.name === activeTag ? activeClass : '',
             { hotTag: tag.hot }
@@ -27,7 +27,7 @@
           @click="$emit('changeTag', tag.name)"
         >
           {{ tag.name }}
-        </span>
+        </a>
       </div>
     </div>
   </div>

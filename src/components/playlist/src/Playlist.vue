@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-24 19:38:41
- * @LastEditTime: 2022-04-04 15:58:56
+ * @LastEditTime: 2022-04-06 09:24:26
  * @LastEditors: simonyang
  * @Description: 
   当前播放   歌曲总数      清空列表
@@ -40,7 +40,7 @@
       <li
         v-for="(song, index) in playlist"
         :key="song.id"
-        class="flex group items-center relative py-2 pl-9 pr-3"
+        class="flex group items-center relative py-3 pl-9 pr-3"
         :class="[index === playingIndex ? activeClass : '']"
         @dblclick.prevent="playSong(index)"
         @touchstart.prevent="playSong(index)"
@@ -52,7 +52,7 @@
           ></playing-icon>
           <p v-else>{{ index + 1 }}</p>
         </div>
-        <div class="flex-1 w-28 truncate">
+        <div class="flex-1 w-28 truncate" :class="song.fee === 1 ? 'vip' : ''">
           <span class="cursor-pointer" @click="playSong(index)">{{
             song.songName
           }}</span>
@@ -76,7 +76,6 @@
 import { mapMutations, mapGetters, mapActions } from 'vuex'
 import PlayingIcon from '@/components/playing-icon'
 
-import { formatSongTime } from '@/utils/format'
 import Velocity from 'velocity-animate'
 import mixinLifeCycle from '@/mixins/life-cycle'
 
@@ -105,7 +104,7 @@ export default {
       return index
     },
     getSongTime(duration) {
-      return formatSongTime(duration, true)
+      return this.$format.formatSongTime(duration, true)
     },
     playSong(index) {
       this.changePlayingIndex(index)
@@ -154,5 +153,9 @@ export default {
 <style scoped>
 .song-move {
   transition: transform 500ms;
+}
+.vip::after {
+  content: 'vip';
+  @apply ml-2 px-1 border rounded border-red-600 text-red-600 text-sm;
 }
 </style>

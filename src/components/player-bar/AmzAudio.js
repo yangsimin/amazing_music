@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-22 08:48:45
- * @LastEditTime: 2022-04-05 22:26:28
+ * @LastEditTime: 2022-04-06 16:44:16
  * @LastEditors: simonyang
  * @Description:
  */
@@ -11,7 +11,7 @@ export default class AmzAudio {
   }
   setSource(url) {
     this._audio.src = url
-    console.log('setSource', url)
+    console.log('setSource')
   }
   getSource() {
     return this._audio.currentSrc
@@ -50,5 +50,11 @@ export default class AmzAudio {
   }
   resetProgress() {
     this._audio.currentTime = 0
+  }
+  addTimeupdateListener(func) {
+    this._audio.addEventListener('timeupdate', func)
+  }
+  removeTimeupdateListener(func) {
+    this._audio.removeEventListener('timeupdate', func)
   }
 }

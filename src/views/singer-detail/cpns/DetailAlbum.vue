@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-04 16:37:39
- * @LastEditTime: 2022-04-05 16:28:39
+ * @LastEditTime: 2022-04-06 13:52:52
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -14,7 +14,7 @@
     <div class="w-2/12 pr-5 mt-5" v-for="album in albums" :key="album.id">
       <song-cover
         class="w-full cursor-pointer rounded-md overflow-hidden"
-        :img="getImageUrl(album.picUrl, 400, 400)"
+        :img="$format.formatImageUrl(album.picUrl, 400, 400)"
         @click.native="addSongs(album.id)"
       ></song-cover>
       <h3
@@ -36,7 +36,6 @@ import { mapActions } from 'vuex'
 import { getArtistAlbum, getAlbum } from '@/api'
 import { Album, Song } from '@/types/song/types'
 import Logger from '@/utils/logger'
-import { formatDate, formatImageUrl } from '@/utils/format'
 
 const Log = Logger.create('DetailAlbum')
 
@@ -70,10 +69,7 @@ export default {
       this.isLoading = false
     },
     getPublishTime(timestamp) {
-      return formatDate('yyyy-MM-dd', timestamp)
-    },
-    getImageUrl(url, width, height) {
-      return formatImageUrl(url, width, height)
+      return this.$format.formatDate('yyyy-MM-dd', timestamp)
     },
     loadMore() {
       if (this.more) {

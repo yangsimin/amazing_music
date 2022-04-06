@@ -1,11 +1,11 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-15 10:51:36
- * @LastEditTime: 2022-03-29 11:44:46
+ * @LastEditTime: 2022-04-06 14:40:16
  * @LastEditors: simonyang
  * @Description:
  */
-import Logger from '../../utils/logger/index'
+import Logger from '@/utils/logger'
 export default function (debug, options) {
   let Log = null
 

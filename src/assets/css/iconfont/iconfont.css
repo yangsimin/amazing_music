@@ -12,6 +12,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-arrow-down:before {
+  content: "\e632";
+}
 .icon-signal-ok:before {
   content: "\e63c";
 }

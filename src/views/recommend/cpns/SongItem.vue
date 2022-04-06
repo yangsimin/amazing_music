@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 11:44:00
- * @LastEditTime: 2022-03-28 22:55:53
+ * @LastEditTime: 2022-04-06 13:54:31
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -10,7 +10,7 @@
     <!-- 歌曲封面图 -->
     <song-cover
       class="justify-self-start flex-shrink-0 w-20 h-20 rounded-lg"
-      :img="getCustomImage(song.picUrl, 160, 160)"
+      :img="$format.formatImageUrl(song.picUrl, 160, 160)"
       @click.native="addSong"
     />
     <!-- 歌曲名称 / 创作人 -->
@@ -35,8 +35,6 @@
 import { mapActions } from 'vuex'
 import SongCover from '@/components/song-cover'
 
-import { formatSongTime, formatImageUrl } from '@/utils/format'
-
 export default {
   name: 'SongItem',
   props: {
@@ -58,10 +56,7 @@ export default {
   methods: {
     ...mapActions(['insertSongs']),
     formatSongTime(duration) {
-      return formatSongTime(duration)
-    },
-    getCustomImage(imageUrl, width, height) {
-      return formatImageUrl(imageUrl, width, height)
+      return this.$format.formatSongTime(duration)
     },
     addSong() {
       this.insertSongs([this.song])

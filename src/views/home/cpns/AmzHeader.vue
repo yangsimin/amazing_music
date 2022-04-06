@@ -1,14 +1,14 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 23:03:30
- * @LastEditTime: 2022-04-05 20:50:16
+ * @LastEditTime: 2022-04-06 10:48:51
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
   <header class="amz-header flex items-center">
     <!-- logo 部分 -->
-    <h1>
+    <h1 class="flex-shrink-0">
       <a href="/" class="flex items-center h-20">
         <img
           src="~@/assets/imgs/home/logo2.png"

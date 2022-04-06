@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-31 15:28:02
- * @LastEditTime: 2022-04-01 10:39:53
+ * @LastEditTime: 2022-04-06 13:47:14
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -9,7 +9,7 @@
   <div class="content-info relative flex">
     <amz-image
       class="w-52 h-52 rounded-xl shadow-md flex-shrink-0 overflow-hidden"
-      :src="getImageUrl(listInfo.coverImgUrl, 416, 416)"
+      :src="$format.formatImageUrl(listInfo.coverImgUrl, 416, 416)"
     ></amz-image>
 
     <div
@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import { formatImageUrl, formatDate, formatPlayCount } from '@/utils/format'
 import Logger from '@/utils/logger'
 const Log = Logger.create('DetailInfo', false)
 
@@ -58,18 +57,13 @@ export default {
   computed: {
     updateTime() {
       Log.d('updateTime', this.listInfo.updateTime)
-      return formatDate('yyyy-MM-dd', this.listInfo.updateTime)
+      return this.$format.formatDate('yyyy-MM-dd', this.listInfo.updateTime)
     },
     playCount() {
       Log.d('playCount', this.listInfo.playCount)
-      const result = formatPlayCount(this.listInfo.playCount)
+      const result = this.$format.formatPlayCount(this.listInfo.playCount)
       Log.d(result)
       return result.count + result.unit
-    }
-  },
-  methods: {
-    getImageUrl(url, width, height) {
-      return formatImageUrl(url, width, height)
     }
   }
 }

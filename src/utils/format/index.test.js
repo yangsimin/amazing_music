@@ -2,11 +2,11 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-17 15:11:04
- * @LastEditTime: 2022-03-18 22:32:54
+ * @LastEditTime: 2022-04-06 17:07:45
  * @LastEditors: simonyang
  * @Description:
  */
-import { formatSongTime, formatImageUrl, formatPlayCount } from './index'
+import { formatSongTime, formatImageUrl, formatTimeToSecond } from './index'
 
 test('231068 must be 03:51', () => {
   expect(formatSongTime('231068')).toBe('03:51')
@@ -23,3 +23,9 @@ test('formatImageUrl', () => {
   )
 })
 
+test('formatTimeToSecond', () => {
+  expect(formatTimeToSecond('03:56.123')).toBe(236.123)
+})
+test('formatTimeToSecond', () => {
+  expect(formatTimeToSecond('03:61.123')).toBe(undefined)
+})

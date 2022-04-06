@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-04 16:38:19
- * @LastEditTime: 2022-04-05 16:29:21
+ * @LastEditTime: 2022-04-06 13:52:31
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -19,7 +19,7 @@
     >
       <amz-image
         class="w-full rounded-full overflow-hidden"
-        :src="getImageUrl(singer.picUrl, 256, 256)"
+        :src="$format.formatImageUrl(singer.picUrl, 256, 256)"
       >
         <template v-slot:placeholder>
           <img src="~@/assets/imgs/common/default_head_singer.png" />
@@ -43,7 +43,6 @@
 import { getSimilarArtist } from '@/api'
 import { Singer } from '@/types/song/types'
 import Logger from '@/utils/logger'
-import { formatImageUrl } from '@/utils/format'
 
 const Log = Logger.create('DetailSimilarSinger')
 
@@ -63,9 +62,6 @@ export default {
       console.log(data)
       this.singers.push(...data.artists.map(artist => new Singer(artist)))
       this.isLoading = false
-    },
-    getImageUrl(url, width, height) {
-      return formatImageUrl(url, width, height)
     },
     getAlias(alias) {
       if (alias.length > 0) {

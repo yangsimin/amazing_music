@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:31:32
- * @LastEditTime: 2022-04-05 22:29:18
+ * @LastEditTime: 2022-04-06 16:32:21
  * @LastEditors: simonyang
  * @Description: 
       输入: 展示的信息, 播放控制; 
@@ -24,7 +24,7 @@
     <div class="h-20 w-20 p-2 mr-2 md:block">
       <amz-image
         class="h-full rounded-lg shadow-sm overflow-hidden"
-        :src="picUrl"
+        :src="$format.formatImageUrl(playingSong.picUrl, 160, 160)"
         alt=""
       />
     </div>
@@ -72,7 +72,6 @@ import { mapMutations, mapGetters } from 'vuex'
 import AmzSeekBar from '@/base-ui/amz-seek-bar'
 import AmzAudio from '../AmzAudio'
 
-import { formatSongTime, formatImageUrl } from '@/utils/format'
 import { throttle } from '@/utils/performance'
 import Logger from '@/utils/logger'
 const Log = Logger.create('PlayerProgress')
@@ -99,10 +98,10 @@ export default {
   computed: {
     ...mapGetters(['playingSong', 'playingIndex', 'volume', 'isPlaying']),
     formatCurrentTime() {
-      return formatSongTime(this.currentTime, false)
+      return this.$format.formatSongTime(this.currentTime, false)
     },
     formatDuration() {
-      return formatSongTime(this.duration, false)
+      return this.$format.formatSongTime(this.duration, false)
     },
     songName() {
       return this.playingSong.songName
@@ -114,9 +113,6 @@ export default {
         return artists.join('/')
       }
       return undefined
-    },
-    picUrl() {
-      return formatImageUrl(this.playingSong.picUrl, 160, 160)
     }
   },
   watch: {

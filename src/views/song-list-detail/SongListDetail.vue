@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 11:41:37
- * @LastEditTime: 2022-04-05 10:59:14
+ * @LastEditTime: 2022-04-06 13:50:35
  * @LastEditors: simonyang
  * @Description: 
  
@@ -30,7 +30,6 @@ import RecommendCard from './cpns/RecommendCard.vue'
 
 import { getSongListDetail, getSongListTrack } from '@/api'
 import { Song, SongListDetail } from '@/types/song/types'
-import { formatImageUrl } from '@/utils/format'
 import mixinLifeCycle from '@/mixins/life-cycle'
 import Logger from '@/utils/logger'
 
@@ -80,9 +79,6 @@ export default {
       this.songs = data.songs.map(song => Song.createFromSongList(song))
       Log.d(this.songs)
       this.isLoading = false
-    },
-    getImageUrl(url, width, height) {
-      return formatImageUrl(url, width, height)
     },
     playAll() {
       this.insertSongs(this.songs)

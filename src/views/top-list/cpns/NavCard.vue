@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-31 10:59:07
- * @LastEditTime: 2022-04-05 23:13:24
+ * @LastEditTime: 2022-04-06 13:46:50
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -22,7 +22,7 @@
       >
         <amz-image
           class="w-16 h-16 rounded-md overflow-hidden flex-shrink-0"
-          :src="getImageUrl(songList.picUrl, 128, 128)"
+          :src="$format.formatImageUrl(songList.picUrl, 128, 128)"
         />
         <h4 class="ml-3 text-base font-bold amz-truncate-2">
           {{ songList.name }}
@@ -34,7 +34,6 @@
 
 <script>
 import CardView from '@/components/card-view'
-import { formatImageUrl } from '@/utils/format'
 export default {
   name: 'NavCard',
   components: {
@@ -49,9 +48,6 @@ export default {
     activeClass: '!bg-red-100 !bg-opacity-50 !text-red-600'
   }),
   methods: {
-    getImageUrl(url, width, height) {
-      return formatImageUrl(url, width, height)
-    },
     itemClick(event) {
       const $li = event.target.closest('li')
       if (!($li && $li.dataset.id)) {

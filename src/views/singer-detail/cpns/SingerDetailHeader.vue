@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-04 15:49:30
- * @LastEditTime: 2022-04-05 11:04:44
+ * @LastEditTime: 2022-04-06 13:52:14
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -9,7 +9,7 @@
   <header class="singer-detail-header flex">
     <amz-image
       class="w-52 h-52 rounded-full shadow-md flex-shrink-0 overflow-hidden"
-      :src="getImageUrl(singer.picUrl, 416, 416)"
+      :src="$format.formatImageUrl(singer.picUrl, 416, 416)"
     >
       <template v-slot:placeholder>
         <img src="~@/assets/imgs/common/default_head_singer2.png" />
@@ -50,8 +50,6 @@
 </template>
 
 <script>
-import { formatImageUrl } from '@/utils/format'
-
 export default {
   name: 'SingerDetailHeader',
   props: {
@@ -66,9 +64,6 @@ export default {
     }
   },
   methods: {
-    getImageUrl(url, width, height) {
-      return formatImageUrl(url, width, height)
-    },
     playHotSongs() {
       this.$emit('playHotSongs')
     }

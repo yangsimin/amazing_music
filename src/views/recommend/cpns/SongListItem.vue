@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 22:33:38
- * @LastEditTime: 2022-04-04 11:08:09
+ * @LastEditTime: 2022-04-06 13:53:54
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -9,7 +9,7 @@
   <div class="playlist-item w-full">
     <song-cover
       class="rounded-lg cursor-pointer"
-      :img="getCustomImage(songList.picUrl, 392, 392)"
+      :img="$format.formatImageUrl(songList.picUrl, 392, 392)"
       @click.native="addSongs"
     ></song-cover>
     <h3
@@ -27,7 +27,6 @@
 <script>
 import { mapActions } from 'vuex'
 import SongCover from '@/components/song-cover'
-import { formatImageUrl, formatPlayCount } from '@/utils/format'
 import { getSongListTrack } from '@/api'
 
 import { Song } from '@/types/song/types.js'
@@ -45,11 +44,8 @@ export default {
   },
   methods: {
     ...mapActions(['insertSongs']),
-    getCustomImage(url, width, height) {
-      return formatImageUrl(url, width, height)
-    },
     formatPlayCount(count) {
-      const newCount = formatPlayCount(count)
+      const newCount = this.$format.formatPlayCount(count)
       return newCount.count + newCount.unit
     },
     async addSongs() {

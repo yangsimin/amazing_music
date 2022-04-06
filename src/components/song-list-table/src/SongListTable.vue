@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-04 22:54:19
- * @LastEditTime: 2022-04-05 22:18:29
+ * @LastEditTime: 2022-04-06 18:23:15
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -41,8 +41,8 @@
       <!-- 歌曲 -->
       <template v-slot:songName="{ cell, row }">
         <amz-image
-          class="w-10 rounded-md overflow-hidden"
-          :src="getImageUrl(row.picUrl, 80, 80)"
+          class="w-10 rounded-md overflow-hidden flex-shrink-0"
+          :src="$format.formatImageUrl(row.picUrl, 80, 80)"
         />
         <span class="ml-2 truncate" :class="row.fee === 1 ? 'vip' : ''">
           <slot name="songName" :songName="cell" :song="row">
@@ -60,18 +60,16 @@
       </template>
       <!-- 时长 -->
       <template v-slot:duration="{ cell }">
-        {{ getSongTime(cell) }}
+        {{ $format.formatSongTime(cell) }}
       </template>
     </amz-table>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import AmzTable from '@/base-ui/amz-table'
 import PlayingIcon from '@/components/playing-icon'
-
-import { mapGetters, mapActions } from 'vuex'
-import { formatImageUrl, formatSongTime } from '@/utils/format'
 
 export default {
   name: 'SongListTable',
@@ -138,14 +136,8 @@ export default {
   },
   methods: {
     ...mapActions(['insertSongs']),
-    getImageUrl(url, width, height) {
-      return formatImageUrl(url, width, height)
-    },
     getArtists(artists) {
       return artists.map(artist => artist.name).join(' / ')
-    },
-    getSongTime(duration) {
-      return formatSongTime(duration)
     },
     playMusic(index) {
       this.insertSongs([this.songs[index]])

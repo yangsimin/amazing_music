@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 15:26:59
- * @LastEditTime: 2022-04-04 15:55:16
+ * @LastEditTime: 2022-04-06 13:49:01
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -9,7 +9,7 @@
   <div class="list-detail-header relative flex">
     <amz-image
       class="w-52 h-52 rounded-xl shadow-md flex-shrink-0 overflow-hidden"
-      :src="getImageUrl(info.coverImgUrl, 416, 416)"
+      :src="$format.formatImageUrl(info.coverImgUrl, 416, 416)"
     />
 
     <div
@@ -21,7 +21,7 @@
       <div class="flex items-center grayscale-0">
         <amz-image
           class="w-10 rounded-full overflow-hidden"
-          :src="getImageUrl(info.creator.avatarUrl, 80, 80)"
+          :src="$format.formatImageUrl(info.creator.avatarUrl, 80, 80)"
         >
           <template v-slot:placeholder>
             <img
@@ -72,7 +72,6 @@
 </template>
 
 <script>
-import { formatImageUrl, formatDate, formatPlayCount } from '@/utils/format'
 import Logger from '@/utils/logger'
 const Log = Logger.create('DetailInfo', false)
 
@@ -87,19 +86,16 @@ export default {
   computed: {
     createTime() {
       Log.d('createTime', this.info.createTime)
-      return formatDate('yyyy-MM-dd', this.info.createTime)
+      return this.$format.formatDate('yyyy-MM-dd', this.info.createTime)
     },
     playCount() {
       Log.d('playCount', this.info.playCount)
-      const result = formatPlayCount(this.info.playCount)
+      const result = this.$format.formatPlayCount(this.info.playCount)
       Log.d(result)
       return result.count + result.unit
     }
   },
   methods: {
-    getImageUrl(url, width, height) {
-      return formatImageUrl(url, width, height)
-    },
     jumpSongList(tag) {
       this.$router.push({
         name: 'song-list',

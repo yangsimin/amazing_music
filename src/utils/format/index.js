@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-17 14:37:07
- * @LastEditTime: 2022-04-02 09:15:13
+ * @LastEditTime: 2022-04-06 17:04:57
  * @LastEditors: simonyang
  * @Description:
  */
@@ -16,6 +16,20 @@ export function formatSongTime(duration, ms = true) {
   const minute = Math.floor(totalSecond / 60)
   const second = totalSecond % 60
   return ('0' + minute).slice(-2) + ':' + ('0' + second).slice(-2)
+}
+
+/**
+ * @method: 将 03:22.123 这个格式的时间转成数字秒
+ * @param {*} strTime
+ */
+export function formatTimeToSecond(strTime) {
+  const regExp = /\d+:[0-5]\d\.\d{3}/g
+  if (regExp.test(strTime)) {
+    const minute = strTime.split(':')[0]
+    const second = strTime.split(':')[1]
+    return Number(minute) * 60 + Number(second)
+  }
+  return
 }
 
 /**

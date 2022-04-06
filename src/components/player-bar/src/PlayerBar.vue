@@ -1,14 +1,14 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:34:40
- * @LastEditTime: 2022-04-05 22:33:15
+ * @LastEditTime: 2022-04-06 13:26:59
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
   <div class="player-bar">
     <div
-      class="flex flex-wrap items-center content-evenly h-28 mb-7 md:h-20 md:mb-0 md:flex-nowrap"
+      class="relative z-20 flex flex-wrap items-center content-evenly h-28 mb-7 md:h-20 md:mb-0 md:flex-nowrap"
       @click.prevent="takeAction"
     >
       <!-- 单曲循环/列表循环/随机播放 -->
@@ -52,6 +52,7 @@
         <!-- 展示歌词 -->
         <i
           class="hidden flex-1 iconfont icon-lyric cursor-pointer media:hover:amz-text-hl before:text-2xl lg:block lg:mr-5"
+          :class="{ 'amz-text-hl': isLyricShow }"
           data-action="toggleLyric"
         ></i>
       </div>
@@ -62,7 +63,6 @@
           :class="{ 'amz-text-hl': isPlaylistShow }"
           data-action="toggleList"
         ></i>
-
         <!-- 播放列表 -->
         <transition name="playlist">
           <playlist
@@ -81,6 +81,7 @@ import PlayerController from './PlayerController.vue'
 import PlayerProgress from './PlayerProgress.vue'
 import PlayerVolume from './PlayerVolume.vue'
 import Playlist from '@/components/playlist'
+import PlayerLyric from '@/components/player-lyric'
 
 import { getPrevSong, getNextSong } from '../get-song'
 import { playModes, playModesIcon } from '@/common/play-mode'
@@ -91,11 +92,18 @@ const Log = Logger.create('PlayerBar')
 
 export default {
   name: 'PlayerBar',
+  props: {
+    isLyricShow: {
+      type: Boolean,
+      default: false
+    }
+  },
   components: {
     PlayerController,
     PlayerProgress,
     PlayerVolume,
-    Playlist
+    Playlist,
+    PlayerLyric
   },
   directives: {
     clickOutside
@@ -187,6 +195,7 @@ export default {
     },
     toggleLyric() {
       Log.d('toggleLyric')
+      this.$emit('toggleLyric')
     },
     toggleList() {
       Log.d('toggleList')

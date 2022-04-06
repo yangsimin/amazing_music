@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-19 11:11:41
- * @LastEditTime: 2022-04-05 14:11:35
+ * @LastEditTime: 2022-04-06 14:29:48
  * @LastEditors: simonyang
  * @Description:
  */
@@ -12,6 +12,7 @@ const PLAYLIST_TRACK_URL = '/playlist/track/all'
 const PLAYLIST_DETAIL = '/playlist/detail'
 const RELATED_PLAYLIST = '/related/playlist'
 const ALBUM = '/album'
+const LYRIC = '/lyric'
 
 /**
  * @method: 根据歌曲的 id 获取对应的 url
@@ -54,4 +55,12 @@ export function getRelatedSongList(id) {
  */
 export function getAlbum(id) {
   return request.get(ALBUM, { id })
+}
+
+/**
+ * @method: 获取歌词
+ * @param {*} id
+ */
+export function getLyric(id) {
+  return request.get(LYRIC, { id })
 }

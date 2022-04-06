@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-01 15:43:35
- * @LastEditTime: 2022-04-04 15:58:34
+ * @LastEditTime: 2022-04-06 09:09:37
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -9,7 +9,7 @@
   <div class="singer-filter">
     <div @click="tagChange('initial', $event)">
       <a
-        class="inline-block mb-2 mr-2 px-5 py-1 text-center text-sm text-black bg-gray-100 bg-opacity-40 border rounded-full cursor-pointer media:hover:amz-text-hl"
+        class="inline-block mb-2 mr-2 px-5 py-1 text-center text-sm text-black bg-gray-100 bg-opacity-40 border rounded-full cursor-pointer transition-colors media:hover:amz-text-hl"
         :class="[tag.code === activeInitial ? activeClass : '']"
         v-for="tag in initials"
         :key="tag.name"
@@ -22,7 +22,7 @@
       @click="tagChange('type', $event)"
     >
       <a
-        class="inline-block mb-2 mr-2 px-5 py-1 text-center text-sm text-black bg-gray-100 bg-opacity-40 border rounded-full cursor-pointer media:hover:amz-text-hl"
+        class="inline-block mb-2 mr-2 px-5 py-1 text-center text-sm text-black bg-gray-100 bg-opacity-40 border rounded-full cursor-pointer transition-colors media:hover:amz-text-hl"
         :class="[tag.code === activeType ? activeClass : '']"
         v-for="tag in types"
         :key="tag.name"
@@ -35,7 +35,7 @@
       @click="tagChange('area', $event)"
     >
       <a
-        class="inline-block mb-2 mr-2 px-5 py-1 text-center text-sm text-black bg-gray-100 bg-opacity-40 border rounded-full cursor-pointer media:hover:amz-text-hl"
+        class="inline-block mb-2 mr-2 px-5 py-1 text-center text-sm text-black bg-gray-100 bg-opacity-40 border rounded-full cursor-pointer transition-colors media:hover:amz-text-hl"
         :class="[tag.code === activeArea ? activeClass : '']"
         v-for="tag in areas"
         :key="tag.name"

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-05 22:58:17
- * @LastEditTime: 2022-04-05 23:40:22
+ * @LastEditTime: 2022-04-06 14:34:26
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -9,7 +9,7 @@
   <transition>
     <div
       v-if="isShow"
-      class="amz-back-top absolute bottom-24 right-10 flex items-center justify-center w-14 h-14 rounded-full bg-red-600 -rotate-90 cursor-pointer"
+      class="amz-back-top absolute bottom-24 right-10 flex items-center justify-center w-14 h-14 rounded-full shadow-md bg-red-600 -rotate-90 cursor-pointer"
       @click="backTop"
     >
       <i
@@ -40,7 +40,6 @@ export default {
       }
     },
     scroll() {
-      console.log(document.body.scrollTop)
       if (document.body.scrollTop >= this.showDistance) {
         this.isShow = true
       } else {
@@ -60,7 +59,7 @@ export default {
 <style scoped>
 .v-enter-active,
 .v-leave-active {
-  @apply transition-transform duration-200;
+  @apply transition-transform duration-300;
 }
 
 .v-enter,

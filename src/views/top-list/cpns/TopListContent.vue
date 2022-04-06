@@ -24,7 +24,6 @@ import ContentInfo from './ContentInfo.vue'
 import Logger from '@/utils/logger'
 import { getSongListTrack } from '@/api'
 import { Song } from '@/types/song/types'
-import { formatImageUrl } from '@/utils/format'
 import lifeCycle from '@/mixins/life-cycle'
 const Log = Logger.create('TopListContent')
 
@@ -51,9 +50,6 @@ export default {
       Log.d('end request', data)
       this.songs = data.songs.map(song => Song.createFromSongList(song))
       this.isLoading = false
-    },
-    getImageUrl(url, width, height) {
-      return formatImageUrl(url, width, height)
     },
     playAll() {
       console.log('playALl')

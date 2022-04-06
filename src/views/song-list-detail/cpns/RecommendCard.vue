@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-30 08:34:51
- * @LastEditTime: 2022-04-02 18:14:25
+ * @LastEditTime: 2022-04-06 13:48:30
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -20,7 +20,7 @@
     >
       <amz-image
         class="w-20 h-20 rounded-md overflow-hidden"
-        :src="getImageUrl(songList.coverImgUrl, 160, 160)"
+        :src="$format.formatImageUrl(songList.coverImgUrl, 160, 160)"
       />
       <div class="flex flex-col justify-between ml-2">
         <h4 class="text-base font-bold amz-truncate-2">
@@ -38,7 +38,6 @@
 import CardView from '@/components/card-view'
 import { getRelatedSongList } from '@/api'
 import Logger from '@/utils/logger'
-import { formatImageUrl } from '@/utils/format'
 
 const Log = Logger.create('RecommendCard', false)
 
@@ -71,9 +70,6 @@ export default {
           songListId: Number.parseInt(id)
         }
       })
-    },
-    getImageUrl(url, width, height) {
-      return formatImageUrl(url, width, height)
     }
   },
   watch: {

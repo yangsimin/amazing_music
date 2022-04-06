@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-01 16:13:16
- * @LastEditTime: 2022-04-04 14:41:44
+ * @LastEditTime: 2022-04-06 13:53:36
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -20,7 +20,7 @@
     >
       <amz-image
         class="w-full rounded-full overflow-hidden"
-        :src="getImageUrl(singer.picUrl, 256, 256)"
+        :src="$format.formatImageUrl(singer.picUrl, 256, 256)"
       >
         <template v-slot:placeholder>
           <img src="~@/assets/imgs/common/default_head_singer.png" />
@@ -44,7 +44,6 @@
 // TODO 请求添加防抖
 import { getArtistList } from '@/api'
 import Logger from '@/utils/logger'
-import { formatImageUrl } from '@/utils/format'
 import { debounce } from '@/utils/performance'
 
 const Log = Logger.create('SingerContent', false)
@@ -89,9 +88,6 @@ export default {
       this.more = data.more
       this.isLoading = false
     }, 500),
-    getImageUrl(url, width, height) {
-      return formatImageUrl(url, width, height)
-    },
     loadMore() {
       Log.d('enter loadMore')
       if (this.more) {
