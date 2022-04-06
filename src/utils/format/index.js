@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-17 14:37:07
- * @LastEditTime: 2022-04-06 17:04:57
+ * @LastEditTime: 2022-04-06 22:31:55
  * @LastEditors: simonyang
  * @Description:
  */
@@ -23,7 +23,7 @@ export function formatSongTime(duration, ms = true) {
  * @param {*} strTime
  */
 export function formatTimeToSecond(strTime) {
-  const regExp = /\d+:[0-5]\d\.\d{3}/g
+  const regExp = /\d+:[0-5]\d(\.\d+)?/g
   if (regExp.test(strTime)) {
     const minute = strTime.split(':')[0]
     const second = strTime.split(':')[1]

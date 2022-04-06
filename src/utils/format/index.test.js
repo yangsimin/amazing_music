@@ -2,7 +2,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-17 15:11:04
- * @LastEditTime: 2022-04-06 17:07:45
+ * @LastEditTime: 2022-04-06 22:32:40
  * @LastEditors: simonyang
  * @Description:
  */
@@ -28,4 +28,10 @@ test('formatTimeToSecond', () => {
 })
 test('formatTimeToSecond', () => {
   expect(formatTimeToSecond('03:61.123')).toBe(undefined)
+})
+test('formatTimeToSecond', () => {
+  expect(formatTimeToSecond('03:56.12')).toBe(236.12)
+})
+test('formatTimeToSecond', () => {
+  expect(formatTimeToSecond('03:56')).toBe(236)
 })

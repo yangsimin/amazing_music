@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-06 10:38:11
- * @LastEditTime: 2022-04-06 22:11:42
+ * @LastEditTime: 2022-04-06 22:26:05
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -82,6 +82,7 @@ export default {
   methods: {
     async requestLyric() {
       const data = await getLyric(this.playingSong.id)
+      Log.d(data)
       const lyricLines = data.lrc.lyric.split('\n')
       // line格式: [03:22.123]然后这部分是歌词
       // 使用正则表达获取 时间 歌词
@@ -94,10 +95,11 @@ export default {
           this.lyricTexts.push(res[2] ? res[2] : '')
         }
       })
+      Log.d(this.lyricTexts)
       Log.d(this.lyricTimes)
     },
     timeupdate: throttle(function () {
-      // Log.d(this.amzAudio.getCurrentTime())
+      Log.d(this.amzAudio.getCurrentTime())
       const index = this.lyricTimes.findIndex(time => {
         return time > this.amzAudio.getCurrentTime()
       })
