@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 13:44:02
- * @LastEditTime: 2022-04-06 22:02:54
+ * @LastEditTime: 2022-04-07 13:36:14
  * @LastEditors: simonyang
  * @Description: 歌词布局
 -->
@@ -47,6 +47,11 @@ export default {
   },
   methods: {
     close() {
+      this.$emit('close')
+    }
+  },
+  watch: {
+    $route() {
       this.$emit('close')
     }
   }

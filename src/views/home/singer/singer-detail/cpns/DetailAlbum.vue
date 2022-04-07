@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-04 16:37:39
- * @LastEditTime: 2022-04-06 13:52:52
+ * @LastEditTime: 2022-04-07 18:10:18
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -71,10 +71,10 @@ export default {
     getPublishTime(timestamp) {
       return this.$format.formatDate('yyyy-MM-dd', timestamp)
     },
-    loadMore() {
-      if (this.more) {
+    async loadMore() {
+      if (!this.isLoading && this.more) {
         this.page += 1
-        this.requestArtistAlbum()
+        await this.requestArtistAlbum()
       }
     },
     async addSongs(albumId) {
@@ -92,6 +92,12 @@ export default {
     jumpDetail(albumId) {
       // TODO
       Log.d('jumpDetail', albumId)
+      this.$router.push({
+        name: 'album',
+        params: {
+          albumId
+        }
+      })
     }
   },
   created() {

@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 21:13:40
- * @LastEditTime: 2022-04-06 09:03:15
+ * @LastEditTime: 2022-04-07 15:19:48
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -12,12 +12,12 @@
     </div>
 
     <main class="w-full h-full mt-2 amz-max-width mx-auto pb-32 px-2 md:pb-24">
-      <keep-alive exclude="SongListDetail,SingerDetail">
+      <keep-alive exclude="SongListDetail">
         <router-view></router-view>
       </keep-alive>
     </main>
-    <amz-player></amz-player>
-    <amz-back-top></amz-back-top>
+    <amz-player class="z-20"></amz-player>
+    <amz-back-top class="z-10"></amz-back-top>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-14 12:12:41
- * @LastEditTime: 2022-04-05 17:39:16
+ * @LastEditTime: 2022-04-07 11:44:43
  * @LastEditors: simonyang
  * @Description:
  */
@@ -21,32 +21,39 @@ const routes = [
   {
     path: '/recommend',
     name: 'recommend',
-    component: () => import('@/views/recommend/AmzRecommend.vue')
+    component: () => import('@/views/home/recommend/AmzRecommend.vue')
   },
   {
     path: '/song-list',
     name: 'song-list',
-    component: () => import('@/views/song-list/SongList.vue')
+    component: () => import('@/views/home/song-list/SongList.vue')
+  },
+  {
+    path: '/song-list/song-list-detail/:songListId',
+    name: 'song-list-detail',
+    component: () =>
+      import('@/views/home/song-list/song-list-detail/SongListDetail.vue')
   },
   {
     path: '/top-list',
     name: 'top-list',
-    component: () => import('@/views/top-list/TopList.vue')
+    component: () => import('@/views/home/top-list/TopList.vue')
   },
   {
     path: '/singer',
     name: 'singer',
-    component: () => import('@/views/singer/Singer.vue')
+    component: () => import('@/views/home/singer/Singer.vue')
   },
   {
-    path: '/song-list-detail/:songListId',
-    name: 'song-list-detail',
-    component: () => import('@/views/song-list-detail/SongListDetail.vue')
-  },
-  {
-    path: '/singer-detail/:singerId',
+    path: '/singer/singer-detail/:singerId',
     name: 'singer-detail',
-    component: () => import('@/views/singer-detail/SingerDetail.vue')
+    component: () =>
+      import('@/views/home/singer/singer-detail/SingerDetail.vue')
+  },
+  {
+    path: '/singer/album/:albumId',
+    name: 'album',
+    component: () => import('@/views/home/singer/album/Album.vue')
   },
   {
     path: '/search',

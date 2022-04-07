@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 13:06:21
- * @LastEditTime: 2022-04-06 22:03:40
+ * @LastEditTime: 2022-04-07 11:08:11
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -19,8 +19,8 @@
     <!-- 歌词页面 -->
     <transition name="lyric">
       <player-lyric
-        class="fixed left-0 top-0 right-0 bottom-0 bg-gray-700 bg-opacity-[0.95] backdrop-blur-lg overflow-hidden z-20"
-        v-if="isLyricShow"
+        class="lyric fixed left-0 top-0 right-0 bottom-0 bg-gray-700 overflow-hidden z-20"
+        v-show="isLyricShow"
         @close="closeLyric"
       ></player-lyric>
     </transition>
@@ -62,5 +62,18 @@ export default {
 .lyric-enter,
 .lyric-leave-to {
   @apply opacity-0 translate-y-full;
+}
+
+@supports (-webkit-backdrop-filter: blur(16px)) or (backdrop-filter: blur(16px)) {
+  .lyric {
+    @apply bg-opacity-[0.95] backdrop-blur-lg;
+  }
+}
+@supports not (
+  (-webkit-backdrop-filter: blur(16px)) or (backdrop-filter: blur(16px))
+) {
+  .lyric {
+    @apply bg-opacity-[0.99];
+  }
 }
 </style>

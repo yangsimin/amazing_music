@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-19 11:11:41
- * @LastEditTime: 2022-04-06 14:29:48
+ * @LastEditTime: 2022-04-07 17:48:44
  * @LastEditors: simonyang
  * @Description:
  */
@@ -27,7 +27,7 @@ export function getSongUrl(id, br) {
  * @method: 获取歌单所有歌曲
  * @param {*} id, 歌单 id
  * @param {*} limit, 限制返回数量, 默认返回歌单所有歌曲
- * @param {*} offset, 歌曲偏移量, 默认为0
+ * @param {*} offset, 歌曲偏移量, 默认为0, 相当于页数
  */
 export function getSongListTrack(id, limit, offset) {
   return request.get(PLAYLIST_TRACK_URL, { id, limit, offset })

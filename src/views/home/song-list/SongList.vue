@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:34
- * @LastEditTime: 2022-04-06 13:50:55
+ * @LastEditTime: 2022-04-07 19:44:04
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -37,7 +37,7 @@
             alt=""
             @click.native="addSongs(songList.id)"
           />
-          <div class="play-count absolute right-0 top-1 text-white">
+          <div class="play-count absolute right-0 top-1 z-10 text-white">
             <i class="iconfont icon-player-play"></i>
             <span class="ml-1">{{ getPlayCount(songList.playCount) }}</span>
           </div>
@@ -200,9 +200,6 @@ export default {
     currentPage() {
       document.body.scrollTo(0, 0)
       this.requestSongLists()
-    },
-    $route(route) {
-      Log.d('route change', route)
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -213,10 +210,6 @@ export default {
         vm.activeTag = to.query.tag
       }
     })
-  },
-  beforeRouteUpdate(to, from, next) {
-    Log.d('beforeRouteUpdate', to, from)
-    next()
   },
   created() {
     this.requestCateList()
@@ -234,11 +227,11 @@ export default {
 }
 .play-count {
   @apply text-sm py-1.5 pl-2 pr-4;
-  /* @apply text-sm pl-2; */
   background: url('https://img.alicdn.com/tfs/TB1xEGRub9YBuNjy0FgXXcxcXXa-268-48.png')
     no-repeat;
   background-size: cover;
   background-position-x: 100%;
   border-bottom-left-radius: 30%;
+  pointer-events: none;
 }
 </style>

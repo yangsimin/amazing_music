@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-01 16:13:16
- * @LastEditTime: 2022-04-06 13:53:36
+ * @LastEditTime: 2022-04-07 18:10:02
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -88,11 +88,11 @@ export default {
       this.more = data.more
       this.isLoading = false
     }, 500),
-    loadMore() {
+    async loadMore() {
       Log.d('enter loadMore')
-      if (this.more) {
+      if (!this.isLoading && this.more) {
         this.page += 1
-        this.requestSingers(
+        await this.requestSingers(
           this.activeInitial,
           this.activeType,
           this.activeArea,

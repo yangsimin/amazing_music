@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 16:38:48
- * @LastEditTime: 2022-04-05 14:13:48
+ * @LastEditTime: 2022-04-07 13:26:37
  * @LastEditors: simonyang
  * @Description:
  */
@@ -32,6 +32,10 @@ export class Song {
       name: artists.name
     }))
     song.duration = data.song.duration
+    song.album = {
+      id: data.song.album.id,
+      name: data.song.album.name
+    }
 
     return song
   }
@@ -129,7 +133,10 @@ export class Singer {
     Object.assign(this, singer)
   }
 }
-
+/**
+ * @method: 简单的专辑信息
+ * @param {*}
+ */
 export class Album {
   constructor(data) {
     const album = {
@@ -141,5 +148,25 @@ export class Album {
       paid: data.paid
     }
     Object.assign(this, album)
+  }
+}
+
+/**
+ * @method: 专辑详情
+ * @param {*}
+ */
+export class AlbumDetail {
+  constructor(data) {
+    const albumDetail = {
+      id: data.id,
+      name: data.name,
+      picUrl: data.picUrl,
+      publishTime: data.publishTime,
+      description: data.description,
+      company: data.company,
+      artist: data.artist,
+      alias: data.alias
+    }
+    Object.assign(this, albumDetail)
   }
 }

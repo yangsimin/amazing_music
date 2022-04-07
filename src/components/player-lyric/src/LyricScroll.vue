@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-06 10:38:11
- * @LastEditTime: 2022-04-06 22:26:05
+ * @LastEditTime: 2022-04-07 18:28:55
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -12,11 +12,17 @@
       <p class="mt-5 text-gray-300">
         专辑:<span
           class="ml-3 mr-10 text-white cursor-pointer hover:text-red-400"
+          @click="jumpAlbumDetail"
         >
           {{ album }}
         </span>
-        歌手:<span class="mx-3 text-white cursor-pointer hover:text-red-400">
-          {{ artists }}
+        歌手:<span
+          class="mx-3 text-white cursor-pointer hover:text-red-400"
+          v-for="artist in playingSong.artists"
+          :key="artist.id"
+          @click="jumpSingerDetail(artist.id)"
+        >
+          {{ artist.name }}
         </span>
       </p>
     </header>
@@ -46,7 +52,7 @@ import AmzAudio from '@/components/player-bar/AmzAudio.js'
 import { throttle } from '@/utils/performance'
 import { smoothScrollTo } from '@/utils/dom'
 
-const Log = Logger.create('LyricScroll')
+const Log = Logger.create('LyricScroll', true)
 
 export default {
   name: 'LyricScroll',
@@ -81,6 +87,8 @@ export default {
   },
   methods: {
     async requestLyric() {
+      this.lyricTexts.splice(0)
+      this.lyricTimes.splice(0)
       const data = await getLyric(this.playingSong.id)
       Log.d(data)
       const lyricLines = data.lrc.lyric.split('\n')
@@ -91,10 +99,21 @@ export default {
         if (line) {
           regExp.lastIndex = 0
           const res = regExp.exec(line)
-          this.lyricTimes.push(this.$format.formatTimeToSecond(res[1]))
-          this.lyricTexts.push(res[2] ? res[2] : '')
+          if (res) {
+            this.lyricTimes.push(this.$format.formatTimeToSecond(res[1]))
+            this.lyricTexts.push(res[2] ? res[2] : '')
+          } else {
+            // 只有文本, 没有时间的情况
+            this.lyricTimes.push(0)
+            this.lyricTexts.push(line)
+          }
         }
       })
+      // 如果没有返回歌词
+      if (!this.lyricTexts.length) {
+        this.lyricTimes.push(-1)
+        this.lyricTexts.push('未有歌词')
+      }
       Log.d(this.lyricTexts)
       Log.d(this.lyricTimes)
     },
@@ -129,8 +148,26 @@ export default {
       Log.d(top)
       smoothScrollTo(container, top, 300)
 
-      // FIXME 兼容性
+      // 存在兼容性问题
       // container.scrollTo({ left: 0, top: distance, behavior: 'smooth' })
+    },
+    jumpSingerDetail(id) {
+      this.$router.push({
+        name: 'singer-detail',
+        params: {
+          singerId: id
+        }
+      })
+    },
+    jumpAlbumDetail() {
+      // if (this.playingSong.album && this.playingSong.album.id) {
+      //   this.$router.push({
+      //     name: 'album-detail',
+      //     params: {
+      //       singerId: this.playingSong.album.id
+      //     }
+      //   })
+      // }
     }
   },
   watch: {
@@ -142,7 +179,7 @@ export default {
       this.smoothScrollTo(this.$refs.lyric, this.getScrollTop(index))
     }
   },
-  created() {
+  mounted() {
     this.$watch(
       () => this.playingSong,
       song => {

@@ -1,12 +1,12 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-17 20:18:12
- * @LastEditTime: 2022-04-05 13:58:38
+ * @LastEditTime: 2022-04-07 19:44:17
  * @LastEditors: simonyang
  * @Description: 歌曲封面, 依赖 iconfront
 -->
 <template>
-  <div class="song-cover overflow-hidden" @click="playMusic">
+  <div class="song-cover relative overflow-hidden z-10" @click="playMusic">
     <amz-image class="w-full transition duration-300" :src="img"></amz-image>
   </div>
 </template>
@@ -29,11 +29,6 @@ export default {
 </script>
 
 <style scoped>
-.song-cover {
-  position: relative;
-}
-
-/* 播放图标 */
 .song-cover::before {
   content: '\e611';
   font-family: 'iconfont' !important;
@@ -52,9 +47,10 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
   opacity: 0;
-  z-index: 9;
+  z-index: 1;
   transition: all 0.3s;
 }
+
 /* 当支持 hover 时才显示 hover 样式, 解决移动端 hover 样式无法取消问题 */
 @media screen and (any-hover: hover) {
   .song-cover:hover .amz-image {
@@ -65,7 +61,6 @@ export default {
     transform: scale(1.2);
   }
 }
-
 @media screen and (any-hover: none) {
   .song-cover:active .amz-image {
     transform: scale(0.95);

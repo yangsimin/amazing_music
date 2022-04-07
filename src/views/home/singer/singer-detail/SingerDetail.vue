@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-02 16:27:41
- * @LastEditTime: 2022-04-05 16:28:22
+ * @LastEditTime: 2022-04-07 15:39:22
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -45,6 +45,8 @@ import DetailSimilarSinger from './cpns/DetailSimilarSinger.vue'
 import { getArtists } from '@/api'
 import { Singer, Song } from '@/types/song/types'
 import Logger from '@/utils/logger'
+import restoreScroll from '@/mixins/restore-scroll'
+import lifeCycle from '@/mixins/life-cycle'
 
 const Log = Logger.create('SingerDetail')
 
@@ -58,6 +60,7 @@ export default {
     DetailSingerDesc,
     DetailSimilarSinger
   },
+  mixins: [restoreScroll, lifeCycle()],
   data: () => ({
     singer: {},
     hotSongs: [],
@@ -67,7 +70,11 @@ export default {
       { title: '歌手详情', component: 'DetailSingerDesc' },
       { title: '相似歌手', component: 'DetailSimilarSinger' }
     ],
-    activeIndex: -1
+    activeIndex: -1,
+    history: {
+      id: -1,
+      index: -1
+    }
   }),
   computed: {
     titles() {
@@ -85,6 +92,7 @@ export default {
   methods: {
     ...mapActions(['insertSongs']),
     async requestArtists() {
+      Log.d('request', this.$route.params.singerId)
       const data = await getArtists(this.$route.params.singerId)
       Log.d(data)
       this.singer = new Singer(data.artist)
@@ -115,6 +123,16 @@ export default {
         immediate: true
       }
     )
+  },
+  activated() {
+    if (this.$route.params.singerId === this.history.id) {
+      this.activeIndex = this.history.index
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    this.history.id = this.$route.params.singerId
+    this.history.index = this.activeIndex
+    next()
   }
 }
 </script>

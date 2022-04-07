@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:27
- * @LastEditTime: 2022-04-02 18:09:03
+ * @LastEditTime: 2022-04-06 22:55:06
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -30,7 +30,7 @@ import {
 import { Song, SongList } from '@/types/song/types'
 
 // eslint-disable-next-line no-unused-vars
-const Log = Logger.create('AmzRecommend', false)
+const Log = Logger.create('AmzRecommend')
 
 export default {
   name: 'AmzRecommend',
@@ -59,7 +59,7 @@ export default {
       const data = await getPersonalizedNewSong(limit)
       // 清空数组
       this.newSongs.splice(0)
-
+      Log.d(data)
       if (!data.result) {
         throw Error('请求数据失败')
       }

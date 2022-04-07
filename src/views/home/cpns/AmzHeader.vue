@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 23:03:30
- * @LastEditTime: 2022-04-06 10:48:51
+ * @LastEditTime: 2022-04-07 11:04:15
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -11,7 +11,7 @@
     <h1 class="flex-shrink-0">
       <a href="/" class="flex items-center h-20">
         <img
-          src="~@/assets/imgs/home/logo2.png"
+          src="~@/assets/imgs/home/logo.png"
           alt="logo"
           class="w-12 h-12 mr-2"
         />
@@ -62,7 +62,7 @@ export default {
       return this.tabs.map(tab => tab.title)
     },
     activeIndex() {
-      return this.tabs.findIndex(tab => tab.path === this.$route.path)
+      return this.tabs.findIndex(tab => this.$route.path.startsWith(tab.path))
     }
   },
   methods: {
