@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 13:06:21
- * @LastEditTime: 2022-04-07 11:08:11
+ * @LastEditTime: 2022-04-11 21:07:16
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -61,7 +61,7 @@ export default {
 
 .lyric-enter,
 .lyric-leave-to {
-  @apply opacity-0 translate-y-full;
+  @apply opacity-0 translate-y-full transform-gpu;
 }
 
 @supports (-webkit-backdrop-filter: blur(16px)) or (backdrop-filter: blur(16px)) {

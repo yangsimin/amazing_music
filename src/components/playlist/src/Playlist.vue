@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-24 19:38:41
- * @LastEditTime: 2022-04-11 12:00:26
+ * @LastEditTime: 2022-04-11 18:30:07
  * @LastEditors: simonyang
  * @Description: 
   当前播放   歌曲总数      清空列表
@@ -77,7 +77,6 @@ import { mapMutations, mapGetters, mapActions } from 'vuex'
 import PlayingIcon from '@/components/playing-icon'
 import AmzRecyclerView from '@/base-ui/amz-recycler-view'
 
-import Velocity from 'velocity-animate'
 import mixinLifeCycle from '@/mixins/life-cycle'
 
 export default {
@@ -119,37 +118,6 @@ export default {
     },
     clearAll() {
       this.clearSongList()
-    },
-    beforeEnter(el) {
-      el.style.opacity = 0
-      el.style.left = '10%'
-    },
-    enter(el, done) {
-      Velocity(
-        el,
-        {
-          opacity: 1,
-          left: 0
-        },
-        {
-          duration: 200,
-          complete: done
-        }
-      )
-    },
-    beforeLeave(el) {
-      el.style.opacity = 1
-      el.style.position = 'absolute'
-    },
-    leave(el, done) {
-      Velocity(
-        el,
-        {
-          opacity: 0,
-          left: '10%'
-        },
-        { duration: 200, complete: done }
-      )
     }
   }
 }
