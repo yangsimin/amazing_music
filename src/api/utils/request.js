@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-14 18:25:54
- * @LastEditTime: 2022-03-17 17:54:12
+ * @LastEditTime: 2022-04-11 12:11:53
  * @LastEditors: simonyang
  * @Description: 封装 axios
  */
@@ -51,7 +51,16 @@ const request = new Request(
     timeout: TIME_OUT,
     withCredentials: true
   },
-  null,
+  function (request) {
+    if (request.method.toUpperCase() === 'POST') {
+      if (request.params) {
+        request.params.timestamp = Date.now()
+      } else {
+        request.params = { timestamp: Date.now() }
+      }
+    }
+    return request
+  },
   function (response) {
     const status = response.status
     const data = response.data

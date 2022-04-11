@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-07 14:03:05
- * @LastEditTime: 2022-04-07 14:50:18
+ * @LastEditTime: 2022-04-11 11:17:30
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -22,7 +22,7 @@
     >
       <slot name="image" :value="songList.coverImgUrl" :item="songList">
         <amz-image
-          class="w-20 h-20 rounded-md overflow-hidden"
+          class="flex-shrink-0 w-20 h-20 rounded-md overflow-hidden"
           :src="$format.formatImageUrl(songList.coverImgUrl, 160, 160)"
         />
       </slot>

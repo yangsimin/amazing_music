@@ -1,14 +1,14 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-28 11:41:37
- * @LastEditTime: 2022-04-07 18:10:40
+ * @LastEditTime: 2022-04-11 12:23:10
  * @LastEditors: simonyang
  * @Description: 
  
 -->
 <template>
   <div class="song-list-detail flex">
-    <div class="flex-1 min-w-[40rem] shadow-lg p-5 rounded-lg">
+    <div class="flex-1 min-w-[40rem] max-w-[56rem] shadow-lg p-5 rounded-lg">
       <list-detail-header :info="info" @playAll="playAll"></list-detail-header>
       <song-list-table
         class="mt-7"
@@ -31,7 +31,12 @@ import { mapActions } from 'vuex'
 import ListDetailHeader from './cpns/ListDetailHeader.vue'
 import SongListTable from '@/components/song-list-table'
 import RecommendCard from '@/components/recommend-card'
-import { getSongListDetail, getSongListTrack, getRelatedSongList } from '@/api'
+import {
+  getSongListDetail,
+  getSongListTrack,
+  getRelatedSongList,
+  getSongDetail
+} from '@/api'
 import { Song, SongListDetail } from '@/types/song/types'
 import mixinLifeCycle from '@/mixins/life-cycle'
 import Logger from '@/utils/logger'
@@ -57,6 +62,7 @@ export default {
       description: '',
       tags: [],
       trackCount: 0,
+      trackIds: [],
       playCount: 0,
       trackUpdateTime: 0,
       creator: {}
@@ -106,7 +112,6 @@ export default {
     async requestSongListTrack(limit, page) {
       this.isLoading = true
       Log.d('发起分页请求', `limit: ${limit}, page: ${page}`)
-      // const data = await getSongListTrack(this.songListId)
       const data = await getSongListTrack(this.songListId, limit, page)
       // 请求后, page 累加
       // TODO 做判断 适当切片
@@ -119,8 +124,13 @@ export default {
       Log.d('加载完成, 当前歌曲总数: ', this.songs.length)
       this.isLoading = false
     },
-    playAll() {
-      this.insertSongs(this.songs)
+    async playAll() {
+      // 超过1000条会请求失败
+      const data = await getSongDetail(this.info.trackIds.slice(0, 1000))
+      Log.d('歌单所有歌曲', data)
+      this.insertSongs([
+        ...data.songs.map(song => Song.createFromSongList(song))
+      ])
     },
     jumpDetail(songList) {
       if (this.info.id !== songList.id) {

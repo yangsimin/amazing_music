@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-19 17:31:32
- * @LastEditTime: 2022-04-06 16:32:21
+ * @LastEditTime: 2022-04-11 10:28:20
  * @LastEditors: simonyang
  * @Description: 
       输入: 展示的信息, 播放控制; 
@@ -123,6 +123,7 @@ export default {
           this.emitFinish()
           return
         }
+        Log.d('watch: isPlaying: ', playing)
         this.playSong(this.playingSong)
       } else {
         // 暂停
@@ -130,8 +131,13 @@ export default {
       }
     },
     playingSong(song) {
+      Log.d('watch: playingSong: ', song)
       if (Object.keys(song).length === 0) {
         this.resetAll()
+        return
+      }
+      // 如果新的 song 是当前播放的 song, 则忽略
+      if (this.amzAudio.getSource() === song.url) {
         return
       }
       this.playSong(song)
@@ -152,7 +158,7 @@ export default {
       this.$emit('error', message)
     },
     playSong(song) {
-      Log.d('song', song)
+      Log.d('playSong', song)
 
       if (this.amzAudio.getSource() !== song.url) {
         this.amzAudio.setSource(song.url)

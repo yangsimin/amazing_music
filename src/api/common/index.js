@@ -1,13 +1,14 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-19 11:11:41
- * @LastEditTime: 2022-04-07 17:48:44
+ * @LastEditTime: 2022-04-07 21:53:48
  * @LastEditors: simonyang
  * @Description:
  */
 import request from '../utils/request.js'
 
 const SONG_URL = '/song/url'
+const SONG_DETAIL = '/song/detail'
 const PLAYLIST_TRACK_URL = '/playlist/track/all'
 const PLAYLIST_DETAIL = '/playlist/detail'
 const RELATED_PLAYLIST = '/related/playlist'
@@ -21,6 +22,14 @@ const LYRIC = '/lyric'
  */
 export function getSongUrl(id, br) {
   return request.get(SONG_URL, { id, br })
+}
+
+/**
+ * @method: 请求歌曲详情, 可以传多首
+ * @param { Array<Number> } ids
+ */
+export function getSongDetail(ids) {
+  return request.post(SONG_DETAIL, { ids: ids.join(',') })
 }
 
 /**

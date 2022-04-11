@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-31 09:30:12
- * @LastEditTime: 2022-04-05 11:00:54
+ * @LastEditTime: 2022-04-11 15:49:23
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -52,16 +52,20 @@ export default {
       this.isLoading = false
     },
     playAll() {
-      console.log('playALl')
+      Log.d('playALl')
       this.insertSongs(this.songs)
     }
   },
   watch: {
-    activeId(id) {
-      if (!id) {
-        return
-      }
-      this.requestDetailInfo()
+    activeId: {
+      handler(id) {
+        Log.d('watch', id)
+        if (!id) {
+          return
+        }
+        this.requestDetailInfo()
+      },
+      immediate: true
     }
   }
 }

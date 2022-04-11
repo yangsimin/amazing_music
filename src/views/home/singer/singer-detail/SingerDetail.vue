@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-02 16:27:41
- * @LastEditTime: 2022-04-07 15:39:22
+ * @LastEditTime: 2022-04-11 14:49:58
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -111,7 +111,7 @@ export default {
     this.$watch(
       () => this.$route.params.singerId,
       id => {
-        if (id) {
+        if (id && id !== this.history.id) {
           Log.d('watch', id)
           this.requestArtists()
           this.singer = {}

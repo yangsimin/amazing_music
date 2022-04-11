@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 21:13:40
- * @LastEditTime: 2022-04-07 15:19:48
+ * @LastEditTime: 2022-04-11 15:39:12
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -13,7 +13,9 @@
 
     <main class="w-full h-full mt-2 amz-max-width mx-auto pb-32 px-2 md:pb-24">
       <keep-alive exclude="SongListDetail">
-        <router-view></router-view>
+        <transition>
+          <router-view></router-view>
+        </transition>
       </keep-alive>
     </main>
     <amz-player class="z-20"></amz-player>
@@ -36,4 +38,13 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: all 300ms;
+}
+.v-enter,
+.v-leave-to {
+  opacity: 0;
+}
+</style>

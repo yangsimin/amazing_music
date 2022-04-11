@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-03-23 16:38:48
- * @LastEditTime: 2022-04-07 13:26:37
+ * @LastEditTime: 2022-04-07 20:36:29
  * @LastEditors: simonyang
  * @Description:
  */
@@ -85,6 +85,7 @@ export class SongListDetail {
       description: data.playlist.description,
       tags: data.playlist.tags,
       trackCount: data.playlist.trackCount,
+      trackIds: data.playlist.trackIds.map(each => each.id),
       playCount: data.playlist.playCount,
       trackUpdateTime: data.playlist.trackUpdateTime,
       creator: {

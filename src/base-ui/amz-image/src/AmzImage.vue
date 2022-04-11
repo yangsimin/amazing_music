@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-31 18:06:43
- * @LastEditTime: 2022-04-05 20:52:52
+ * @LastEditTime: 2022-04-11 15:54:58
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -31,6 +31,7 @@
 
 <script>
 import Logger from '@/utils/logger'
+import lifeCycle from '@/mixins/life-cycle'
 // import { throttle } from '@/utils/performance'
 
 // 加载失败
@@ -42,6 +43,9 @@ const DEFAULT = 1
 
 // 判断元素是否在可见范围内
 const isVisible = (el, container, offset = 0) => {
+  if (!container || !el) {
+    return true
+  }
   const containerRect = container.getBoundingClientRect()
   const elRect = el.getBoundingClientRect()
 
@@ -82,6 +86,7 @@ const Log = Logger.create('AmzImage', false)
 export default {
   name: 'AmzImage',
   inheritAttrs: false,
+  mixins: [lifeCycle(false)],
   props: {
     // 图片源
     src: {
@@ -148,7 +153,10 @@ export default {
       this.scrollContainer.addEventListener('scroll', this._scroll, {
         passive: true
       })
-      this._scroll()
+      // FIXME 临时方案, 立即调用 this._scroll() 获取的 image 元素位置异常, 影响判断 isVisible
+      setTimeout(() => {
+        this._scroll()
+      }, 200)
     },
     loadImage() {
       // 预加载图像
@@ -183,9 +191,6 @@ export default {
         immediate: true
       }
     )
-  },
-  updated() {
-    this._scroll()
   },
   destroyed() {
     this.scrollContainer.removeEventListener('scroll', this._scroll)

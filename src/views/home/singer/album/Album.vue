@@ -1,13 +1,13 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-07 11:33:58
- * @LastEditTime: 2022-04-07 15:05:59
+ * @LastEditTime: 2022-04-11 12:22:09
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
   <div class="album flex">
-    <div>
+    <div class="max-w-[56rem] flex-1">
       <album-header :info="info" @playAll="playAll"></album-header>
       <song-list-table
         class="mt-7"

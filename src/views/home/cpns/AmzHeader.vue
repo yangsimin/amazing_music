@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-13 23:03:30
- * @LastEditTime: 2022-04-07 11:04:15
+ * @LastEditTime: 2022-04-11 09:33:53
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -34,7 +34,7 @@
     <!-- 搜索框部分 -->
     <div>
       <i
-        class="iconfont icon-search align-middle text-2xl cursor-pointer mr-2"
+        class="hidden iconfont icon-search align-middle text-2xl cursor-pointer mr-2"
         @click="jumpSearch"
       />
     </div>

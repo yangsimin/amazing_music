@@ -1,13 +1,13 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-03-14 12:19:27
- * @LastEditTime: 2022-04-06 22:55:06
+ * @LastEditTime: 2022-04-11 10:47:21
  * @LastEditors: simonyang
  * @Description: 
 -->
 <template>
   <div class="amz-recommend">
-    <banner :images="images" />
+    <banner :banners="banners" />
     <recommend-new-songs :songs="newSongs"></recommend-new-songs>
     <recommend-song-list :song-lists="songLists"></recommend-song-list>
   </div>
@@ -41,7 +41,7 @@ export default {
     RecommendSongList
   },
   data: () => ({
-    images: [],
+    banners: [],
     newSongs: [],
     songLists: []
   }),
@@ -49,10 +49,16 @@ export default {
     // 请求 Banner 数据
     async getBanner() {
       const data = await getBanner()
-      const images = data.banners.map(banner => banner.imageUrl)
       // 布局限制, 只取前三张图
-      images.splice(3)
-      this.images.push(...images)
+      this.banners.push(
+        ...data.banners
+          .map(banner => ({
+            id: banner.targetId,
+            type: banner.typeTitle,
+            imageUrl: banner.imageUrl
+          }))
+          .slice(0, 3)
+      )
     },
     // 请求推荐新音乐
     async getPersonalizedNewSong(limit) {

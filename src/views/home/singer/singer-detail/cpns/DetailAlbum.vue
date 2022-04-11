@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-04 16:37:39
- * @LastEditTime: 2022-04-07 18:10:18
+ * @LastEditTime: 2022-04-11 14:46:34
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -36,6 +36,7 @@ import { mapActions } from 'vuex'
 import { getArtistAlbum, getAlbum } from '@/api'
 import { Album, Song } from '@/types/song/types'
 import Logger from '@/utils/logger'
+import lifeCycle from '@/mixins/life-cycle'
 
 const Log = Logger.create('DetailAlbum')
 
@@ -44,6 +45,7 @@ export default {
   props: {
     id: Number
   },
+  mixins: [lifeCycle()],
   components: {
     SongCover
   },

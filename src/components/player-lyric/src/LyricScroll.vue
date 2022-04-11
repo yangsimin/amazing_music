@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-06 10:38:11
- * @LastEditTime: 2022-04-07 18:28:55
+ * @LastEditTime: 2022-04-11 16:05:31
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -146,7 +146,9 @@ export default {
           : top
 
       Log.d(top)
-      smoothScrollTo(container, top, 300)
+      setTimeout(() => {
+        smoothScrollTo(container, top, 300)
+      }, 50)
 
       // 存在兼容性问题
       // container.scrollTo({ left: 0, top: distance, behavior: 'smooth' })
@@ -160,14 +162,14 @@ export default {
       })
     },
     jumpAlbumDetail() {
-      // if (this.playingSong.album && this.playingSong.album.id) {
-      //   this.$router.push({
-      //     name: 'album-detail',
-      //     params: {
-      //       singerId: this.playingSong.album.id
-      //     }
-      //   })
-      // }
+      if (this.playingSong.album && this.playingSong.album.id) {
+        this.$router.push({
+          name: 'album',
+          params: {
+            albumId: this.playingSong.album.id
+          }
+        })
+      }
     }
   },
   watch: {
@@ -185,6 +187,10 @@ export default {
       song => {
         if (Object.keys(song).length > 0) {
           this.requestLyric()
+        } else {
+          // 清空数据
+          this.lyricTexts.splice(0)
+          this.lyricTimes.splice(0)
         }
       },
       {

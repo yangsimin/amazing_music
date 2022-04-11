@@ -1,7 +1,7 @@
 <!--
  * @Author: simonyang
  * @Date: 2022-04-04 22:54:19
- * @LastEditTime: 2022-04-06 18:23:15
+ * @LastEditTime: 2022-04-11 11:49:07
  * @LastEditors: simonyang
  * @Description: 
 -->
@@ -104,7 +104,7 @@ export default {
     headerRowClassName: 'flex items-center h-14 text-gray-400 bg-gray-100',
     headerColClassNames: {
       index: 'w-16 text-center',
-      songName: 'flex items-center w-[30%] flex-auto ',
+      songName: 'w-[30%] flex items-center flex-auto ',
       artists: 'w-[30%] flex-shrink flex-auto',
       album: 'w-[22%] flex-shrink flex-auto',
       duration: 'w-20 ml-5'
@@ -120,9 +120,9 @@ export default {
       'group flex items-center h-14 text-left media:hover:bg-gray-hl even:bg-gray-100',
     colClassNames: {
       index: 'w-16 text-center cursor-pointer',
-      songName: 'flex items-center w-[30%] flex-auto',
-      artists: 'w-[30%] flex-shrink truncate flex-auto',
-      album: 'w-[22%] flex-shrink truncate flex-auto',
+      songName: 'w-[30%] flex items-center flex-auto flex-shrink-0',
+      artists: 'w-[30%] truncate flex-auto flex-shrink-0',
+      album: 'w-[22%] truncate flex-auto flex-shrink-0',
       duration: 'w-20 ml-5'
     }
   }),

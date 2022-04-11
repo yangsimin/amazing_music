@@ -1,7 +1,7 @@
 /*
  * @Author: simonyang
  * @Date: 2022-04-06 20:21:23
- * @LastEditTime: 2022-04-06 22:09:37
+ * @LastEditTime: 2022-04-11 16:01:30
  * @LastEditors: simonyang
  * @Description:
  */
@@ -16,7 +16,7 @@ export function smoothScrollTo(
   container,
   top,
   speed = 1000,
-  easing = 'easeInOutQuad'
+  easing = 'easeInOutCubic'
 ) {
   // 滚动起始时间点
   let start = 0
